@@ -1,0 +1,7 @@
+language: java
+jdk:
+  - openjdk6
+notifications:
+  email: true
+before_script: chmod -R 777 ./travis_build.sh
+script: ./travis_build.sh

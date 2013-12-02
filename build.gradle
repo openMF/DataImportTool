@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.5.0',
+                  'org.gradle.api.plugins:gradle-tomcat-plugin:0.9.8'
+    }
+}
+
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'tomcat'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+
+sourceCompatibility = JavaVersion.VERSION_1_6
+targetCompatibility = JavaVersion.VERSION_1_6
+
+group = 'org.mifostools'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    providedCompile
+    compile
+    runtime
+}
+
+compileJava.dependsOn(pmdMain)
+
+dependencies {
+    def tomcatVersion = '7.0.42'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+    }
+
+    providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
+
+    compile    'org.slf4j:slf4j-api:1.7.5',
+               'org.slf4j:jcl-over-slf4j:1.7.5',
+               'ch.qos.logback:logback-core:1.0.13',
+               'ch.qos.logback:logback-classic:1.0.13',
+               'com.google.code.gson:gson:2.2.4',
+               'org.apache.poi:poi:3.9'
+
+     testCompile 'junit:junit:4.11',
+                 'org.mockito:mockito-all:1.9.5'
+
+}
+
+tomcatRunWar {
+    httpPort = 8070
+    httpsPort = 8433
+    stopPort = 8071
+}

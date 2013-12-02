@@ -1,0 +1,30 @@
+package org.openmf.mifos.dataimport.dto;
+
+
+public class Type {
+	
+	private final Integer id;
+	
+	private final String code;
+	
+	private final String value;
+
+	public Type(Integer id, String code, String value) {
+		this.id = id;
+		this.code = code;
+		this.value = value;
+	}
+	
+	public Integer getId() {
+    	return this.id;
+    }
+	
+	public String getCode() {
+    	return this.code;
+    }
+	
+	public String getValue() {
+    	return this.value;
+    }
+
+}
