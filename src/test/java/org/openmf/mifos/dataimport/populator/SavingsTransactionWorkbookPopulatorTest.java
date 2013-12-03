@@ -95,7 +95,7 @@ public class SavingsTransactionWorkbookPopulatorTest {
     	
     	//Lookup Table test
     	row = savingsTransactionSheet.getRow(1);
-    	Assert.assertEquals("Arsene K Wenger", row.getCell(LOOKUP_CLIENT_NAME_COL).getStringCellValue());
+    	Assert.assertEquals("Arsene K Wenger(1)", row.getCell(LOOKUP_CLIENT_NAME_COL).getStringCellValue());
     	Assert.assertEquals("6.0", ((Double)row.getCell(LOOKUP_ACCOUNT_NO_COL).getNumericCellValue()).toString());
     	Assert.assertEquals("SP1", row.getCell(LOOKUP_PRODUCT_COL).getStringCellValue());
     	Assert.assertEquals("1200.0", ((Double)row.getCell(LOOKUP_OPENING_BALANCE_COL).getNumericCellValue()).toString());

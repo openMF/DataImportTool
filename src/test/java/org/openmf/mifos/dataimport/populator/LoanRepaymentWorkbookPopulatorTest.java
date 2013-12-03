@@ -99,7 +99,7 @@ public class LoanRepaymentWorkbookPopulatorTest {
     	
     	//Lookup Table test
     	row = loanRepaymentSheet.getRow(1);
-    	Assert.assertEquals("Billy T Bob", row.getCell(LOOKUP_CLIENT_NAME_COL).getStringCellValue());
+    	Assert.assertEquals("Billy T Bob(2)", row.getCell(LOOKUP_CLIENT_NAME_COL).getStringCellValue());
     	Assert.assertEquals("3.0", ((Double)row.getCell(LOOKUP_ACCOUNT_NO_COL).getNumericCellValue()).toString());
     	Assert.assertEquals("HM", row.getCell(LOOKUP_PRODUCT_COL).getStringCellValue());
     	Assert.assertEquals("25000.0", ((Double)row.getCell(LOOKUP_PRINCIPAL_COL).getNumericCellValue()).toString());
