@@ -92,7 +92,7 @@ public class ClientSheetPopulatorTest {
     	Sheet clientSheet = book.getSheet("Clients");
     	Row row = clientSheet.getRow(2);
     	Assert.assertEquals("Office1", row.getCell(0).getStringCellValue());
-    	Assert.assertEquals("Billy T Bob", row.getCell(1).getStringCellValue());
+    	Assert.assertEquals("Billy T Bob(2)", row.getCell(1).getStringCellValue());
     	Assert.assertEquals("2.0", "" + row.getCell(2).getNumericCellValue());
     	
     	Assert.assertEquals("2", "" + officeNameToBeginEndIndexesOfClients[0]);
@@ -100,8 +100,8 @@ public class ClientSheetPopulatorTest {
     	Assert.assertEquals("2", "" + officeToClients.size());
     	Assert.assertEquals("1", "" + officeToClients.get("Head_Office").size());
     	Assert.assertEquals("1", "" + officeToClients.get("Office1").size());
-    	Assert.assertEquals("Billy T Bob", "" + officeToClients.get("Office1").get(0));
+    	Assert.assertEquals("Billy T Bob(2)", "" + officeToClients.get("Office1").get(0));
     	Assert.assertEquals("2", "" + clientNameToClientId.size());
-    	Assert.assertEquals("2", "" + clientNameToClientId.get("Billy T Bob"));
+    	Assert.assertEquals("2", "" + clientNameToClientId.get("Billy T Bob(2)"));
     }
 }

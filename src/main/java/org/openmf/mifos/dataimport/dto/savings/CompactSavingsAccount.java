@@ -7,7 +7,9 @@ import org.openmf.mifos.dataimport.dto.Status;
 
 public class CompactSavingsAccount {
 
-private final String accountNo;
+    private final String accountNo;
+    
+    private final String clientId;
 	
 	private final String clientName;
 	
@@ -19,9 +21,10 @@ private final String accountNo;
 	
 	private final Status status;
 	
-	public CompactSavingsAccount(String accountNo, String clientName, String savingsProductName,
+	public CompactSavingsAccount(String accountNo, String clientId, String clientName, String savingsProductName,
 			Double minRequiredOpeningBalance, SavingsTimeline timeline, Status status) {
 		this.accountNo = accountNo;
+		this.clientId = clientId;
 		this.clientName = clientName;
 		this.savingsProductName = savingsProductName;
 		this.minRequiredOpeningBalance = minRequiredOpeningBalance;
@@ -31,6 +34,10 @@ private final String accountNo;
 
 	public String getClientName() {
 		return clientName;
+	}
+
+	public String getClientId() {
+		return clientId;
 	}
 
 	public String getAccountNo() {

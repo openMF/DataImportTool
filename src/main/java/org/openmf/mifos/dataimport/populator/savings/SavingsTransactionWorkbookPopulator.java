@@ -117,14 +117,14 @@ public class SavingsTransactionWorkbookPopulator extends AbstractWorkbookPopulat
     	if(result.isSuccess())
     		result = extrasSheetPopulator.populate(workbook);
     	if(result.isSuccess())
-    		result = populateLoansTable(savingsTransactionSheet);
+    		result = populateSavingsTable(savingsTransactionSheet);
         if(result.isSuccess())
             result = setRules(savingsTransactionSheet);
         setDefaults(savingsTransactionSheet);
         return result;
     }
     
-    private Result populateLoansTable(Sheet savingsTransactionSheet) {
+    private Result populateSavingsTable(Sheet savingsTransactionSheet) {
     	Result result = new Result();
     	Workbook workbook = savingsTransactionSheet.getWorkbook();
     	CellStyle dateCellStyle = workbook.createCellStyle();
@@ -136,10 +136,11 @@ public class SavingsTransactionWorkbookPopulator extends AbstractWorkbookPopulat
     	try{
     		for(CompactSavingsAccount savingsAccount : savings) {
     			row = savingsTransactionSheet.createRow(rowIndex++);
-    			writeString(LOOKUP_CLIENT_NAME_COL, row, savingsAccount.getClientName());
+    			writeString(LOOKUP_CLIENT_NAME_COL, row, savingsAccount.getClientName()  + "(" + savingsAccount.getClientId() + ")");
     			writeLong(LOOKUP_ACCOUNT_NO_COL, row, Long.parseLong(savingsAccount.getAccountNo()));
     			writeString(LOOKUP_PRODUCT_COL, row, savingsAccount.getSavingsProductName());
-    			writeDouble(LOOKUP_OPENING_BALANCE_COL, row, savingsAccount.getMinRequiredOpeningBalance());
+    			if(savingsAccount.getMinRequiredOpeningBalance() != null)
+    			   writeDouble(LOOKUP_OPENING_BALANCE_COL, row, savingsAccount.getMinRequiredOpeningBalance());
     			writeDate(LOOKUP_SAVINGS_ACTIVATION_DATE_COL, row, savingsAccount.getTimeline().getActivatedOnDate().get(2) + "/" + savingsAccount.getTimeline().getActivatedOnDate().get(1) + "/" + savingsAccount.getTimeline().getActivatedOnDate().get(0), dateCellStyle);
     		}
 	    } catch (Exception e) {
@@ -208,7 +209,7 @@ public class SavingsTransactionWorkbookPopulator extends AbstractWorkbookPopulat
         	
         	DataValidationConstraint officeNameConstraint = validationHelper.createFormulaListConstraint("Office");
         	DataValidationConstraint clientNameConstraint = validationHelper.createFormulaListConstraint("INDIRECT(CONCATENATE(\"Client_\",$A1))");
-        	DataValidationConstraint accountNumberConstraint = validationHelper.createFormulaListConstraint("INDIRECT(CONCATENATE(\"Account_\",SUBSTITUTE($B1,\" \",\"_\")))");
+        	DataValidationConstraint accountNumberConstraint = validationHelper.createFormulaListConstraint("INDIRECT(CONCATENATE(\"Account_\",SUBSTITUTE(SUBSTITUTE(SUBSTITUTE($B1,\" \",\"_\"),\"(\",\"_\"),\")\",\"_\")))");
         	DataValidationConstraint transactionTypeConstraint = validationHelper.createExplicitListConstraint(new String[] {"Withdrawal","Deposit"});
         	DataValidationConstraint paymentTypeConstraint = validationHelper.createFormulaListConstraint("PaymentTypes");
         	DataValidationConstraint transactionDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=VLOOKUP($C1,$Q$2:$T$" + (savings.size() + 1) + ",4,FALSE)", "=TODAY()", "dd/mm/yy");
@@ -270,16 +271,19 @@ public class SavingsTransactionWorkbookPopulator extends AbstractWorkbookPopulat
     	//Counting clients with active savings and starting and end addresses of cells for naming
     	HashMap<String, Integer[]> clientNameToBeginEndIndexes = new HashMap<String, Integer[]>();
     	ArrayList<String> clientsWithActiveSavings = new ArrayList<String>();
+    	ArrayList<String> clientIdsWithActiveSavings = new ArrayList<String>();
     	int startIndex = 1, endIndex = 1;
     	String clientName = "";
-    	
+    	String clientId = "";
     	for(int i = 0; i < savings.size(); i++){
     		if(!clientName.equals(savings.get(i).getClientName())) {
     			endIndex = i + 1;
     			clientNameToBeginEndIndexes.put(clientName, new Integer[]{startIndex, endIndex});
     			startIndex = i + 2;
     			clientName = savings.get(i).getClientName();
+    			clientId = savings.get(i).getClientId();
     			clientsWithActiveSavings.add(clientName);
+    			clientIdsWithActiveSavings.add(clientId);
     		}
     		if(i == savings.size()-1) {
     			endIndex = i + 2;
@@ -290,7 +294,7 @@ public class SavingsTransactionWorkbookPopulator extends AbstractWorkbookPopulat
     	//Account Number Named  after Clients
     	for(int j = 0; j < clientsWithActiveSavings.size(); j++) {
     		Name name = savingsTransactionWorkbook.createName();
-    		name.setNameName("Account_" + clientsWithActiveSavings.get(j).replaceAll(" ", "_"));
+    		name.setNameName("Account_" + clientsWithActiveSavings.get(j).replaceAll(" ", "_") + "_" + clientIdsWithActiveSavings.get(j) + "_");
     		name.setRefersToFormula("SavingsTransaction!$Q$" + clientNameToBeginEndIndexes.get(clientsWithActiveSavings.get(j))[0] + ":$Q$" + clientNameToBeginEndIndexes.get(clientsWithActiveSavings.get(j))[1]);
     	}
     	

@@ -90,7 +90,7 @@ public class ClientSheetPopulator extends AbstractWorkbookPopulator {
         	if(client.isActive()) {
         	  clients.add(client);
         	}
-        	clientNameToClientId.put(client.getDisplayName().trim(), client.getId());
+        	clientNameToClientId.put(client.getDisplayName().trim()+"("+client.getId()+")", client.getId());
         }
     }
     
@@ -133,7 +133,7 @@ public class ClientSheetPopulator extends AbstractWorkbookPopulator {
     private void setOfficeToClientsMap() {
     	officeToClients = new HashMap<String, ArrayList<String>>();
     	for(CompactClient person : clients) 
-    		add(person.getOfficeName().trim().replaceAll("[ )(]", "_"), person.getDisplayName().trim());
+    		add(person.getOfficeName().trim().replaceAll("[ )(]", "_"), person.getDisplayName().trim()+"("+person.getId()+")");
     }
     
     //Guava Multi-map can reduce this.
