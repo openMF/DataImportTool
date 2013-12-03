@@ -31,8 +31,8 @@ public class GroupWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int ACTIVATION_DATE_COL = 5;
     private static final int MEETING_START_DATE_COL = 6;
     private static final int IS_REPEATING_COL = 7;
-    private static final int REPEATS_COL = 8;
-    private static final int REPEATS_EVERY_COL = 9;
+    private static final int FREQUENCY_COL = 8;
+    private static final int INTERVAL_COL = 9;
     private static final int REPEATS_ON_DAY_COL = 10;
     private static final int STATUS_COL = 11;
     private static final int GROUP_ID_COL = 12;
@@ -95,8 +95,8 @@ public class GroupWorkbookPopulator extends AbstractWorkbookPopulator {
         worksheet.setColumnWidth(ACTIVATION_DATE_COL, 3500);
         worksheet.setColumnWidth(MEETING_START_DATE_COL, 3500);
         worksheet.setColumnWidth(IS_REPEATING_COL, 2000);
-        worksheet.setColumnWidth(REPEATS_COL, 3000);
-        worksheet.setColumnWidth(REPEATS_EVERY_COL, 2000);
+        worksheet.setColumnWidth(FREQUENCY_COL, 3000);
+        worksheet.setColumnWidth(INTERVAL_COL, 2000);
         worksheet.setColumnWidth(REPEATS_ON_DAY_COL, 2500);
         worksheet.setColumnWidth(STATUS_COL, 2000);
         worksheet.setColumnWidth(GROUP_ID_COL, 2000);
@@ -115,8 +115,8 @@ public class GroupWorkbookPopulator extends AbstractWorkbookPopulator {
         writeString(ACTIVATION_DATE_COL, rowHeader, "Activation Date*");
         writeString(MEETING_START_DATE_COL, rowHeader, "Meeting Start Date* (On or After)");
         writeString(IS_REPEATING_COL, rowHeader, "Repeat*");
-        writeString(REPEATS_COL, rowHeader, "Repeats*");
-        writeString(REPEATS_EVERY_COL, rowHeader, "Every*");
+        writeString(FREQUENCY_COL, rowHeader, "Frequency*");
+        writeString(INTERVAL_COL, rowHeader, "Interval*");
         writeString(REPEATS_ON_DAY_COL, rowHeader, "Repeats On*");
         writeString(CLIENT_NAMES_STARTING_COL, rowHeader, "Client Names* (Enter in consecutive cells horizontally)");
         writeString(LOOKUP_OFFICE_NAME_COL, rowHeader, "Office Name");
@@ -154,8 +154,8 @@ public class GroupWorkbookPopulator extends AbstractWorkbookPopulator {
     	CellRangeAddressList activeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), ACTIVE_COL, ACTIVE_COL);
     	CellRangeAddressList meetingStartDateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), MEETING_START_DATE_COL, MEETING_START_DATE_COL);
     	CellRangeAddressList isRepeatRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), IS_REPEATING_COL, IS_REPEATING_COL);
-    	CellRangeAddressList repeatsRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), REPEATS_COL, REPEATS_COL);
-    	CellRangeAddressList repeatsEveryRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), REPEATS_EVERY_COL, REPEATS_EVERY_COL);
+    	CellRangeAddressList repeatsRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), FREQUENCY_COL, FREQUENCY_COL);
+    	CellRangeAddressList repeatsEveryRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), INTERVAL_COL, INTERVAL_COL);
     	CellRangeAddressList repeatsOnRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), REPEATS_ON_DAY_COL, REPEATS_ON_DAY_COL);
     	CellRangeAddressList clientNameRange = new  CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CLIENT_NAMES_STARTING_COL, CLIENT_NAMES_ENDING_COL);
     	

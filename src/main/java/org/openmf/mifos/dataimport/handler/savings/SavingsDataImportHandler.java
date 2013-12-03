@@ -98,48 +98,48 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         String nominalAnnualInterestRate = readAsString(NOMINAL_ANNUAL_INTEREST_RATE_COL, row);
         String interestCompoundingPeriodType = readAsString(INTEREST_COMPOUNDING_PERIOD_COL, row);
         String interestCompoundingPeriodTypeId = "";
-        if(interestCompoundingPeriodType.equals("Daily"))
+        if(interestCompoundingPeriodType.equalsIgnoreCase("Daily"))
         	interestCompoundingPeriodTypeId = "1";
-        else if(interestCompoundingPeriodType.equals("Monthly"))
+        else if(interestCompoundingPeriodType.equalsIgnoreCase("Monthly"))
         	interestCompoundingPeriodTypeId = "4";
         String interestPostingPeriodType = readAsString(INTEREST_POSTING_PERIOD_COL, row);
         String interestPostingPeriodTypeId = "";
-        if(interestPostingPeriodType.equals("Monthly"))
+        if(interestPostingPeriodType.equalsIgnoreCase("Monthly"))
         	interestPostingPeriodTypeId = "4";
-        else if(interestPostingPeriodType.equals("Quarterly"))
+        else if(interestPostingPeriodType.equalsIgnoreCase("Quarterly"))
         	interestPostingPeriodTypeId = "5";
-        else if(interestPostingPeriodType.equals("Annually"))
+        else if(interestPostingPeriodType.equalsIgnoreCase("Annually"))
         	interestPostingPeriodTypeId = "7";
         String interestCalculationType = readAsString(INTEREST_CALCULATION_COL, row);
         String interestCalculationTypeId = "";
-        if(interestCalculationType.equals("Daily Balance"))
+        if(interestCalculationType.equalsIgnoreCase("Daily Balance"))
         	interestCalculationTypeId = "1";
-        else if(interestCalculationType.equals("Average Daily Balance"))
+        else if(interestCalculationType.equalsIgnoreCase("Average Daily Balance"))
         	interestCalculationTypeId = "2";
         String interestCalculationDaysInYearType = readAsString(INTEREST_CALCULATION_DAYS_IN_YEAR_COL, row);
         String interestCalculationDaysInYearTypeId = "";
-        if(interestCalculationDaysInYearType.equals("360 Days"))
+        if(interestCalculationDaysInYearType.equalsIgnoreCase("360 Days"))
         	interestCalculationDaysInYearTypeId = "360";
-        else if(interestCalculationDaysInYearType.equals("365 Days"))
+        else if(interestCalculationDaysInYearType.equalsIgnoreCase("365 Days"))
         	interestCalculationDaysInYearTypeId = "365";
         String minRequiredOpeningBalance = readAsString(MIN_OPENING_BALANCE_COL, row);
         String lockinPeriodFrequency = readAsString(LOCKIN_PERIOD_COL, row);
         String lockinPeriodFrequencyType = readAsString(LOCKIN_PERIOD_FREQUENCY_COL, row);
         String lockinPeriodFrequencyTypeId = "";
-        if(lockinPeriodFrequencyType.equals("Days"))
+        if(lockinPeriodFrequencyType.equalsIgnoreCase("Days"))
         	lockinPeriodFrequencyTypeId = "0";
-        else if(lockinPeriodFrequencyType.equals("Weeks"))
+        else if(lockinPeriodFrequencyType.equalsIgnoreCase("Weeks"))
         	lockinPeriodFrequencyTypeId = "1";
-        else if(lockinPeriodFrequencyType.equals("Months"))
+        else if(lockinPeriodFrequencyType.equalsIgnoreCase("Months"))
         	lockinPeriodFrequencyTypeId = "2";
-        else if(lockinPeriodFrequencyType.equals("Years"))
+        else if(lockinPeriodFrequencyType.equalsIgnoreCase("Years"))
         	lockinPeriodFrequencyTypeId = "3";
         String withdrawalFeeAmount = readAsString(WITHDRAWAL_FEE_AMOUNT_COL, row);
         String withdrawalFeeType = readAsString(WITHDRAWAL_FEE_TYPE_COL, row);
         String withdrawalFeeTypeId = "";
-        if(withdrawalFeeType.equals("Flat"))
+        if(withdrawalFeeType.equalsIgnoreCase("Flat"))
         	withdrawalFeeTypeId = "1";
-        else if(withdrawalFeeType.equals("% of Amount"))
+        else if(withdrawalFeeType.equalsIgnoreCase("% of Amount"))
         	withdrawalFeeTypeId = "2";
         String annualFeeAmount = readAsString(ANNUAL_FEE_COL, row);
         String annualFeeOnMonthDay = readAsDateWithoutYear(ANNUAL_FEE_ON_MONTH_DAY_COL, row);

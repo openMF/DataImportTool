@@ -44,8 +44,8 @@ public class GroupDataImportHandlerTest {
 	        
 	        Assert.assertEquals("14 September 2013", meeting.getStartDate());
 	        Assert.assertEquals("true", meeting.isRepeating());
-	        Assert.assertEquals("Weekly", meeting.getRepeats());
-	        Assert.assertEquals("2", meeting.getRepeatsEvery());
+	        Assert.assertEquals("Weekly", meeting.getFrequency());
+	        Assert.assertEquals("2", meeting.getInterval());
 	        Assert.assertEquals("WE", meeting.getRepeatsOnDay());
 	    }
 }

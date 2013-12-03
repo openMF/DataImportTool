@@ -9,7 +9,7 @@ Build Status
 Travis
 
 [![Build
-Status](https://travis-ci.org/avikganguly01/mifosx-community-apps.png?branch=master)](https://travis-ci.org/avikganguly01/mifosx-community-apps)
+Status](https://travis-ci.org/avikganguly01/DataImportTool.png?branch=master)](https://travis-ci.org/avikganguly01/DataImportTool)
 
 Setup Instructions
 ==================
@@ -21,9 +21,14 @@ Setup Instructions
   mifos.password=password  
   mifos.tenant.id=default  
 
-2. Use the command "gradle clean tomcatRunWar" to run the application and access it at localhost:8070/dataimport.
+2. Use the command "gradle clean tomcatRunWar" to run the application and access it at localhost:8070/DataImportTool.
 
-3. If you are hosting the data import tool in the cloud, you need to ssh into the system to create the dataimport.properties file.
+3. If you are hosting the data import tool in the cloud, you need to ssh into the system to create the dataimport.properties file.Troubleshooting
+===============
+
+1. If you are hosting both this tool and the backend in the same system, you can change the debug port in gradlew.bat under mifosng-provider to listen in on a different port instead of 8005:-  set DEFAULT_JVM_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,address=8006,server=y,suspend=n
+
+2. If you accidentally run out of heap size when running both in the same system, make sure your _JAVA_OPTIONS in Environment variables is set to -Xms512m -Xmx512m -XX:MaxPermSize=512m and it is getting picked up by gradle.
 
 Demo Import
 ===========

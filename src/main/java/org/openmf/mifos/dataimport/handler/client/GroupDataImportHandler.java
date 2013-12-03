@@ -2,7 +2,6 @@ package org.openmf.mifos.dataimport.handler.client;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -36,8 +35,8 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
     private static final int ACTIVATION_DATE_COL = 5;
     private static final int MEETING_START_DATE_COL = 6;
     private static final int IS_REPEATING_COL = 7;
-    private static final int REPEATS_COL = 8;
-    private static final int REPEATS_EVERY_COL = 9;
+    private static final int FREQUENCY_COL = 8;
+    private static final int INTERVAL_COL = 9;
     private static final int REPEATS_ON_DAY_COL = 10;
     private static final int STATUS_COL = 11;
     private static final int GROUP_ID_COL = 12;
@@ -109,18 +108,18 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
     private Meeting parseAsMeeting(Row row) {
     	String meetingStartDate = readAsDate(MEETING_START_DATE_COL, row);
     	String isRepeating = readAsBoolean(IS_REPEATING_COL, row).toString();
-    	String repeats = readAsString(REPEATS_COL, row);
-    	String repeatsEvery = readAsString(REPEATS_EVERY_COL, row);
+    	String frequency = readAsString(FREQUENCY_COL, row);
+    	frequency = getFrequencyId(frequency);
+    	String interval = readAsString(INTERVAL_COL, row);
     	String repeatsOnDay = readAsString(REPEATS_ON_DAY_COL, row);
-    	if(!repeatsOnDay.equals(""))
-    		repeatsOnDay = repeatsOnDay.substring(0, 2).toUpperCase(Locale.ENGLISH);
+    	repeatsOnDay = getRepeatsOnDayId(repeatsOnDay);
     	if(meetingStartDate.equals(""))
     		return null;
     	else {
     		if(repeatsOnDay.equals(""))
-    			return new Meeting(meetingStartDate, isRepeating, repeats, repeatsEvery, row.getRowNum());
+    			return new Meeting(meetingStartDate, isRepeating, frequency, interval, row.getRowNum());
     		else
-    			return new WeeklyMeeting(meetingStartDate, isRepeating, repeats, repeatsEvery, repeatsOnDay, row.getRowNum());
+    			return new WeeklyMeeting(meetingStartDate, isRepeating, frequency, interval, repeatsOnDay, row.getRowNum());
     	}
     }
     
@@ -210,6 +209,36 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
     	writeString(STATUS_COL, sheet.getRow(0), "Status");
     	writeString(GROUP_ID_COL, sheet.getRow(0), "Group Id");
     	writeString(FAILURE_COL, sheet.getRow(0), "Failure Report");
+    }
+    
+    private String getFrequencyId(String frequency) {
+    	if(frequency.equalsIgnoreCase("Daily"))
+    		frequency = "1";
+        else if(frequency.equalsIgnoreCase("Weekly"))
+        	frequency = "2";
+        else if(frequency.equalsIgnoreCase("Monthly"))
+        	frequency = "3";
+        else if(frequency.equalsIgnoreCase("Yearly"))
+        	frequency = "4";
+    	return frequency;
+    }
+    
+    private String getRepeatsOnDayId(String repeatsOnDay) {
+    	if(repeatsOnDay.equalsIgnoreCase("Mon"))
+    		repeatsOnDay = "1";
+        else if(repeatsOnDay.equalsIgnoreCase("Tue"))
+        	repeatsOnDay = "2";
+        else if(repeatsOnDay.equalsIgnoreCase("Wed"))
+        	repeatsOnDay = "3";
+        else if(repeatsOnDay.equalsIgnoreCase("Thu"))
+        	repeatsOnDay = "4";
+        else if(repeatsOnDay.equalsIgnoreCase("Fri"))
+        	repeatsOnDay = "5";
+        else if(repeatsOnDay.equalsIgnoreCase("Sat"))
+        	repeatsOnDay = "6";
+        else if(repeatsOnDay.equalsIgnoreCase("Sun"))
+        	repeatsOnDay = "7";
+    	return repeatsOnDay;
     }
     
     public List<Group> getGroups() {

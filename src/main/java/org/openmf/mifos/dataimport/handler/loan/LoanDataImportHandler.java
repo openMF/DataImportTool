@@ -119,54 +119,54 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         String repaidEvery = readAsString(REPAID_EVERY_COL, row);
         String repaidEveryFrequency = readAsString(REPAID_EVERY_FREQUENCY_COL, row);
         String repaidEveryFrequencyId = "";
-        if(repaidEveryFrequency.equals("Days"))
+        if(repaidEveryFrequency.equalsIgnoreCase("Days"))
         	repaidEveryFrequencyId = "0";
-        else if(repaidEveryFrequency.equals("Weeks"))
+        else if(repaidEveryFrequency.equalsIgnoreCase("Weeks"))
         	repaidEveryFrequencyId = "1";
-        else if(repaidEveryFrequency.equals("Months"))
+        else if(repaidEveryFrequency.equalsIgnoreCase("Months"))
         	repaidEveryFrequencyId = "2";
         String loanTerm = readAsString(LOAN_TERM_COL, row);
         String loanTermFrequency = readAsString(LOAN_TERM_FREQUENCY_COL, row);
         String loanTermFrequencyId = "";
-        if(loanTermFrequency.equals("Days"))
+        if(loanTermFrequency.equalsIgnoreCase("Days"))
         	loanTermFrequencyId = "0";
-        else if(loanTermFrequency.equals("Weeks"))
+        else if(loanTermFrequency.equalsIgnoreCase("Weeks"))
         	loanTermFrequencyId = "1";
-        else if(loanTermFrequency.equals("Months"))
+        else if(loanTermFrequency.equalsIgnoreCase("Months"))
         	loanTermFrequencyId = "2";
         String nominalInterestRate = readAsString(NOMINAL_INTEREST_RATE_COL, row);
         String amortization = readAsString(AMORTIZATION_COL, row);
         String amortizationId = "";
-        if(amortization.equals("Equal principal payments"))
+        if(amortization.equalsIgnoreCase("Equal principal payments"))
         	amortizationId = "0";
-        else if(amortization.equals("Equal installments"))
+        else if(amortization.equalsIgnoreCase("Equal installments"))
         	amortizationId = "1";
         String interestMethod = readAsString(INTEREST_METHOD_COL, row);
         String interestMethodId = "";
-        if(interestMethod.equals("Flat"))
+        if(interestMethod.equalsIgnoreCase("Flat"))
         	interestMethodId = "1";
-        else if(interestMethod.equals("Declining Balance"))
+        else if(interestMethod.equalsIgnoreCase("Declining Balance"))
         	interestMethodId = "0";
         String interestCalculationPeriod = readAsString(INTEREST_CALCULATION_PERIOD_COL, row);
         String interestCalculationPeriodId = "";
-        if(interestCalculationPeriod.equals("Daily"))
+        if(interestCalculationPeriod.equalsIgnoreCase("Daily"))
         	interestCalculationPeriodId = "0";
-        else if(interestCalculationPeriod.equals("Same as repayment period"))
+        else if(interestCalculationPeriod.equalsIgnoreCase("Same as repayment period"))
         	interestCalculationPeriodId = "1";
         String arrearsTolerance = readAsString(ARREARS_TOLERANCE_COL, row);
         String repaymentStrategy = readAsString(REPAYMENT_STRATEGY_COL, row);
         String repaymentStrategyId = "";
-        if(repaymentStrategy.equals("Mifos style"))
+        if(repaymentStrategy.equalsIgnoreCase("Mifos style"))
         	repaymentStrategyId = "1";
-        else if(repaymentStrategy.equals("Heavensfamily"))
+        else if(repaymentStrategy.equalsIgnoreCase("Heavensfamily"))
         	repaymentStrategyId = "2";
-        else if(repaymentStrategy.equals("Creocore"))
+        else if(repaymentStrategy.equalsIgnoreCase("Creocore"))
         	repaymentStrategyId = "3";
-        else if(repaymentStrategy.equals("RBI (India)"))
+        else if(repaymentStrategy.equalsIgnoreCase("RBI (India)"))
         	repaymentStrategyId = "4";
-        else if(repaymentStrategy.equals("Principal Interest Penalties Fees Order"))
+        else if(repaymentStrategy.equalsIgnoreCase("Principal Interest Penalties Fees Order"))
         	repaymentStrategyId = "5";
-        else if(repaymentStrategy.equals("Interest Principal Penalties Fees Order"))
+        else if(repaymentStrategy.equalsIgnoreCase("Interest Principal Penalties Fees Order"))
         	repaymentStrategyId = "6";
         String graceOnPrincipalPayment = readAsString(GRACE_ON_PRINCIPAL_PAYMENT_COL, row);
         String graceOnInterestPayment = readAsString(GRACE_ON_INTEREST_PAYMENT_COL, row);

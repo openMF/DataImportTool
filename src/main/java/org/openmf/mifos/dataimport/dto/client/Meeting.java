@@ -23,15 +23,15 @@ public class Meeting {
     
     private final String repeating;
     
-    private final String repeats;
+    private final String frequency;
     
-    private final String repeatsEvery;
+    private final String interval;
     
-    public Meeting(String startDate, String repeating, String repeats, String repeatsEvery, Integer rowIndex ) {
+    public Meeting(String startDate, String repeating, String frequency, String interval, Integer rowIndex ) {
         this.startDate = startDate;
         this.repeating = repeating;
-        this.repeats = repeats;
-        this.repeatsEvery = repeatsEvery;
+        this.frequency = frequency;
+        this.interval = interval;
         this.rowIndex = rowIndex;
         this.dateFormat = "dd MMMM yyyy";
         this.locale = Locale.ENGLISH;
@@ -79,12 +79,12 @@ public class Meeting {
 		return repeating;
 	}
 
-	public String getRepeats() {
-		return repeats;
+	public String getFrequency() {
+		return frequency;
 	}
 
-	public String getRepeatsEvery() {
-		return repeatsEvery;
+	public String getInterval() {
+		return interval;
 	}
 
 	public String getGroupId() {

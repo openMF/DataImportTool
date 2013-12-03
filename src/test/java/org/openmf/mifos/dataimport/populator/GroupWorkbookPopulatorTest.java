@@ -65,8 +65,8 @@ public class GroupWorkbookPopulatorTest {
     	Assert.assertEquals("Activation Date*", row.getCell(5).getStringCellValue());
     	Assert.assertEquals("Meeting Start Date* (On or After)", row.getCell(6).getStringCellValue());
     	Assert.assertEquals("Repeat*", row.getCell(7).getStringCellValue());
-    	Assert.assertEquals("Repeats*", row.getCell(8).getStringCellValue());
-    	Assert.assertEquals("Every*", row.getCell(9).getStringCellValue());
+    	Assert.assertEquals("Frequency*", row.getCell(8).getStringCellValue());
+    	Assert.assertEquals("Interval*", row.getCell(9).getStringCellValue());
     	Assert.assertEquals("Repeats On*", row.getCell(10).getStringCellValue());
     	Assert.assertEquals("Client Names* (Enter in consecutive cells horizontally)", row.getCell(14).getStringCellValue());
     	Assert.assertEquals("Office Name", row.getCell(LOOKUP_OFFICE_NAME_COL).getStringCellValue());

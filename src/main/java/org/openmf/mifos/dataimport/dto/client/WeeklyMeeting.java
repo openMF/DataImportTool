@@ -5,8 +5,8 @@ public class WeeklyMeeting extends Meeting{
 	
     private final String repeatsOnDay;
     
-    public WeeklyMeeting(String startDate, String repeating, String repeats, String repeatsEvery, String repeatsOnDay, Integer rowIndex  ) {
-        super(startDate, repeating, repeats, repeatsEvery, rowIndex );
+    public WeeklyMeeting(String startDate, String repeating, String frequency, String interval, String repeatsOnDay, Integer rowIndex  ) {
+        super(startDate, repeating, frequency, interval, rowIndex );
     	this.repeatsOnDay = repeatsOnDay;
     }
 
