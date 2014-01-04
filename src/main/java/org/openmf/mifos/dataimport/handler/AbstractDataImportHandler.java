@@ -98,10 +98,18 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
     }
     
     protected Boolean readAsBoolean(int colIndex, Row row) {
-    	Cell c = row.getCell(colIndex);
-		if(c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
-			return false;
-    	return row.getCell(colIndex).getBooleanCellValue();
+    	try{
+    	    Cell c = row.getCell(colIndex);
+		    if(c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
+			    return false;
+    	    return c.getBooleanCellValue();
+    	} catch (Exception e) {
+    		String booleanString = row.getCell(colIndex).getStringCellValue().trim();
+    		if(booleanString.equalsIgnoreCase("TRUE"))
+    			return true;
+    		else
+    			return false;
+    	}
     }
     
     protected void writeString(int colIndex, Row row, String value) {

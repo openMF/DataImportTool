@@ -53,10 +53,6 @@ public class SavingsImportHandlerTest {
         Assert.assertEquals("1000", savings.getMinRequiredOpeningBalance());
         Assert.assertEquals("1", savings.getLockinPeriodFrequency());
         Assert.assertEquals("0", savings.getLockinPeriodFrequencyType());
-        Assert.assertEquals("1", savings.getWithdrawalFeeAmount());
-        Assert.assertEquals("1", savings.getWithdrawalFeeType());
-        Assert.assertEquals("3", savings.getAnnualFeeAmount());
-        Assert.assertEquals("01 September", savings.getAnnualFeeOnMonthDay());
         
         Assert.assertEquals("02 August 2013", savingsApproval.getApprovedOnDate());
         Assert.assertEquals("03 August 2013", savingsActivation.getActivatedOnDate());

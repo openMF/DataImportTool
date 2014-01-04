@@ -39,13 +39,9 @@ private static final Logger logger = LoggerFactory.getLogger(SavingsProductSheet
 	private static final int MIN_OPENING_BALANCE_COL = 7;
 	private static final int LOCKIN_PERIOD_COL = 8;
 	private static final int LOCKIN_PERIOD_FREQUENCY_COL = 9;
-	private static final int WITHDRAWAL_FEE_AMOUNT_COL = 10;
-	private static final int WITHDRAWAL_FEE_TYPE_COL = 11;
-	private static final int ANNUAL_FEE_COL = 12;
-	private static final int ANNUAL_FEE_ON_MONTH_DAY_COL = 13;
-	private static final int CURRENCY_COL = 14;
-	private static final int DECIMAL_PLACES_COL = 15;
-	private static final int IN_MULTIPLES_OF_COL = 16;
+	private static final int CURRENCY_COL = 10;
+	private static final int DECIMAL_PLACES_COL = 11;
+	private static final int IN_MULTIPLES_OF_COL = 12;
 	
 	private List<SavingsProduct> products;
 	
@@ -101,14 +97,6 @@ private static final Logger logger = LoggerFactory.getLogger(SavingsProductSheet
 	            	    writeInt(LOCKIN_PERIOD_COL, row, product.getLockinPeriodFrequency());
 	            	if(product.getLockinPeriodFrequencyType() != null)
 	            	    writeString(LOCKIN_PERIOD_FREQUENCY_COL, row, product.getLockinPeriodFrequencyType().getValue());
-	            	if(product.getWithdrawalFeeAmount() != null)
-	            	    writeDouble(WITHDRAWAL_FEE_AMOUNT_COL, row, product.getWithdrawalFeeAmount());
-	            	if(product.getWithdrawalFeeType() != null)
-	            	    writeString(WITHDRAWAL_FEE_TYPE_COL, row, product.getWithdrawalFeeType().getValue());
-	            	if(product.getAnnualFeeAmount() != null)
-	            	    writeDouble(ANNUAL_FEE_COL, row, product.getAnnualFeeAmount());
-	            	if(product.getAnnualFeeOnMonthDay() != null)
-	            	    writeDate(ANNUAL_FEE_ON_MONTH_DAY_COL, row, product.getAnnualFeeOnMonthDay().get(1) + "/" + product.getAnnualFeeOnMonthDay().get(0) + "/2010" , dateCellStyle);
 	            	Currency currency = product.getCurrency();
 	            	writeString(CURRENCY_COL, row, currency.getCode());
 	            	writeInt(DECIMAL_PLACES_COL, row, currency.getDecimalPlaces());
@@ -136,10 +124,6 @@ private static final Logger logger = LoggerFactory.getLogger(SavingsProductSheet
         worksheet.setColumnWidth(MIN_OPENING_BALANCE_COL, 3000);
         worksheet.setColumnWidth(LOCKIN_PERIOD_COL, 3000);
         worksheet.setColumnWidth(LOCKIN_PERIOD_FREQUENCY_COL, 3000);
-        worksheet.setColumnWidth(WITHDRAWAL_FEE_AMOUNT_COL, 3000);
-        worksheet.setColumnWidth(WITHDRAWAL_FEE_TYPE_COL, 3000);
-        worksheet.setColumnWidth(ANNUAL_FEE_COL, 3000);
-        worksheet.setColumnWidth(ANNUAL_FEE_ON_MONTH_DAY_COL, 3000);
         worksheet.setColumnWidth(CURRENCY_COL, 2000);
         worksheet.setColumnWidth(DECIMAL_PLACES_COL, 3000);
         worksheet.setColumnWidth(IN_MULTIPLES_OF_COL, 3500);
@@ -154,10 +138,6 @@ private static final Logger logger = LoggerFactory.getLogger(SavingsProductSheet
         writeString(MIN_OPENING_BALANCE_COL, rowHeader, "Min Opening Balance");
         writeString(LOCKIN_PERIOD_COL, rowHeader, "Locked In For");
         writeString(LOCKIN_PERIOD_FREQUENCY_COL, rowHeader, "Frequency");
-        writeString(WITHDRAWAL_FEE_AMOUNT_COL, rowHeader, "Withdrawal Fee");
-        writeString(WITHDRAWAL_FEE_TYPE_COL, rowHeader, "Type");
-        writeString(ANNUAL_FEE_COL, rowHeader, "Annual Fee");
-        writeString(ANNUAL_FEE_ON_MONTH_DAY_COL, rowHeader, "On");
         writeString(CURRENCY_COL, rowHeader, "Currency");
         writeString(DECIMAL_PLACES_COL, rowHeader, "Decimal Places");
         writeString(IN_MULTIPLES_OF_COL, rowHeader, "In Multiples Of");

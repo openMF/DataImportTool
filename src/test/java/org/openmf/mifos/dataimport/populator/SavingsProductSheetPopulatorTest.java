@@ -1,7 +1,5 @@
 package org.openmf.mifos.dataimport.populator;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -98,13 +96,8 @@ public class SavingsProductSheetPopulatorTest {
     	Assert.assertEquals("870.0", "" + row.getCell(7).getNumericCellValue());
     	Assert.assertEquals("1.0", "" + row.getCell(8).getNumericCellValue());
     	Assert.assertEquals("Days", row.getCell(9).getStringCellValue());
-    	Assert.assertEquals("1.0", "" + row.getCell(10).getNumericCellValue());
-    	Assert.assertEquals("Flat", row.getCell(11).getStringCellValue());
-    	Assert.assertEquals("3.0", "" + row.getCell(12).getNumericCellValue());
-    	Assert.assertEquals("USD", row.getCell(14).getStringCellValue());
-    	Assert.assertEquals("2.0", "" + row.getCell(15).getNumericCellValue());
-    	Assert.assertEquals("5.0", "" + row.getCell(16).getNumericCellValue());
-    	DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
-    	Assert.assertEquals("01 September 2010" , dateFormat.format(row.getCell(13).getDateCellValue()));
+    	Assert.assertEquals("USD", row.getCell(10).getStringCellValue());
+    	Assert.assertEquals("2.0", "" + row.getCell(11).getNumericCellValue());
+    	Assert.assertEquals("5.0", "" + row.getCell(12).getNumericCellValue());
     }
 }

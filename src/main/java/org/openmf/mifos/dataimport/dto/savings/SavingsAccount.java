@@ -32,14 +32,6 @@ public class SavingsAccount {
 	
 	private final String lockinPeriodFrequencyType;
 	
-	private final String withdrawalFeeAmount;
-	
-	private final String withdrawalFeeType;
-	
-	private final String annualFeeAmount;
-	
-	private final String annualFeeOnMonthDay;
-	
 	private final String withdrawalFeeForTransfers;
 	
 	private final String monthDayFormat;
@@ -50,8 +42,7 @@ public class SavingsAccount {
 	
 	public SavingsAccount( String clientId, String productId, String fieldOfficerId, String submittedOnDate, String nominalAnnualInterestRate, String interestCompoundingPeriodType,
 			String interestPostingPeriodType, String interestCalculationType, String interestCalculationDaysInYearType, String minRequiredOpeningBalance, String lockinPeriodFrequency,
-			String lockinPeriodFrequencyType, String  withdrawalFeeAmount, String withdrawalFeeType, String annualFeeAmount, String annualFeeOnMonthDay,
-			String withdrawalFeeForTransfers, Integer rowIndex, String status) {
+			String lockinPeriodFrequencyType, String withdrawalFeeForTransfers, Integer rowIndex, String status) {
 		this.clientId = clientId;
 		this.productId = productId;
 		this.fieldOfficerId = fieldOfficerId;
@@ -64,10 +55,6 @@ public class SavingsAccount {
 		this.minRequiredOpeningBalance = minRequiredOpeningBalance;
 		this.lockinPeriodFrequency = lockinPeriodFrequency;
 		this.lockinPeriodFrequencyType = lockinPeriodFrequencyType;
-		this.withdrawalFeeAmount = withdrawalFeeAmount;
-		this.withdrawalFeeType = withdrawalFeeType;
-		this.annualFeeAmount = annualFeeAmount;
-		this.annualFeeOnMonthDay = annualFeeOnMonthDay;
 		this.withdrawalFeeForTransfers = withdrawalFeeForTransfers;
 		this.rowIndex = rowIndex;
 		this.status = status;
@@ -118,22 +105,6 @@ public class SavingsAccount {
 	
 	public String getLockinPeriodFrequencyType() {
 		return lockinPeriodFrequencyType;
-	}
-	
-	public String getWithdrawalFeeAmount() {
-		return withdrawalFeeAmount;
-	}
-	
-	public String getWithdrawalFeeType() {
-		return withdrawalFeeType;
-	}
-	
-	public String getAnnualFeeAmount() {
-		return annualFeeAmount;
-	}
-	
-	public String getAnnualFeeOnMonthDay() {
-		return annualFeeOnMonthDay;
 	}
 	
 	public String getDateFormat() {

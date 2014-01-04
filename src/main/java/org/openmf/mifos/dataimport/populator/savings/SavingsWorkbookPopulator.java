@@ -56,11 +56,7 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	private static final int MIN_OPENING_BALANCE_COL = 16;
 	private static final int LOCKIN_PERIOD_COL = 17;
 	private static final int LOCKIN_PERIOD_FREQUENCY_COL = 18;
-	private static final int WITHDRAWAL_FEE_AMOUNT_COL = 19;
-	private static final int WITHDRAWAL_FEE_TYPE_COL = 20;
-	private static final int ANNUAL_FEE_COL = 21;
-	private static final int ANNUAL_FEE_ON_MONTH_DAY_COL = 22;
-	private static final int APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS = 23;
+	private static final int APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS = 19;
     private static final int LOOKUP_CLIENT_NAME_COL = 31;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 32;
     @SuppressWarnings("CPD-END")
@@ -134,10 +130,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
             worksheet.setColumnWidth(MIN_OPENING_BALANCE_COL, 4000);
             worksheet.setColumnWidth(LOCKIN_PERIOD_COL, 3000);
             worksheet.setColumnWidth(LOCKIN_PERIOD_FREQUENCY_COL, 3000);
-            worksheet.setColumnWidth(WITHDRAWAL_FEE_AMOUNT_COL, 3000);
-            worksheet.setColumnWidth(WITHDRAWAL_FEE_TYPE_COL, 3000);
-            worksheet.setColumnWidth(ANNUAL_FEE_COL, 3000);
-            worksheet.setColumnWidth(ANNUAL_FEE_ON_MONTH_DAY_COL, 3000);
             worksheet.setColumnWidth(APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, 4000);
             
             worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
@@ -161,9 +153,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
             writeString(INTEREST_CALCULATION_DAYS_IN_YEAR_COL, rowHeader, "# Days in Year*");
             writeString(MIN_OPENING_BALANCE_COL, rowHeader, "Min Opening Balance");
             writeString(LOCKIN_PERIOD_COL, rowHeader, "Locked In For");
-            writeString(WITHDRAWAL_FEE_AMOUNT_COL, rowHeader, "Withdrawal Fee");
-            writeString(ANNUAL_FEE_COL, rowHeader, "Annual Fee");
-            writeString(ANNUAL_FEE_ON_MONTH_DAY_COL, rowHeader, "On Date");
             writeString(APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, rowHeader, "Apply Withdrawal Fee For Transfers");
             
             writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
@@ -186,7 +175,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	CellRangeAddressList interestCalculationRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), INTEREST_CALCULATION_COL, INTEREST_CALCULATION_COL);
 	        	CellRangeAddressList interestCalculationDaysInYearRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), INTEREST_CALCULATION_DAYS_IN_YEAR_COL, INTEREST_CALCULATION_DAYS_IN_YEAR_COL);
 	        	CellRangeAddressList lockinPeriodFrequencyRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LOCKIN_PERIOD_FREQUENCY_COL, LOCKIN_PERIOD_FREQUENCY_COL);
-	        	CellRangeAddressList withdrawalFeeTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), WITHDRAWAL_FEE_TYPE_COL, WITHDRAWAL_FEE_TYPE_COL);
 	        	CellRangeAddressList applyWithdrawalFeeForTransfersRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS);
 	        	
 	        	DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet)worksheet);
@@ -206,7 +194,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	DataValidationConstraint interestCalculationConstraint = validationHelper.createExplicitListConstraint(new String[] {"Daily Balance","Average Daily Balance"});
 	        	DataValidationConstraint interestCalculationDaysInYearConstraint = validationHelper.createExplicitListConstraint(new String[] {"360 Days","365 Days"});
 	        	DataValidationConstraint lockinPeriodFrequencyConstraint = validationHelper.createExplicitListConstraint(new String[] {"Days","Weeks","Months","Years"});
-	        	DataValidationConstraint withdrawalFeeTypeConstraint = validationHelper.createExplicitListConstraint(new String[] {"Flat","% of Amount"});
 	        	DataValidationConstraint applyWithdrawalFeeForTransferConstraint = validationHelper.createExplicitListConstraint(new String[] {"True","False"});
 	        	
 	        	
@@ -220,7 +207,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	DataValidation interestCalculationValidation = validationHelper.createValidation(interestCalculationConstraint, interestCalculationRange);
 	        	DataValidation interestCalculationDaysInYearValidation = validationHelper.createValidation(interestCalculationDaysInYearConstraint, interestCalculationDaysInYearRange);
 	        	DataValidation lockinPeriodFrequencyValidation = validationHelper.createValidation(lockinPeriodFrequencyConstraint, lockinPeriodFrequencyRange);
-	        	DataValidation withdrawalFeeTypeValidation = validationHelper.createValidation(withdrawalFeeTypeConstraint, withdrawalFeeTypeRange);
 	        	DataValidation applyWithdrawalFeeForTransferValidation = validationHelper.createValidation(applyWithdrawalFeeForTransferConstraint, applyWithdrawalFeeForTransfersRange);
 	        	DataValidation submittedDateValidation = validationHelper.createValidation(submittedDateConstraint, submittedDateRange);
 	        	DataValidation approvalDateValidation = validationHelper.createValidation(approvalDateConstraint, approvedDateRange);
@@ -239,7 +225,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	            worksheet.addValidationData(interestCalculationValidation);
 	            worksheet.addValidationData(interestCalculationDaysInYearValidation);
 	            worksheet.addValidationData(lockinPeriodFrequencyValidation);
-	            worksheet.addValidationData(withdrawalFeeTypeValidation);
 	            worksheet.addValidationData(applyWithdrawalFeeForTransferValidation);
 	        	
 	    	} catch (RuntimeException re) {
@@ -269,11 +254,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	    			writeFormula(MIN_OPENING_BALANCE_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Min_Balance_\",$D" + (rowNo + 1) + "))),\"\",INDIRECT(CONCATENATE(\"Min_Balance_\",$D"+ (rowNo + 1) + ")))");
 	    			writeFormula(LOCKIN_PERIOD_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Lockin_Period_\",$D" + (rowNo + 1) + "))),\"\",INDIRECT(CONCATENATE(\"Lockin_Period_\",$D"+ (rowNo + 1) + ")))");
 	    			writeFormula(LOCKIN_PERIOD_FREQUENCY_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Lockin_Frequency_\",$D" + (rowNo + 1) + "))),\"\",INDIRECT(CONCATENATE(\"Lockin_Frequency_\",$D"+ (rowNo + 1) + ")))");
-	    			writeFormula(WITHDRAWAL_FEE_AMOUNT_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Withdrawal_Fee_\",$D" + (rowNo + 1) + "))),\"\",INDIRECT(CONCATENATE(\"Withdrawal_Fee_\",$D"+ (rowNo + 1) + ")))");
-	    			writeFormula(WITHDRAWAL_FEE_TYPE_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Withdrawal_Fee_Type_\",$D" + (rowNo + 1) + "))),\"\",INDIRECT(CONCATENATE(\"Withdrawal_Fee_Type_\",$D"+ (rowNo + 1) + ")))");
-	    			writeFormula(ANNUAL_FEE_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Annual_Fee_\",$D" + (rowNo + 1) + "))),\"\",INDIRECT(CONCATENATE(\"Annual_Fee_\",$D"+ (rowNo + 1) + ")))");
-	    			writeFormula(ANNUAL_FEE_ON_MONTH_DAY_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Annual_Fee_Date_\",$D" + (rowNo + 1) + "))),\"\",INDIRECT(CONCATENATE(\"Annual_Fee_Date_\",$D"+ (rowNo + 1) + ")))");
-	    			row.getCell(ANNUAL_FEE_ON_MONTH_DAY_COL).setCellStyle(dateCellStyle);
 	    		}
 	    	} catch (RuntimeException re) {
 	    		logger.error(re.getMessage());
@@ -331,10 +311,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
       		Name minOpeningBalanceName = savingsWorkbook.createName();
       		Name lockinPeriodName = savingsWorkbook.createName();
       		Name lockinPeriodFrequencyName = savingsWorkbook.createName();
-      		Name withdrawalFeeAmountName = savingsWorkbook.createName();
-      		Name withdrawalFeeTypeName = savingsWorkbook.createName();
-      		Name annualFeeName = savingsWorkbook.createName();
-      		Name annualFeeOnDateName = savingsWorkbook.createName();
       		Name currencyName = savingsWorkbook.createName();
       		Name decimalPlacesName = savingsWorkbook.createName();
       		Name inMultiplesOfName = savingsWorkbook.createName();
@@ -354,8 +330,8 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
       		interestPostingPeriodName.setRefersToFormula("Products!$E$" + (i + 2));
       		interestCalculationName.setRefersToFormula("Products!$F$" + (i + 2));
       		daysInYearName.setRefersToFormula("Products!$G$" + (i + 2));
-      		currencyName.setRefersToFormula("Products!$O$" + (i + 2));
-      		decimalPlacesName.setRefersToFormula("Products!$P$" + (i + 2));
+      		currencyName.setRefersToFormula("Products!$K$" + (i + 2));
+      		decimalPlacesName.setRefersToFormula("Products!$L$" + (i + 2));
       		if(product.getMinRequiredOpeningBalance() != null) {
       		   minOpeningBalanceName.setNameName("Min_Balance_" + productName);
       		   minOpeningBalanceName.setRefersToFormula("Products!$H$" + (i + 2));
@@ -368,26 +344,9 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
       		   lockinPeriodFrequencyName.setNameName("Lockin_Frequency_" + productName);
       		   lockinPeriodFrequencyName.setRefersToFormula("Products!$J$" + (i + 2));
       		}
-      		if(product.getWithdrawalFeeAmount() != null) {
-      		   withdrawalFeeAmountName.setNameName("Withdrawal_Fee_" + productName);
-      		   withdrawalFeeAmountName.setRefersToFormula("Products!$K$" + (i + 2));
-      		}
-      		if(product.getWithdrawalFeeType() != null) {
-      		   withdrawalFeeTypeName.setNameName("Withdrawal_Fee_Type_" + productName);
-      		   withdrawalFeeTypeName.setRefersToFormula("Products!$L$" + (i + 2));
-      		}
-      		if(product.getAnnualFeeAmount() != null) {
-      		   annualFeeName.setNameName("Annual_Fee_" + productName);
-      		   annualFeeName.setRefersToFormula("Products!$M$" + (i + 2));
-      		}
-      		if(product.getAnnualFeeOnMonthDay() != null) {
-      		   annualFeeOnDateName.setNameName("Annual_Fee_Date_" + productName);
-      		   annualFeeOnDateName.setRefersToFormula("Products!$N$" + (i + 2));
-      		}
-      		
       		if(product.getCurrency().getInMultiplesOf() != null) {
       			inMultiplesOfName.setNameName("In_Multiples_" + productName);
-      			inMultiplesOfName.setRefersToFormula("Products!$Q$" + (i + 2));
+      			inMultiplesOfName.setRefersToFormula("Products!$M$" + (i + 2));
       		}
       	}
 	 }
