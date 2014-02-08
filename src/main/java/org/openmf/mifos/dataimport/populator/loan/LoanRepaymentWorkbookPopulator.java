@@ -97,9 +97,9 @@ public class LoanRepaymentWorkbookPopulator extends AbstractWorkbookPopulator {
     		result = clientSheetPopulator.populate(workbook);
     	if(result.isSuccess())
     		result = extrasSheetPopulator.populate(workbook);
-    	if(result.isSuccess())
+    	if(result.isSuccess()) 
     		result = populateLoansTable(loanRepaymentSheet);
-        if(result.isSuccess())
+        if(result.isSuccess()) 
             result = setRules(loanRepaymentSheet);
         setDefaults(loanRepaymentSheet);
         return result;

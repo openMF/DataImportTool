@@ -93,10 +93,7 @@ public class SavingsWorkbookPopulatorTest {
     	Assert.assertEquals("# Days in Year*", row.getCell(15).getStringCellValue());
     	Assert.assertEquals("Min Opening Balance", row.getCell(16).getStringCellValue());
     	Assert.assertEquals("Locked In For", row.getCell(17).getStringCellValue());
-    	Assert.assertEquals("Withdrawal Fee", row.getCell(19).getStringCellValue());
-    	Assert.assertEquals("Annual Fee", row.getCell(21).getStringCellValue());
-    	Assert.assertEquals("On Date", row.getCell(22).getStringCellValue());
-    	Assert.assertEquals("Apply Withdrawal Fee For Transfers", row.getCell(23).getStringCellValue());
+    	Assert.assertEquals("Apply Withdrawal Fee For Transfers", row.getCell(19).getStringCellValue());
     	Assert.assertEquals("Client Name", row.getCell(LOOKUP_CLIENT_NAME_COL).getStringCellValue());
     	Assert.assertEquals("Client Activation Date", row.getCell(LOOKUP_ACTIVATION_DATE_COL).getStringCellValue());
     	

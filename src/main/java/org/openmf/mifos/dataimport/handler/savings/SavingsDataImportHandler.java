@@ -43,14 +43,10 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
 	private static final int MIN_OPENING_BALANCE_COL = 16;
 	private static final int LOCKIN_PERIOD_COL = 17;
 	private static final int LOCKIN_PERIOD_FREQUENCY_COL = 18;
-	private static final int WITHDRAWAL_FEE_AMOUNT_COL = 19;
-	private static final int WITHDRAWAL_FEE_TYPE_COL = 20;
-	private static final int ANNUAL_FEE_COL = 21;
-	private static final int ANNUAL_FEE_ON_MONTH_DAY_COL = 22;
-	private static final int APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS = 23;
-	private static final int STATUS_COL = 24;
-	private static final int SAVINGS_ID_COL = 25;
-    private static final int FAILURE_REPORT_COL = 26;
+	private static final int APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS = 19;
+	private static final int STATUS_COL = 20;
+	private static final int SAVINGS_ID_COL = 21;
+    private static final int FAILURE_REPORT_COL = 22;
     @SuppressWarnings("CPD-END")
 
     private final RestClient restClient;
@@ -134,28 +130,19 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         	lockinPeriodFrequencyTypeId = "2";
         else if(lockinPeriodFrequencyType.equalsIgnoreCase("Years"))
         	lockinPeriodFrequencyTypeId = "3";
-        String withdrawalFeeAmount = readAsString(WITHDRAWAL_FEE_AMOUNT_COL, row);
-        String withdrawalFeeType = readAsString(WITHDRAWAL_FEE_TYPE_COL, row);
-        String withdrawalFeeTypeId = "";
-        if(withdrawalFeeType.equalsIgnoreCase("Flat"))
-        	withdrawalFeeTypeId = "1";
-        else if(withdrawalFeeType.equalsIgnoreCase("% of Amount"))
-        	withdrawalFeeTypeId = "2";
-        String annualFeeAmount = readAsString(ANNUAL_FEE_COL, row);
-        String annualFeeOnMonthDay = readAsDateWithoutYear(ANNUAL_FEE_ON_MONTH_DAY_COL, row);
         String applyWithdrawalFeeForTransfers = readAsBoolean(APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, row).toString();
         String savingsType = readAsString(SAVINGS_TYPE_COL, row).toLowerCase(Locale.ENGLISH);
         String clientOrGroupName = readAsString(CLIENT_NAME_COL, row);
         if(savingsType.equals("individual")) {
                String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
                return new SavingsAccount(clientId, productId, fieldOfficerId, submittedOnDate, nominalAnnualInterestRate, interestCompoundingPeriodTypeId, interestPostingPeriodTypeId,
-        		   interestCalculationTypeId, interestCalculationDaysInYearTypeId, minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyTypeId, withdrawalFeeAmount,
-        		   withdrawalFeeTypeId, annualFeeAmount, annualFeeOnMonthDay, applyWithdrawalFeeForTransfers, row.getRowNum(), status);
+        		   interestCalculationTypeId, interestCalculationDaysInYearTypeId, minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyTypeId, 
+        		   applyWithdrawalFeeForTransfers, row.getRowNum(), status);
         } else {
         	   String groupId = getIdByName(workbook.getSheet("Groups"), clientOrGroupName).toString();
         	   return new GroupSavingsAccount(groupId, productId, fieldOfficerId, submittedOnDate, nominalAnnualInterestRate, interestCompoundingPeriodTypeId, interestPostingPeriodTypeId,
-            		   interestCalculationTypeId, interestCalculationDaysInYearTypeId, minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyTypeId, withdrawalFeeAmount,
-            		   withdrawalFeeTypeId, annualFeeAmount, annualFeeOnMonthDay, applyWithdrawalFeeForTransfers, row.getRowNum(), status);
+            		   interestCalculationTypeId, interestCalculationDaysInYearTypeId, minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
+            		   applyWithdrawalFeeForTransfers, row.getRowNum(), status);
         }
     }
     
