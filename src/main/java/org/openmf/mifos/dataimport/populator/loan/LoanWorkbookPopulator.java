@@ -67,6 +67,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int TOTAL_AMOUNT_REPAID_COL = 28;
     private static final int LAST_REPAYMENT_DATE_COL = 29;
     private static final int REPAYMENT_TYPE_COL = 30;
+    private static final int EXTERNAL_ID_COL = 34;
     private static final int LOOKUP_CLIENT_NAME_COL = 42;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 43;
     @SuppressWarnings("CPD-END")
@@ -158,6 +159,8 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             worksheet.setColumnWidth(REPAYMENT_TYPE_COL, 4300);
             worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
             worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
+            worksheet.setColumnWidth( EXTERNAL_ID_COL, 6000);
+           
             writeString(OFFICE_NAME_COL, rowHeader, "Office Name*");
             writeString(LOAN_TYPE_COL, rowHeader, "Loan Type*");
             writeString(CLIENT_NAME_COL, rowHeader, "Client/Group Name*");
@@ -188,12 +191,14 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             writeString(REPAYMENT_TYPE_COL, rowHeader, "Repayment Type");
             writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
             writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");
+            writeString(EXTERNAL_ID_COL, rowHeader, "External Id");
+            
             CellStyle borderStyle = worksheet.getWorkbook().createCellStyle();
             CellStyle doubleBorderStyle = worksheet.getWorkbook().createCellStyle();
             borderStyle.setBorderBottom(CellStyle.BORDER_THIN);
             doubleBorderStyle.setBorderBottom(CellStyle.BORDER_THIN);
             doubleBorderStyle.setBorderRight(CellStyle.BORDER_THICK);
-            for(int colNo = 0; colNo < 30; colNo++) {
+            for(int colNo = 0; colNo < 35; colNo++) {
             	Cell cell = rowHeader.getCell(colNo);
             	if(cell == null)
             		rowHeader.createCell(colNo);
@@ -233,6 +238,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	CellRangeAddressList paymentTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), DISBURSED_PAYMENT_TYPE_COL, DISBURSED_PAYMENT_TYPE_COL);
 	        	CellRangeAddressList repaymentTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), REPAYMENT_TYPE_COL, REPAYMENT_TYPE_COL);
 	        	CellRangeAddressList lastrepaymentDateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LAST_REPAYMENT_DATE_COL, LAST_REPAYMENT_DATE_COL);
+	        	CellRangeAddressList externalIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), EXTERNAL_ID_COL, EXTERNAL_ID_COL);
 	        	
 	        	DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet)worksheet);
 	        	
@@ -264,6 +270,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	DataValidationConstraint graceOnInterestChargedConstraint = validationHelper.createIntegerConstraint(DataValidationConstraint.OperatorType.GREATER_OR_EQUAL, "0", null);
 	        	DataValidationConstraint lastRepaymentDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=$H1", "=TODAY()", "dd/mm/yy");
 	        	
+	        	
 	        	DataValidation officeValidation = validationHelper.createValidation(officeNameConstraint, officeNameRange);
 	        	DataValidation loanTypeValidation = validationHelper.createValidation(loanTypeConstraint, loanTypeRange);
 	        	DataValidation clientValidation = validationHelper.createValidation(clientNameConstraint, clientNameRange);
@@ -291,6 +298,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	DataValidation graceOnInterestPaymentValidation = validationHelper.createValidation(graceOnInterestPaymentConstraint, graceOnInterestPaymentRange);
 	        	DataValidation graceOnInterestChargedValidation = validationHelper.createValidation(graceOnInterestChargedConstraint, graceOnInterestChargedRange);
 	        	DataValidation interestFrequencyValidation = validationHelper.createValidation(interestFrequencyConstraint, interestFrequencyRange);
+	        	
 	        	interestFrequencyValidation.setSuppressDropDownArrow(true);
 	        	
 	        	
@@ -322,6 +330,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	            worksheet.addValidationData(graceOnInterestChargedValidation);
 	            worksheet.addValidationData(lastRepaymentDateValidation);
 	            worksheet.addValidationData(repaymentTypeValidation);
+	          
 	    	} catch (RuntimeException re) {
 	    		result.addError(re.getMessage());
 	    	}
@@ -376,6 +385,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
         		Name clientName = loanWorkbook.createName();
         		Name loanOfficerName = loanWorkbook.createName();
         		Name groupName = loanWorkbook.createName();
+        	
         	    
         		if(officeNameToBeginEndIndexesOfStaff != null) {
         	       loanOfficerName.setNameName("Staff_" + officeNames.get(i));

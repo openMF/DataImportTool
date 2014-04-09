@@ -57,6 +57,7 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	private static final int LOCKIN_PERIOD_COL = 17;
 	private static final int LOCKIN_PERIOD_FREQUENCY_COL = 18;
 	private static final int APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS = 19;
+	 private static final int EXTERNAL_ID_COL = 25;
     private static final int LOOKUP_CLIENT_NAME_COL = 31;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 32;
     @SuppressWarnings("CPD-END")
@@ -134,6 +135,7 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
             
             worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
             worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
+            worksheet.setColumnWidth( EXTERNAL_ID_COL, 6000);
             
             writeString(OFFICE_NAME_COL, rowHeader, "Office Name*");
             writeString(SAVINGS_TYPE_COL, rowHeader, "Individual/Group*");
@@ -157,6 +159,7 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
             
             writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
             writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");
+            writeString(EXTERNAL_ID_COL, rowHeader, "External Id");
 	  }
 	  
 	  private Result setRules(Sheet worksheet) {
@@ -176,6 +179,7 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	CellRangeAddressList interestCalculationDaysInYearRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), INTEREST_CALCULATION_DAYS_IN_YEAR_COL, INTEREST_CALCULATION_DAYS_IN_YEAR_COL);
 	        	CellRangeAddressList lockinPeriodFrequencyRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LOCKIN_PERIOD_FREQUENCY_COL, LOCKIN_PERIOD_FREQUENCY_COL);
 	        	CellRangeAddressList applyWithdrawalFeeForTransfersRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS);
+	        	CellRangeAddressList externalIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), EXTERNAL_ID_COL, EXTERNAL_ID_COL);
 	        	
 	        	DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet)worksheet);
 	        	

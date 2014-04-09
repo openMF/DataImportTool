@@ -3,6 +3,7 @@ package org.openmf.mifos.dataimport.handler;
 import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.openmf.mifos.dataimport.handler.client.CenterDataImportHandler;
 import org.openmf.mifos.dataimport.handler.client.ClientDataImportHandler;
 import org.openmf.mifos.dataimport.handler.client.GroupDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanDataImportHandler;
@@ -18,8 +19,10 @@ public class ImportHandlerFactory {
         
         if(workbook.getSheetIndex("Clients") == 0) {
             	return new ClientDataImportHandler(workbook, new MifosRestClient());
-        } else if(workbook.getSheetIndex("Groups") == 0) {
+        }else if(workbook.getSheetIndex("Groups") == 0) {
     	    return new GroupDataImportHandler(workbook, new MifosRestClient());
+        }else if(workbook.getSheetIndex("Centers") == 0) {
+    	    return new CenterDataImportHandler(workbook, new MifosRestClient());
         }else if(workbook.getSheetIndex("Loans") == 0) {
         	    return new LoanDataImportHandler(workbook, new MifosRestClient());
         } else if(workbook.getSheetIndex("LoanRepayment") == 0) {

@@ -1,32 +1,27 @@
 package org.openmf.mifos.dataimport.dto.client;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
-public class Group {
+public class Center {
 	
-	    private final transient Integer rowIndex;
-	    private final transient String status;
+	 	private final transient Integer rowIndex;	    
+	    private final transient String status;	    
 	    private final String dateFormat;	    
 	    private final Locale locale;	    
-	    private final String name;	    
-	    private final ArrayList<String> clientMembers;	    
+	    private final String name;	    	      
 	    private final String officeId;	    
-	    private final String staffId;
-	    private final String centerId;
+	    private final String staffId;	    
 	    private final String externalId;	    
 	    private final String active;	    
 	    private final String activationDate;
 	    
-	    public Group(String name, ArrayList<String> clientMembers, String activationDate, String active, String externalId, String officeId, String staffId, String centerId,Integer rowIndex, String status) {
+	    public Center(String name, String activationDate, String active, String externalId, String officeId, String staffId, Integer rowIndex, String status) {
 	        this.name = name;
-	        this.clientMembers = clientMembers;
 	        this.activationDate = activationDate;
 	        this.active = active;
 	        this.externalId = externalId;
 	        this.officeId = officeId;
 	        this.staffId = staffId;
-	        this.centerId= centerId;
 	        this.rowIndex = rowIndex;
 	        this.status = status;
 	        this.dateFormat = "dd MMMM yyyy";
@@ -49,19 +44,12 @@ public class Group {
 			return name;
 		}
 
-		public ArrayList<String> getClientMembers() {
-			return clientMembers;
-		}
-
 		public String getOfficeId() {
 			return officeId;
 		}
 
 		public String getStaffId() {
 			return staffId;
-		}
-		public String getCenterId() {
-			return centerId;
 		}
 
 		public String getExternalId() {

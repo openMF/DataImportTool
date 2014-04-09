@@ -5,26 +5,17 @@ import java.util.Locale;
 //Meeting
 public class Meeting {
 	
-    private final transient Integer rowIndex;
-    
-    private transient String groupId;
-    
-    private final String dateFormat;
-    
-    private final Locale locale;
-    
-    private final String description;
-    
-    private final Integer typeId;
-    
-    private String title;
-    
-    private final String startDate;
-    
-    private final String repeating;
-    
-    private final String frequency;
-    
+    private final transient Integer rowIndex;    
+    private transient String groupId;    
+    private transient String centerId;    
+    private final String dateFormat;    
+    private final Locale locale;    
+    private final String description;    
+    private final Integer typeId;    
+    private String title;    
+    private final String startDate;    
+    private final String repeating;    
+    private final String frequency;    
     private final String interval;
     
     public Meeting(String startDate, String repeating, String frequency, String interval, Integer rowIndex ) {
@@ -41,6 +32,10 @@ public class Meeting {
     
     public void setGroupId(String groupId) {
     	this.groupId = groupId;
+    }
+    
+    public void setCenterId(String centerId) {
+    	this.centerId = centerId;
     }
     
     public void setTitle(String title) {

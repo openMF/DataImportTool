@@ -61,6 +61,8 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     private static final int STATUS_COL = 31;
     private static final int LOAN_ID_COL = 32;
     private static final int FAILURE_REPORT_COL = 33;
+    private static final int EXTERNAL_ID_COL = 34;
+    
     @SuppressWarnings("CPD-END")
     
     private List<Loan> loans = new ArrayList<Loan>();
@@ -102,6 +104,7 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
    }
     
     private Loan parseAsLoan(Row row) {
+    	String externalId = readAsString(EXTERNAL_ID_COL, row);
     	String status = readAsString(STATUS_COL, row);
         String productName = readAsString(PRODUCT_COL, row);
         String productId = getIdByName(workbook.getSheet("Products"), productName).toString();
@@ -179,12 +182,12 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     	    String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
     	    return new Loan(loanType, clientId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
             		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
-            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status);
+            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId);
         } else {
         	String groupId = getIdByName(workbook.getSheet("Groups"), clientOrGroupName).toString();
         	 return new GroupLoan(loanType, groupId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
              		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
-             		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status);
+             		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId);
         }
     }
     

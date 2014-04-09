@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 
 public class ClientDataImportHandler extends AbstractDataImportHandler {
-           
 	private static final Logger logger = LoggerFactory.getLogger(ClientDataImportHandler.class);
 	
 	private static final int FIRST_NAME_COL = 0;
@@ -38,7 +37,6 @@ public class ClientDataImportHandler extends AbstractDataImportHandler {
     private String clientType;
     
     private final RestClient restClient;
-    
     private final Workbook workbook;
 
     public ClientDataImportHandler(Workbook workbook, RestClient client) {

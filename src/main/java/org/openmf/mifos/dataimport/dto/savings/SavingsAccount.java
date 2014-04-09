@@ -37,12 +37,14 @@ public class SavingsAccount {
 	private final String monthDayFormat;
 	
     private final String dateFormat;
+    
+    private final String externalId;
 	
 	private final Locale locale;
 	
 	public SavingsAccount( String clientId, String productId, String fieldOfficerId, String submittedOnDate, String nominalAnnualInterestRate, String interestCompoundingPeriodType,
 			String interestPostingPeriodType, String interestCalculationType, String interestCalculationDaysInYearType, String minRequiredOpeningBalance, String lockinPeriodFrequency,
-			String lockinPeriodFrequencyType, String withdrawalFeeForTransfers, Integer rowIndex, String status) {
+			String lockinPeriodFrequencyType, String withdrawalFeeForTransfers, Integer rowIndex, String status, String externalId) {
 		this.clientId = clientId;
 		this.productId = productId;
 		this.fieldOfficerId = fieldOfficerId;
@@ -61,6 +63,7 @@ public class SavingsAccount {
 		this.dateFormat = "dd MMMM yyyy";
 		this.locale = Locale.ENGLISH;
 		this.monthDayFormat =  "dd MMM";
+		this.externalId= externalId;
 	}
 	
 	public String getClientId() {
@@ -133,5 +136,9 @@ public class SavingsAccount {
 
 	public String getWithdrawalFeeForTransfers() {
 		return withdrawalFeeForTransfers;
+	}
+	public String getExternalId() {
+		return externalId;
+	
 	}
 }

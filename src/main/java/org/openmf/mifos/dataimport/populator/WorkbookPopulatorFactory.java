@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.openmf.mifos.dataimport.http.MifosRestClient;
 import org.openmf.mifos.dataimport.populator.client.ClientWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.client.GroupWorkbookPopulator;
+import org.openmf.mifos.dataimport.populator.client.CenterWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanProductSheetPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanRepaymentWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanWorkbookPopulator;
@@ -21,8 +22,10 @@ public class WorkbookPopulatorFactory {
 	        if(template.trim().equals("client")) 
 	             return new ClientWorkbookPopulator (parameter, new OfficeSheetPopulator(restClient), new PersonnelSheetPopulator(Boolean.FALSE, restClient));
 	        else if(template.trim().equals("groups"))
-	        	 return new GroupWorkbookPopulator(new OfficeSheetPopulator(restClient), new PersonnelSheetPopulator(Boolean.FALSE, restClient),
+	        	 return new GroupWorkbookPopulator(new OfficeSheetPopulator(restClient), new PersonnelSheetPopulator(Boolean.FALSE, restClient), new CenterSheetPopulator(restClient),
 	        			 new ClientSheetPopulator(restClient));
+	        else if(template.trim().equals("centers"))
+	        	 return new CenterWorkbookPopulator(new OfficeSheetPopulator(restClient), new PersonnelSheetPopulator(Boolean.FALSE, restClient));
 	        else if(template.trim().equals("loan"))
 	        	 return new LoanWorkbookPopulator(new OfficeSheetPopulator(restClient), new ClientSheetPopulator(restClient), new GroupSheetPopulator(restClient),
 	        			 new PersonnelSheetPopulator(Boolean.TRUE, restClient), new LoanProductSheetPopulator(restClient), new ExtrasSheetPopulator(restClient));

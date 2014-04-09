@@ -113,7 +113,7 @@ public class LoanWorkbookPopulatorTest {
     	Assert.assertEquals("Repayment Type", row.getCell(30).getStringCellValue());
     	Assert.assertEquals("Client Name", row.getCell(LOOKUP_CLIENT_NAME_COL).getStringCellValue());
     	Assert.assertEquals("Client Activation Date", row.getCell(LOOKUP_ACTIVATION_DATE_COL).getStringCellValue());
-    	
+    	Assert.assertEquals("EXTERNAL_ID_COL", row.getCell(34).getStringCellValue());
     	//Date Lookup Table test
     	DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
     	row = loanSheet.getRow(1);

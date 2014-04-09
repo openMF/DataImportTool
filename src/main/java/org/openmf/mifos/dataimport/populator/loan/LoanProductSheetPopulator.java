@@ -56,6 +56,7 @@ public class LoanProductSheetPopulator extends AbstractWorkbookPopulator {
 	private static final int START_DATE_COL = 23;
 	private static final int CLOSE_DATE_COL = 24;
 	
+	
 	public LoanProductSheetPopulator(RestClient client) {
         this.client = client;
     }
@@ -186,7 +187,7 @@ public class LoanProductSheetPopulator extends AbstractWorkbookPopulator {
 	        worksheet.setColumnWidth(GRACE_ON_INTEREST_CHARGED_COL, 6000);
 	        worksheet.setColumnWidth(START_DATE_COL, 3000);
 	        worksheet.setColumnWidth(CLOSE_DATE_COL, 3000);
-	        
+	       
 	        Row rowHeader = worksheet.createRow(0);
 	        rowHeader.setHeight((short)500);
 	        writeString(ID_COL, rowHeader, "ID");
@@ -214,6 +215,8 @@ public class LoanProductSheetPopulator extends AbstractWorkbookPopulator {
 	        writeString(GRACE_ON_INTEREST_CHARGED_COL, rowHeader, "Grace on Interest Charged");
 	        writeString(START_DATE_COL, rowHeader, "Start Date");
 	        writeString(CLOSE_DATE_COL, rowHeader, "End Date");
+	     
+	        
 	 }
 	 
 	 public List<LoanProduct> getProducts() {
