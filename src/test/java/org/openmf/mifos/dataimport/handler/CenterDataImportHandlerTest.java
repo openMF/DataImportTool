@@ -39,8 +39,6 @@ public class CenterDataImportHandlerTest {
 	        Assert.assertEquals("4531",center.getExternalId());
 	        Assert.assertEquals("true", center.isActive());
 	        Assert.assertEquals("13 September 2013", center.getActivationDate());
-	        Assert.assertEquals("1", handler.getIdByName(book.getSheet("Clients"), "Arsene K Wenger").toString());
-	        
 	        Assert.assertEquals("14 September 2013", meeting.getStartDate());
 	        Assert.assertEquals("true", meeting.isRepeating());
 	        Assert.assertEquals("2", meeting.getFrequency());
