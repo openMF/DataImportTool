@@ -3,7 +3,6 @@ package org.openmf.mifos.dataimport.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Result {
 	  
     private List<String> errors = new ArrayList<String>();

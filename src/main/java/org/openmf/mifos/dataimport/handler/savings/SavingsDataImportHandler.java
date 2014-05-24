@@ -47,6 +47,7 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
 	private static final int STATUS_COL = 20;
 	private static final int SAVINGS_ID_COL = 21;
     private static final int FAILURE_REPORT_COL = 22;
+    private static final int EXTERNAL_ID_COL = 25;
     @SuppressWarnings("CPD-END")
 
     private final RestClient restClient;
@@ -133,16 +134,17 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         String applyWithdrawalFeeForTransfers = readAsBoolean(APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, row).toString();
         String savingsType = readAsString(SAVINGS_TYPE_COL, row).toLowerCase(Locale.ENGLISH);
         String clientOrGroupName = readAsString(CLIENT_NAME_COL, row);
-        if(savingsType.equals("individual")) {
+        String externalId = readAsString(EXTERNAL_ID_COL, row);
+		if(savingsType.equals("individual")) {
                String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
                return new SavingsAccount(clientId, productId, fieldOfficerId, submittedOnDate, nominalAnnualInterestRate, interestCompoundingPeriodTypeId, interestPostingPeriodTypeId,
         		   interestCalculationTypeId, interestCalculationDaysInYearTypeId, minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyTypeId, 
-        		   applyWithdrawalFeeForTransfers, row.getRowNum(), status);
+        		   applyWithdrawalFeeForTransfers, row.getRowNum(), status,externalId);
         } else {
         	   String groupId = getIdByName(workbook.getSheet("Groups"), clientOrGroupName).toString();
         	   return new GroupSavingsAccount(groupId, productId, fieldOfficerId, submittedOnDate, nominalAnnualInterestRate, interestCompoundingPeriodTypeId, interestPostingPeriodTypeId,
             		   interestCalculationTypeId, interestCalculationDaysInYearTypeId, minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
-            		   applyWithdrawalFeeForTransfers, row.getRowNum(), status);
+            		   applyWithdrawalFeeForTransfers, row.getRowNum(), status, externalId);
         }
     }
     

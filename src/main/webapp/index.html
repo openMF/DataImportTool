@@ -2,88 +2,166 @@
 <head>
 <title>Data Import Tool</title>
 <style>
-div#title{	letter-spacing:1px; text-align:center; line-height:67px; font-weight:normal; color: #4b4b4b; font-size: 28px; width: 400px; margin:0 auto; padding-top: 0px; font-weight:100; height: 68px;
-margin-bottom: 0px;	-moz-border-radius: 44px; -webkit-border-radius: 44px; border-radius: 44px; -moz-background-clip: padding;	-webkit-background-clip: padding-box;background-clip: padding-box;background-color: #fff; -moz-box-shadow:0 1px 4px rgba(0,0,0,.22),0 0 0 1px rgba(46,45,47,.05),inset 0 1px 0 #fff,inset 0 0 0 1px   rgba(255,255,255,.5); -webkit-box-shadow:0 1px 4px rgba(0,0,0,.22),	0 0 0 1px rgba(46,45,47,.05),inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.5);box-shadow:0 1px 4px rgba(0,0,0,.22),
-0 0 0 1px rgba(46,45,47,.05),inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.5);}
-div#container{	z-index:2;overflow:hidden;width:1090px;margin:70px auto 20px;background:#fff;-moz-border-radius: 8px;-webkit-border-radius: 8px;border-radius: 8px;-moz-background-clip: padding;
--webkit-background-clip: padding-box;background-clip: padding-box;background-color: #fff;-moz-box-shadow:0 1px 4px rgba(0,0,0,.33),0 0 0 1px rgba(46,45,47,.05),inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.5);-webkit-box-shadow:0 1px 4px rgba(0,0,0,.33),0 0 0 1px rgba(46,45,47,.05),inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.5);box-shadow:0 1px 4px rgba(0,0,0,.33),
-0 0 0 1px rgba(46,45,47,.05),inset 0 1px 0 #fff,inset 0 0 0 1px rgba(255,255,255,.5);}
-div#content {font-family:Helvetica Neue, Arial, sans-serif;	height: 1500px;	padding: 20px 50px 0 80px;}
+*{margin:0;padding:0;}
+body{font-family:Helvetica Neue, Arial, sans-serif;background: #EEE;}
+div#title{color:#777;text-align: center;font-size: 2em;margin: 10px auto 0 auto;padding: 25px;font-weight: bold;}
+div#container{width:75%;margin:0 auto;}
+div#content {padding: 20px;}
+div.step{padding:15px;margin-bottom:20px;background-image: -webkit-linear-gradient(top,#fff 0,#f8f8f8 100%);background-image: linear-gradient(to bottom,#fff 0,#f8f8f8 100%);background-repeat: repeat-x;filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff8f8f8', GradientType=0);filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);border-radius: 4px;-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 5px rgba(0,0,0,.075);box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 5px rgba(0,0,0,.075);}
+div.step .stepCount {float: left;width: 70px;font-weight: bold;color:#777;}
+div.step .stepCount span{font-size: 12px;}
+.step .stepContent {float: left;width: 85%;}
+div.step form {margin: 15px 0;}
+.clearfix:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.clearfix {display: inline-block;}
+* html .clearfix {height: 1%;} /* Hides from IE-mac \*/
+.clearfix {display: block;}
+.btn {color: #fff;background-color: #428bca;border-color: #357ebd;background-image: -webkit-linear-gradient(top,#428bca 0,#2d6ca2 100%);background-image: linear-gradient(to bottom,#428bca 0,#2d6ca2 100%);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff2d6ca2', GradientType=0);filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);background-repeat: repeat-x;border-color: #2b669a;padding: 5px 10px;font-size: 12px;line-height: 1.5;border-radius: 3px;display: inline-block;margin-bottom: 0;font-weight: 400;text-align: center;vertical-align: middle;cursor: pointer;background-image: none;border: 1px solid transparent;white-space: nowrap;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;}
+.btn:hover{color: #fff;background-color: #3276b1;border-color: #285e8e;}
+fieldset {border: 0;margin: 0 0 15px 0;}
 </style>
 </head>
-<body style="background-color:f9f9f9;">
-<div id="title">
-Data Import Tool
-</div>
+<body>
+<div id="title">Data Import Tool</div>
 
 <div id="container">
-<div id="content">
-<h4>Step 1 :</h4> Enter your offices and staff through the front-end app provided with MifosX.
-  <h4>Step 2 :</h4> Download template to help facilitate Client Import.
-    <form method="get" action="download" >
-     <input type="hidden" name="template" value="client" > 
-     Select Client Type :<br/> <br/>
-     <input type="radio" name="clientType" value="individual"> Individual
-     <input type="radio" name="clientType" value="corporate"> Corporate <br/><br/>
-     <input type="submit" value="Download"  />
-    </form>
-	<form method="post" action="import" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit"/>
-	</form>
+  <div id="content">
+
+	<div class="step clearfix">
+		<div class="stepCount">Step 1 :</div>
+		<div class="stepContent">
+			<p>Enter your offices and staff through the front-end app provided with MifosX.</p>
+		</div>
+	</div>
 	
-	<h4>Step 3 :</h4> Download template to help facilitate Groups Import.
-    <form method="get" action="download" >
-     <input type="hidden" name="template" value="groups" > 
-     <input type="submit" value="Download"  />
-    </form>
-	<form method="post" action="import" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit"/>
-	</form>
+	<div class="step clearfix">
+	  	<div class="stepCount">Step 2 :</div>
+	  	<div class="stepContent">
+		  	<p>Download template to help facilitate Clients Import.</p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="client" > 
+		     <fieldset>Select Client Type : &nbsp;&nbsp;
+		     <input type="radio" name="clientType" value="individual"> Individual &nbsp;&nbsp;
+		     <input type="radio" name="clientType" value="corporate"> Corporate </fieldset>
+		     <input type="submit" value="Download" class="btn" />
+		    </form>
+			<form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
 	
-	<h4>Step 4 :</h4> Enter your Currency Configuration, Funds, Charges, Loan Product configuration (Administration -&gt; Organisation) and Payment Types (Administration -&gt; System -&gt; View Code -&gt;Add/Edit Code Value) through the UI.
-	<h4>Step 5 :</h4> Download template to help facilitate Loan Import. <br><br>
-    For quick import of outstanding balances of each loan, use the entire template <b>OR</b> leave the last 3 columns empty and proceed to Step 5 for importing complete repayment history for each loan.
-	<form method="get" action="download" >
-     <input type="hidden" name="template" value="loan" > 
-     <input type="submit" value="Download"  />
-    </form>
-    <form method="post" action="import" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit"/>
-	</form>
-    <h4>(Optional) Step 6 :</h4> Download template to help facilitate import of Loan Repayment History.
-    <form method="get" action="download" >
-     <input type="hidden" name="template" value="loanRepaymentHistory" > 
-     <input type="submit" value="Download"  />
-    </form>
-    <form method="post" action="import" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit"/>
-	</form>
+	<div class="step clearfix">
+		<div class="stepCount">Step 3:</div> 
+		<div class="stepContent">
+			<p>Download template to help facilitate Centers Import.</p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="centers" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+			<form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
 	
-	<h4>Step 7 :</h4> Enter your Savings Product configuration (Administration -&gt; Organisation) through the UI.
-	<h4>Step 8 :</h4> Download template to help facilitate Savings Import. <br><br>
-    For quick import of current balances of each savings account, enter the current balance as Minimum Required Opening Balance
-     <b>OR</b> proceed to Step 8 for importing complete transaction history for each savings account.
-	<form method="get" action="download" >
-     <input type="hidden" name="template" value="savings" > 
-     <input type="submit" value="Download"  />
-    </form>
-    <form method="post" action="import" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit"/>
-	</form>
-    <h4>(Optional) Step 9 :</h4> Download template to help facilitate import of Savings Transaction History.
-    <form method="get" action="download" >
-     <input type="hidden" name="template" value="savingsTransactionHistory" > 
-     <input type="submit" value="Download"  />
-    </form>
-    <form method="post" action="import" enctype="multipart/form-data">
-            <input type="file" name="file"/>
-            <input type="submit"/>
-	</form>
+	<div class="step clearfix">
+		<div class="stepCount">Step 4:</div> 
+		<div class="stepContent">
+			<p>Download template to help facilitate Groups Import.</p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="groups" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+			<form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>	
+	
+	<div class="step clearfix">
+		<div class="stepCount">Step 5:</div> 
+		<div class="stepContent">
+			<p>
+			Enter your Currency Configuration, Funds, Charges, Loan Product configuration (Administration -&gt;
+			Organisation) and Payment Types (Administration -&gt; System -&gt; View Code -&gt; Add/Edit Code Value) 
+			 through the UI.</p>
+		</div>
+	</div>
+	
+	<div class="step clearfix">
+		<div class="stepCount">Step 6:</div>
+		<div class="stepContent">
+			<p>Download template to help facilitate Loan Import. </p>
+		    <p>For quick import of outstanding balances of each loan, use the entire template <b>OR</b> leave the last 3 columns empty and proceed to Step 5 for importing complete repayment history for each loan.</p>
+			<form method="get" action="download" >
+		     <input type="hidden" name="template" value="loan" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
+	
+	<div class="step clearfix">
+	    <div class="stepCount">Step 7:<br/><span>(Optional)</span></div>
+	    <div class="stepContent">
+	    	<p>Download template to help facilitate import of Loan Repayment History.</p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="loanRepaymentHistory" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
+	
+	<div class="step clearfix">
+		<div class="stepCount">Step 8:</div> 
+		<div class="stepContent">
+			<p>Enter your Savings Product configuration (Administration -&gt; Organisation) through the UI.</p>
+		</div>
+	</div>
+	
+	<div class="step clearfix">
+		<div class="stepCount">Step 9:</div> 
+		<div class="stepContent">
+			<p>Download template to help facilitate Savings Import. </p>
+		    <p>For quick import of current balances of each savings account, enter the current balance as Minimum Required Opening Balance
+		     <b>OR</b> proceed to Step 8 for importing complete transaction history for each savings account.</p>
+			<form method="get" action="download" >
+		     <input type="hidden" name="template" value="savings" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
+	
+	<div class="step clearfix">
+	    <div class="stepCount">Step 10:<br/><span>(Optional)</span></div>
+	    <div class="stepContent">
+		    <p>Download template to help facilitate import of Savings Transaction History.</p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="savingsTransactionHistory" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
+	
 </div>
 </div>
 </body>

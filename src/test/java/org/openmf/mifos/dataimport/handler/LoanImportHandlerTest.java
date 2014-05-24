@@ -74,7 +74,7 @@ public class LoanImportHandlerTest {
         Assert.assertEquals("01 September 2013", loanRepayment.getTransactionDate());
         Assert.assertEquals("11", loanRepayment.getPaymentTypeId());
         Assert.assertEquals("11", handler.getIdByName(book.getSheet("Extras"), "MPesa").toString());
-        
+        Assert.assertEquals("4531",loan.getExternalId());
         GroupLoan groupLoan = (GroupLoan)handler.getLoans().get(1);
         Assert.assertEquals("1", groupLoan.getGroupId());
         Assert.assertEquals("1", handler.getIdByName(book.getSheet("Groups"), "Group 1").toString());

@@ -23,30 +23,29 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class GroupDataImportHandler extends AbstractDataImportHandler {
-
 	private static final Logger logger = LoggerFactory.getLogger(GroupDataImportHandler.class);
 	
 	@SuppressWarnings("CPD-START")
 	private static final int NAME_COL = 0;
     private static final int OFFICE_NAME_COL = 1;
     private static final int STAFF_NAME_COL = 2;
-    private static final int EXTERNAL_ID_COL = 3;
-    private static final int ACTIVE_COL = 4;
-    private static final int ACTIVATION_DATE_COL = 5;
-    private static final int MEETING_START_DATE_COL = 6;
-    private static final int IS_REPEATING_COL = 7;
-    private static final int FREQUENCY_COL = 8;
-    private static final int INTERVAL_COL = 9;
-    private static final int REPEATS_ON_DAY_COL = 10;
-    private static final int STATUS_COL = 11;
-    private static final int GROUP_ID_COL = 12;
-    private static final int FAILURE_COL = 13;
-    private static final int CLIENT_NAMES_STARTING_COL = 14;
+    private static final int CENTER_NAME_COL= 3;
+    private static final int EXTERNAL_ID_COL = 4;
+    private static final int ACTIVE_COL = 5;
+    private static final int ACTIVATION_DATE_COL = 6;
+    private static final int MEETING_START_DATE_COL = 7;
+    private static final int IS_REPEATING_COL = 8;
+    private static final int FREQUENCY_COL = 9;
+    private static final int INTERVAL_COL = 10;
+    private static final int REPEATS_ON_DAY_COL = 11;
+    private static final int STATUS_COL = 12;
+    private static final int GROUP_ID_COL = 13;
+    private static final int FAILURE_COL = 14;
+    private static final int CLIENT_NAMES_STARTING_COL = 15;
     private static final int CLIENT_NAMES_ENDING_COL = 109;
     @SuppressWarnings("CPD-END")
     
     private final RestClient restClient;
-    
     private final Workbook workbook;
     
     private List<Group> groups;
@@ -86,6 +85,8 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
         String officeId = getIdByName(workbook.getSheet("Offices"), officeName).toString();
         String staffName = readAsString(STAFF_NAME_COL, row);
         String staffId = getIdByName(workbook.getSheet("Staff"), staffName).toString();
+        String centerName =readAsString(CENTER_NAME_COL,row);
+        String centerId = getIdByName(workbook.getSheet("Center"), centerName).toString();
         String externalId = readAsString(EXTERNAL_ID_COL, row);
         String activationDate = readAsDate(ACTIVATION_DATE_COL, row);
         String active = readAsBoolean(ACTIVE_COL, row).toString();
@@ -102,7 +103,7 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
         	if(!clientMemberIds.contains(clientId))
         		clientMemberIds.add(clientId);
         }
-        return new Group(groupName, clientMemberIds, activationDate, active, externalId, officeId, staffId, row.getRowNum(), status);
+        return new Group(groupName, clientMemberIds, activationDate, active, externalId, officeId, staffId,centerId, row.getRowNum(), status);
 	}
     
     private Meeting parseAsMeeting(Row row) {

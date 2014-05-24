@@ -26,7 +26,6 @@ public class ClientSheetPopulator extends AbstractWorkbookPopulator {
 	private static final Logger logger = LoggerFactory.getLogger(ClientSheetPopulator.class);
 	
     private final RestClient restClient;
-
     private String content;
     
     private List<CompactClient> clients;

@@ -23,10 +23,9 @@ import com.google.gson.JsonParser;
 
 public class GroupSheetPopulator extends AbstractWorkbookPopulator {
 	
-private static final Logger logger = LoggerFactory.getLogger(GroupSheetPopulator.class);
+	private static final Logger logger = LoggerFactory.getLogger(GroupSheetPopulator.class);
 	
     private final RestClient restClient;
-
     private String content;
     
     private List<CompactGroup> groups;
@@ -50,7 +49,7 @@ private static final Logger logger = LoggerFactory.getLogger(GroupSheetPopulator
     	try {
         	restClient.createAuthToken();
         	groups = new ArrayList<CompactGroup>();
-            content = restClient.get("groups?limit=-1");
+            content = restClient.get("groups?paged=true&limit=-1");
             parseGroups();
             content = restClient.get("offices?limit=-1");
             parseOfficeNames();

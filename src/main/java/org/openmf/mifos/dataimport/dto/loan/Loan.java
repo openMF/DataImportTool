@@ -12,6 +12,8 @@ public class Loan {
 	
 	private final String productId;
 	
+    private final String externalId;
+	
 	private final String loanOfficerId;
 	
 	private final String fundId;
@@ -63,11 +65,12 @@ public class Loan {
 	public Loan(String loanType, String clientId, String productId, String loanOfficerId, String submittedOnDate, String fundId, String principal, String numberOfRepayments, String repaymentEvery,
 			String repaymentFrequencyType,  String loanTermFrequency, String loanTermFrequencyType, String interestRatePerPeriod, String expectedDisbursementDate, String amortizationType,
 			String interestType, String interestCalculationPeriodType, String inArrearsTolerance, String transactionProcessingStrategyId, String graceOnPrincipalPayment,
-			String graceOnInterestPayment, String graceOnInterestCharged, String interestChargedFromDate, String repaymentsStartingFromDate, Integer rowIndex, String status) {
+			String graceOnInterestPayment, String graceOnInterestCharged, String interestChargedFromDate, String repaymentsStartingFromDate, Integer rowIndex, String status,String externalId) {
 		this.amortizationType = amortizationType;
 		this.clientId = clientId;
 		this.expectedDisbursementDate = expectedDisbursementDate;
 		this.fundId = fundId;
+		this.externalId= externalId;
 		this.graceOnInterestCharged = graceOnInterestCharged;
 		this.graceOnInterestPayment = graceOnInterestPayment;
 		this.graceOnPrincipalPayment = graceOnPrincipalPayment;
@@ -205,5 +208,11 @@ public class Loan {
 	public String getStatus() {
         return status;
     }
+
+	public String getExternalId() {
+		return externalId;
+	
+	}
+
 	
 }

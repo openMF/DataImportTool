@@ -4,17 +4,13 @@ import java.util.ArrayList;
 
 public class CompactGroup {
     
-    private final Integer id;
-	
-    private final String name;
-    
-    private final String officeName;
-    
-    private final ArrayList<Integer> activationDate;
-	
+    private final Integer id;	
+    private final String name;    
+    private final String officeName;    
+    private final ArrayList<Integer> activationDate;	
     private final Boolean active;
     
-    public CompactGroup(Integer id, String name,  String officeName, ArrayList<Integer> activationDate, Boolean active) {
+    public CompactGroup(Integer id, String name, String officeName, ArrayList<Integer> activationDate, Boolean active) {
 		this.id = id;
         this.name = name;
         this.activationDate = activationDate;
