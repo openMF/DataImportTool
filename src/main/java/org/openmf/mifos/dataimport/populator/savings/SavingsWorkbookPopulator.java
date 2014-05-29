@@ -193,8 +193,8 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	DataValidationConstraint submittedDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=VLOOKUP($C1,$AF$2:$AG$" + (clientSheetPopulator.getClientsSize() + groupSheetPopulator.getGroupsSize() + 1) + ",2,FALSE)", "=TODAY()", "dd/mm/yy");
 	        	DataValidationConstraint approvalDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=$F1", "=TODAY()", "dd/mm/yy");
 	        	DataValidationConstraint activationDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=$G1", "=TODAY()", "dd/mm/yy");
-	        	DataValidationConstraint interestCompudingPeriodConstraint = validationHelper.createExplicitListConstraint(new String[] {"Daily","Monthly"});
-	        	DataValidationConstraint interestPostingPeriodConstraint = validationHelper.createExplicitListConstraint(new String[] {"Monthly","Quarterly","Annually"});
+	        	DataValidationConstraint interestCompudingPeriodConstraint = validationHelper.createExplicitListConstraint(new String[] {"Daily","Monthly","Semi-Annual"});
+	        	DataValidationConstraint interestPostingPeriodConstraint = validationHelper.createExplicitListConstraint(new String[] {"Monthly","Quarterly","Annually","BiAnnual"});
 	        	DataValidationConstraint interestCalculationConstraint = validationHelper.createExplicitListConstraint(new String[] {"Daily Balance","Average Daily Balance"});
 	        	DataValidationConstraint interestCalculationDaysInYearConstraint = validationHelper.createExplicitListConstraint(new String[] {"360 Days","365 Days"});
 	        	DataValidationConstraint lockinPeriodFrequencyConstraint = validationHelper.createExplicitListConstraint(new String[] {"Days","Weeks","Months","Years"});
