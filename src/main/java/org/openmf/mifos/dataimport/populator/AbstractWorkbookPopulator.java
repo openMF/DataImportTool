@@ -80,12 +80,14 @@ public abstract class AbstractWorkbookPopulator implements WorkbookPopulator {
     		}
     		
     		for(CompactGroup group: groups) {
-    			Row row = sheet.getRow(++rowIndex);
+			Row row = sheet.getRow(++rowIndex);
+			if(row == null)
+    			    row = sheet.createRow(rowIndex);
     			writeString(nameCol, row, group.getName().replaceAll("[ )(] ", "_"));
     			writeDate(activationDateCol, row, group.getActivationDate().get(2) + "/" + group.getActivationDate().get(1) + "/" + group.getActivationDate().get(0), dateCellStyle);
     		}
 	    }
-	    
+
 	    protected void setOfficeDateLookupTable(Sheet sheet, List<Office> offices, int officeNameCol, int activationDateCol) {
 	    	Workbook workbook = sheet.getWorkbook();
 	    	CellStyle dateCellStyle = workbook.createCellStyle();
