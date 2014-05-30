@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.Approval;
+import org.openmf.mifos.dataimport.dto.Charge;
 import org.openmf.mifos.dataimport.dto.Transaction;
 import org.openmf.mifos.dataimport.dto.loan.GroupLoan;
 import org.openmf.mifos.dataimport.dto.loan.Loan;
@@ -62,6 +63,12 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     private static final int LOAN_ID_COL = 32;
     private static final int FAILURE_REPORT_COL = 33;
     private static final int EXTERNAL_ID_COL = 34;
+    private static final int CHARGE_ID_1 = 35;
+    private static final int CHARGE_AMOUNT_1 = 36;
+    private static final int CHARGE_DUE_DATE_1 = 37;
+    private static final int CHARGE_ID_2 = 38;
+    private static final int CHARGE_AMOUNT_2 = 39;
+    private static final int CHARGE_DUE_DATE_2 = 40;    
     
     @SuppressWarnings("CPD-END")
     
@@ -178,11 +185,26 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         String firstRepaymentOnDate = readAsDate(FIRST_REPAYMENT_COL, row);
         String loanType = readAsString(LOAN_TYPE_COL, row).toLowerCase(Locale.ENGLISH);
         String clientOrGroupName = readAsString(CLIENT_NAME_COL, row);
+        
+        List<Charge> charges = new ArrayList<Charge>();
+        
+        String charge1 = readAsString(CHARGE_ID_1, row);
+        String charge2 = readAsString(CHARGE_ID_2, row);
+        
+        if(!charge1.equalsIgnoreCase("")){
+        	charges.add(new Charge(readAsString(CHARGE_ID_1, row) ,readAsString(CHARGE_AMOUNT_1, row),readAsDate(CHARGE_DUE_DATE_1, row) ));
+        }
+        
+        if(!charge2.equalsIgnoreCase("")){
+        
+        	charges.add(new Charge(readAsString(CHARGE_ID_2, row) ,readAsString(CHARGE_AMOUNT_2, row),readAsDate(CHARGE_DUE_DATE_2, row) ));
+        }
+        
         if(loanType.equals("individual")) {
     	    String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
     	    return new Loan(loanType, clientId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
             		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
-            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId);
+            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId, charges);
         } else {
         	String groupId = getIdByName(workbook.getSheet("Groups"), clientOrGroupName).toString();
         	 return new GroupLoan(loanType, groupId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,

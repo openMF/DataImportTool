@@ -68,6 +68,12 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int LAST_REPAYMENT_DATE_COL = 29;
     private static final int REPAYMENT_TYPE_COL = 30;
     private static final int EXTERNAL_ID_COL = 34;
+    private static final int CHARGE_ID_1 = 35;
+    private static final int CHARGE_AMOUNT_1 = 36;
+    private static final int CHARGE_DUE_DATE_1 = 37;
+    private static final int CHARGE_ID_2 = 38;
+    private static final int CHARGE_AMOUNT_2 = 39;
+    private static final int CHARGE_DUE_DATE_2 = 40; 
     private static final int LOOKUP_CLIENT_NAME_COL = 42;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 43;
     @SuppressWarnings("CPD-END")
@@ -160,7 +166,13 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
             worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
             worksheet.setColumnWidth( EXTERNAL_ID_COL, 6000);
-           
+            worksheet.setColumnWidth(CHARGE_ID_1, 6000);
+            worksheet.setColumnWidth(CHARGE_AMOUNT_1, 6000);
+            worksheet.setColumnWidth(CHARGE_DUE_DATE_1, 6000);
+            worksheet.setColumnWidth(CHARGE_ID_2, 6000);
+            worksheet.setColumnWidth(CHARGE_AMOUNT_2, 6000);
+            worksheet.setColumnWidth(CHARGE_DUE_DATE_2, 6000);
+            
             writeString(OFFICE_NAME_COL, rowHeader, "Office Name*");
             writeString(LOAN_TYPE_COL, rowHeader, "Loan Type*");
             writeString(CLIENT_NAME_COL, rowHeader, "Client/Group Name*");
@@ -192,6 +204,12 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
             writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");
             writeString(EXTERNAL_ID_COL, rowHeader, "External Id");
+            writeString(CHARGE_ID_1,rowHeader,"Charge Id");
+            writeString(CHARGE_AMOUNT_1, rowHeader, "Charged Amount");
+            writeString(CHARGE_DUE_DATE_1, rowHeader, "Charged On Date");
+            writeString(CHARGE_ID_2,rowHeader,"Charge Id");
+            writeString(CHARGE_AMOUNT_2, rowHeader, "Charged Amount");
+            writeString(CHARGE_DUE_DATE_2, rowHeader, "Charged On Date");
             
             CellStyle borderStyle = worksheet.getWorkbook().createCellStyle();
             CellStyle doubleBorderStyle = worksheet.getWorkbook().createCellStyle();
@@ -239,6 +257,12 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	CellRangeAddressList repaymentTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), REPAYMENT_TYPE_COL, REPAYMENT_TYPE_COL);
 	        	CellRangeAddressList lastrepaymentDateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LAST_REPAYMENT_DATE_COL, LAST_REPAYMENT_DATE_COL);
 	        	CellRangeAddressList externalIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), EXTERNAL_ID_COL, EXTERNAL_ID_COL);
+	        	CellRangeAddressList chargeIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_1,CHARGE_ID_1);
+	        	CellRangeAddressList chargeamountRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_1, CHARGE_AMOUNT_1);
+	        	CellRangeAddressList duedateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_1, CHARGE_DUE_DATE_1);
+	        	CellRangeAddressList chargeId1Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2,CHARGE_ID_1);
+	        	CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_2, CHARGE_AMOUNT_1);
+	        	CellRangeAddressList duedate2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_2, CHARGE_DUE_DATE_1);
 	        	
 	        	DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet)worksheet);
 	        	

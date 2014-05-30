@@ -14,7 +14,7 @@ public class GroupLoan extends Loan{
 		super(loanType, null, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaymentEvery, repaymentFrequencyType,
 				loanTermFrequency, loanTermFrequencyType, interestRatePerPeriod, expectedDisbursementDate, amortizationType, interestType,
 				interestCalculationPeriodType, inArrearsTolerance, transactionProcessingStrategyId, graceOnPrincipalPayment,
-				graceOnInterestPayment, graceOnInterestCharged,	interestChargedFromDate, repaymentsStartingFromDate, rowIndex, status, externalId);
+				graceOnInterestPayment, graceOnInterestCharged,	interestChargedFromDate, repaymentsStartingFromDate, rowIndex, status, externalId, null);
 		
 		this.groupId = groupId;
 		this.externalId=externalId;
