@@ -1,6 +1,9 @@
 package org.openmf.mifos.dataimport.dto.loan;
 
+import java.util.List;
 import java.util.Locale;
+
+import org.openmf.mifos.dataimport.dto.Charge;
 
 public class Loan {
 
@@ -62,10 +65,12 @@ public class Loan {
 	
 	private final String loanType;
 	
+	private final List<Charge> charges;
+	
 	public Loan(String loanType, String clientId, String productId, String loanOfficerId, String submittedOnDate, String fundId, String principal, String numberOfRepayments, String repaymentEvery,
 			String repaymentFrequencyType,  String loanTermFrequency, String loanTermFrequencyType, String interestRatePerPeriod, String expectedDisbursementDate, String amortizationType,
 			String interestType, String interestCalculationPeriodType, String inArrearsTolerance, String transactionProcessingStrategyId, String graceOnPrincipalPayment,
-			String graceOnInterestPayment, String graceOnInterestCharged, String interestChargedFromDate, String repaymentsStartingFromDate, Integer rowIndex, String status,String externalId) {
+			String graceOnInterestPayment, String graceOnInterestCharged, String interestChargedFromDate, String repaymentsStartingFromDate, Integer rowIndex, String status,String externalId, List<Charge> charges) {
 		this.amortizationType = amortizationType;
 		this.clientId = clientId;
 		this.expectedDisbursementDate = expectedDisbursementDate;
@@ -95,6 +100,7 @@ public class Loan {
 		this.loanType = loanType;
 		this.rowIndex = rowIndex;
 		this.status = status;
+		this.charges = charges;
 	}
 	
 	public String getAmortizationType() {
@@ -212,6 +218,10 @@ public class Loan {
 	public String getExternalId() {
 		return externalId;
 	
+	}
+
+	public List<Charge> getCharges() {
+		return charges;
 	}
 
 	
