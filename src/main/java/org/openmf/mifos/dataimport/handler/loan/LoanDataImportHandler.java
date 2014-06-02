@@ -68,7 +68,8 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     private static final int CHARGE_DUE_DATE_1 = 37;
     private static final int CHARGE_ID_2 = 38;
     private static final int CHARGE_AMOUNT_2 = 39;
-    private static final int CHARGE_DUE_DATE_2 = 40;    
+    private static final int CHARGE_DUE_DATE_2 = 40;   
+    private static final int GROUP_ID = 41;
     
     @SuppressWarnings("CPD-END")
     
@@ -190,6 +191,7 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         
         String charge1 = readAsString(CHARGE_ID_1, row);
         String charge2 = readAsString(CHARGE_ID_2, row);
+        String groupId = readAsString(GROUP_ID, row);
         
         if(!charge1.equalsIgnoreCase("")){
         	charges.add(new Charge(readAsString(CHARGE_ID_1, row) ,readAsString(CHARGE_AMOUNT_1, row),readAsDate(CHARGE_DUE_DATE_1, row) ));
@@ -199,18 +201,23 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         
         	charges.add(new Charge(readAsString(CHARGE_ID_2, row) ,readAsString(CHARGE_AMOUNT_2, row),readAsDate(CHARGE_DUE_DATE_2, row) ));
         }
-        
         if(loanType.equals("individual")) {
     	    String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
     	    return new Loan(loanType, clientId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
             		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
-            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId, charges);
-        } else {
-        	String groupId = getIdByName(workbook.getSheet("Groups"), clientOrGroupName).toString();
-        	 return new GroupLoan(loanType, groupId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
-             		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
-             		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId);
+            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), null , status,externalId, charges);
+        } 
+        else if(loanType.equals("jlg")) {
+        	String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
+    	    return new Loan(loanType, clientId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
+            		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
+            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum() , status,externalId,groupId,charges);
         }
+        else {
+        	String groupIdforGroupLoan = getIdByName(workbook.getSheet("Groups"), clientOrGroupName).toString();
+        	return new GroupLoan(loanType, groupIdforGroupLoan, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
+             		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
+             		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId);}
     }
     
     private Approval parseAsLoanApproval(Row row) {
