@@ -228,8 +228,7 @@ public class Loan {
 	}
 	
 	public String getGroupId(){
-		return groupId;
-		
+		return groupId;	
 	}
 
 	

@@ -206,7 +206,6 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     	    return new Loan(loanType, clientId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
             		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
             		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), null , status,externalId, charges);
-        
         } 
         else if(loanType.equals("jlg")) {
         	String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
