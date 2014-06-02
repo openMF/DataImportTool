@@ -74,6 +74,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int CHARGE_ID_2 = 38;
     private static final int CHARGE_AMOUNT_2 = 39;
     private static final int CHARGE_DUE_DATE_2 = 40; 
+    private static final int JLGROUP_ID = 41;
     private static final int LOOKUP_CLIENT_NAME_COL = 42;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 43;
     @SuppressWarnings("CPD-END")
@@ -172,6 +173,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             worksheet.setColumnWidth(CHARGE_ID_2, 6000);
             worksheet.setColumnWidth(CHARGE_AMOUNT_2, 6000);
             worksheet.setColumnWidth(CHARGE_DUE_DATE_2, 6000);
+            worksheet.setColumnWidth(JLGROUP_ID,6000);
             
             writeString(OFFICE_NAME_COL, rowHeader, "Office Name*");
             writeString(LOAN_TYPE_COL, rowHeader, "Loan Type*");
@@ -210,6 +212,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             writeString(CHARGE_ID_2,rowHeader,"Charge Id");
             writeString(CHARGE_AMOUNT_2, rowHeader, "Charged Amount");
             writeString(CHARGE_DUE_DATE_2, rowHeader, "Charged On Date");
+            writeString(JLGROUP_ID, rowHeader, "JLG Group Id");
             
             CellStyle borderStyle = worksheet.getWorkbook().createCellStyle();
             CellStyle doubleBorderStyle = worksheet.getWorkbook().createCellStyle();
@@ -263,14 +266,15 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	CellRangeAddressList chargeId1Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2,CHARGE_ID_1);
 	        	CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_2, CHARGE_AMOUNT_1);
 	        	CellRangeAddressList duedate2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_2, CHARGE_DUE_DATE_1);
+	        	CellRangeAddressList groupIdRang = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), JLGROUP_ID, JLGROUP_ID);
 	        	
 	        	DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet)worksheet);
 	        	
 	        	setNames(worksheet);
 	        	
 	        	DataValidationConstraint officeNameConstraint = validationHelper.createFormulaListConstraint("Office");
-	        	DataValidationConstraint loanTypeConstraint = validationHelper.createExplicitListConstraint(new String[] {"Individual","Group"});
-	        	DataValidationConstraint clientNameConstraint = validationHelper.createFormulaListConstraint("IF($B1=\"Individual\",INDIRECT(CONCATENATE(\"Client_\",$A1)),INDIRECT(CONCATENATE(\"Group_\",$A1)))");
+	        	DataValidationConstraint loanTypeConstraint = validationHelper.createExplicitListConstraint(new String[] {"Individual","Group","JLG"});
+	        	DataValidationConstraint clientNameConstraint = validationHelper.createFormulaListConstraint("IF($B1=\"Group\",INDIRECT(CONCATENATE(\"Group_\",$A1)),INDIRECT(CONCATENATE(\"Client_\",$A1))");
 	        	DataValidationConstraint productNameConstraint = validationHelper.createFormulaListConstraint("Products");
 	        	DataValidationConstraint loanOfficerNameConstraint = validationHelper.createFormulaListConstraint("INDIRECT(CONCATENATE(\"Staff_\",$A1))");
 	        	DataValidationConstraint submittedDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=IF(INDIRECT(CONCATENATE(\"START_DATE_\",$D1))>VLOOKUP($C1,$AQ$2:$AR$" + (clientSheetPopulator.getClientsSize() + groupSheetPopulator.getGroupsSize() + 1) + ",2,FALSE),INDIRECT(CONCATENATE(\"START_DATE_\",$D1)),VLOOKUP($C1,$AQ$2:$AR$" + (clientSheetPopulator.getClientsSize() + groupSheetPopulator.getGroupsSize() + 1) + ",2,FALSE))", "=TODAY()", "dd/mm/yy");
