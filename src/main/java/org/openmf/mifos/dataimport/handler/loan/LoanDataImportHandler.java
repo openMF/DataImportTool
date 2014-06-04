@@ -70,6 +70,7 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     private static final int CHARGE_AMOUNT_2 = 39;
     private static final int CHARGE_DUE_DATE_2 = 40;   
     private static final int GROUP_ID = 41;
+    private static final int LINK_ACCOUNT_ID = 44;
     
     @SuppressWarnings("CPD-END")
     
@@ -192,6 +193,7 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         String charge1 = readAsString(CHARGE_ID_1, row);
         String charge2 = readAsString(CHARGE_ID_2, row);
         String groupId = readAsString(GROUP_ID, row);
+        String linkAccountId=readAsString(LINK_ACCOUNT_ID, row);
         
         if(!charge1.equalsIgnoreCase("")){
         	charges.add(new Charge(readAsString(CHARGE_ID_1, row) ,readAsString(CHARGE_AMOUNT_1, row),readAsDate(CHARGE_DUE_DATE_1, row) ));
@@ -205,19 +207,19 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     	    String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
     	    return new Loan(loanType, clientId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
             		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
-            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), null , status,externalId, charges);
+            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status, externalId, null, charges,linkAccountId);
         } 
         else if(loanType.equals("jlg")) {
         	String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
     	    return new Loan(loanType, clientId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
             		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
-            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum() , status,externalId,groupId,charges);
+            		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum() , status,externalId,groupId,charges,linkAccountId);
         }
         else {
         	String groupIdforGroupLoan = getIdByName(workbook.getSheet("Groups"), clientOrGroupName).toString();
         	return new GroupLoan(loanType, groupIdforGroupLoan, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaidEvery, repaidEveryFrequencyId, loanTerm,
              		loanTermFrequencyId, nominalInterestRate, submittedOnDate, amortizationId, interestMethodId, interestCalculationPeriodId, arrearsTolerance, repaymentStrategyId,
-             		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId);}
+             		graceOnPrincipalPayment, graceOnInterestPayment, graceOnInterestCharged, interestChargedFromDate, firstRepaymentOnDate, row.getRowNum(), status,externalId,linkAccountId);}
     }
     
     private Approval parseAsLoanApproval(Row row) {
@@ -231,7 +233,11 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     private LoanDisbursal parseAsLoanDisbursal(Row row) {
     	String disbursedDate = readAsDate(DISBURSED_DATE_COL, row);
     	String paymentType = readAsString(DISBURSED_PAYMENT_TYPE_COL, row);
-        String paymentTypeId = getIdByName(workbook.getSheet("Extras"), paymentType).toString();
+        String paymentTypeId = null;
+        
+        if(!paymentType.equals("")){
+        	paymentTypeId = getIdByName(workbook.getSheet("Extras"), paymentType).toString();
+        }
         if(!disbursedDate.equals(""))
             return new LoanDisbursal(disbursedDate, paymentTypeId, row.getRowNum());
          else

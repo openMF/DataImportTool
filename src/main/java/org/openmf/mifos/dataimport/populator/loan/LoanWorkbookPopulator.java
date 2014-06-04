@@ -77,6 +77,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int LOOKUP_CLIENT_NAME_COL = 42;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 43;
     private static final int GROUP_ID = 41;
+    private static final int LINK_ACCOUNT_ID = 44;
     @SuppressWarnings("CPD-END")
 	
 	public LoanWorkbookPopulator(OfficeSheetPopulator officeSheetPopulator, ClientSheetPopulator clientSheetPopulator,
@@ -174,6 +175,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             worksheet.setColumnWidth(CHARGE_AMOUNT_2, 6000);
             worksheet.setColumnWidth(CHARGE_DUE_DATE_2, 6000);
             worksheet.setColumnWidth(GROUP_ID, 6000);
+            worksheet.setColumnWidth(LINK_ACCOUNT_ID, 6000);
             
             writeString(OFFICE_NAME_COL, rowHeader, "Office Name*");
             writeString(LOAN_TYPE_COL, rowHeader, "Loan Type*");
@@ -213,6 +215,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             writeString(CHARGE_AMOUNT_2, rowHeader, "Charged Amount");
             writeString(CHARGE_DUE_DATE_2, rowHeader, "Charged On Date");
             writeString(GROUP_ID, rowHeader, "GROUP ID");
+            writeString(LINK_ACCOUNT_ID, rowHeader, "Linked Account No.");
             
             CellStyle borderStyle = worksheet.getWorkbook().createCellStyle();
             CellStyle doubleBorderStyle = worksheet.getWorkbook().createCellStyle();
@@ -266,6 +269,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	CellRangeAddressList chargeId1Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2,CHARGE_ID_1);
 	        	CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_2, CHARGE_AMOUNT_1);
 	        	CellRangeAddressList duedate2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_2, CHARGE_DUE_DATE_1);
+	        	CellRangeAddressList lintAccountIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LINK_ACCOUNT_ID, LINK_ACCOUNT_ID);
 	        	
 	        	DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet)worksheet);
 	        	
