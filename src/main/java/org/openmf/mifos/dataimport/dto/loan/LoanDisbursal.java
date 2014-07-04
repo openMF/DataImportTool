@@ -33,11 +33,11 @@ public class LoanDisbursal {
 	        this.dateFormat = "dd MMMM yyyy";
 	        this.locale = Locale.ENGLISH;
 	        this.note = "";
-	        this.accountNumber = "";
-	        this.routingCode = "";
-	        this.receiptNumber = "";
-	        this.bankNumber = "";
-	        this.checkNumber = "";
+	        this.accountNumber = null;
+	        this.routingCode = null;
+	        this.receiptNumber = null;
+	        this.bankNumber = null;
+	        this.checkNumber = null;
 	    }
 	 
 	 public String getActualDisbursementDate() {
