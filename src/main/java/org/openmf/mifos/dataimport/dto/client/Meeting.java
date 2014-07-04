@@ -6,8 +6,8 @@ import java.util.Locale;
 public class Meeting {
 	
     private final transient Integer rowIndex;    
-    private transient String groupId;    
-    private transient String centerId;    
+    private transient String groupId; 
+    private transient String centerId;
     private final String dateFormat;    
     private final Locale locale;    
     private final String description;    
@@ -32,10 +32,6 @@ public class Meeting {
     
     public void setGroupId(String groupId) {
     	this.groupId = groupId;
-    }
-    
-    public void setCenterId(String centerId) {
-    	this.centerId = centerId;
     }
     
     public void setTitle(String title) {
@@ -84,6 +80,14 @@ public class Meeting {
 
 	public String getGroupId() {
 		return groupId;
+	}
+
+	public String getCenterId() {
+		return centerId;
+	}
+
+	public void setCenterId(String centerId) {
+		this.centerId = centerId;
 	}
 
 }

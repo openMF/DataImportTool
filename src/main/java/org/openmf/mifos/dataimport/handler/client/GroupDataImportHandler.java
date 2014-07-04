@@ -185,7 +185,6 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
     
     private String uploadGroup(int rowIndex) {
         String payload = new Gson().toJson(groups.get(rowIndex));
-        logger.info(payload);
         String response = restClient.post("groups", payload);
     	return response;
     }
@@ -201,7 +200,6 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
     	meeting.setGroupId(groupId);
     	meeting.setTitle("groups_" + groupId + "_CollectionMeeting");
     	String payload = new Gson().toJson(meeting);
-        logger.info(payload);
         restClient.post("groups/" + groupId + "/calendars", payload);
         return 2;
    }

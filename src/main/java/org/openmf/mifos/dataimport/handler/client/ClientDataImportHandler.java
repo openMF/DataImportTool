@@ -108,7 +108,6 @@ public class ClientDataImportHandler extends AbstractDataImportHandler {
             try {
                 Gson gson = new Gson();
                 String payload = gson.toJson(client);
-                logger.info(payload);
                 restClient.post("clients", payload);
                 
                 Cell statusCell = clientSheet.getRow(client.getRowIndex()).createCell(STATUS_COL);

@@ -3,12 +3,14 @@ package org.openmf.mifos.dataimport.populator;
 import java.io.IOException;
 
 import org.openmf.mifos.dataimport.http.MifosRestClient;
+import org.openmf.mifos.dataimport.populator.client.CenterWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.client.ClientWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.client.GroupWorkbookPopulator;
-import org.openmf.mifos.dataimport.populator.client.CenterWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanProductSheetPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanRepaymentWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanWorkbookPopulator;
+import org.openmf.mifos.dataimport.populator.savings.FixedDepositProductSheetPopulator;
+import org.openmf.mifos.dataimport.populator.savings.FixedDepositWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.savings.SavingsProductSheetPopulator;
 import org.openmf.mifos.dataimport.populator.savings.SavingsTransactionWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.savings.SavingsWorkbookPopulator;
@@ -36,6 +38,9 @@ public class WorkbookPopulatorFactory {
 	        			 new PersonnelSheetPopulator(Boolean.TRUE, restClient), new SavingsProductSheetPopulator(restClient));
 	        else if(template.trim().equals("savingsTransactionHistory"))
 	        	 return new SavingsTransactionWorkbookPopulator(restClient, new OfficeSheetPopulator(restClient), new ClientSheetPopulator(restClient), new ExtrasSheetPopulator(restClient));
+	        else if(template.trim().equals("fixeddeposit"))
+	        	 return new FixedDepositWorkbookPopulator(new OfficeSheetPopulator(restClient), new ClientSheetPopulator(restClient),
+	        			 new PersonnelSheetPopulator(Boolean.TRUE, restClient), new FixedDepositProductSheetPopulator(restClient));
 	        throw new IllegalArgumentException("Can't find populator.");
 	    }
 }

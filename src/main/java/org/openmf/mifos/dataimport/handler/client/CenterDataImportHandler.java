@@ -175,7 +175,6 @@ public class CenterDataImportHandler extends AbstractDataImportHandler   {
 	
 	private String uploadCenter(int rowIndex) {
         String payload = new Gson().toJson(centers.get(rowIndex));
-        logger.info(payload);
         String response = restClient.post("centers", payload);
     	return response;
     }
@@ -191,7 +190,6 @@ public class CenterDataImportHandler extends AbstractDataImportHandler   {
     	meeting.setCenterId(centerId);
     	meeting.setTitle("centers_" + centerId + "_CollectionMeeting");
     	String payload = new Gson().toJson(meeting);
-        logger.info(payload);
         restClient.post("centers/" + centerId + "/calendars", payload);
        
         return 2;

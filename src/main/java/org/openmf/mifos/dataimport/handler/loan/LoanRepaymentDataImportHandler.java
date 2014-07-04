@@ -89,7 +89,6 @@ public class LoanRepaymentDataImportHandler extends AbstractDataImportHandler {
             try {
                 Gson gson = new Gson();
                 String payload = gson.toJson(loanRepayment);
-                logger.info("ID: "+loanRepayment.getAccountId()+" : "+payload);
                 restClient.post("loans/" + loanRepayment.getAccountId() + "/transactions?command=repayment", payload);
                 Cell statusCell = loanRepaymentSheet.getRow(loanRepayment.getRowIndex()).createCell(STATUS_COL);
                 statusCell.setCellValue("Imported");

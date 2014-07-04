@@ -162,6 +162,50 @@ fieldset {border: 0;margin: 0 0 15px 0;}
 		</div>
 	</div>
 	
+	<div class="step clearfix">
+		<div class="stepCount">Step 11:</div> 
+		<div class="stepContent">
+			<p>Enter your Fixed Deposit Product configuration (Administration -&gt; Organisation) through the UI.</p>
+		</div>
+	</div>
+	
+	<div class="step clearfix">
+		<div class="stepCount">Step 12:</div> 
+		<div class="stepContent">
+			<p>Download template to help facilitate Fixed Deposit Import. </p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="fixeddeposit" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
+	
+		<div class="step clearfix">
+		<div class="stepCount">Step 13:</div> 
+		<div class="stepContent">
+			<p>Enter your Recurring Deposit Product configuration (Administration -&gt; Organisation) through the UI.</p>
+		</div>
+	</div>
+	
+	<div class="step clearfix">
+		<div class="stepCount">Step 14:</div> 
+		<div class="stepContent">
+			<p>Download template to help facilitate Recurring Deposit Import. </p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="recurringdeposit" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
+	
 </div>
 </div>
 </body>

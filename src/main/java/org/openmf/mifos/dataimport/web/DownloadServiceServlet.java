@@ -35,6 +35,7 @@ public class DownloadServiceServlet extends HttpServlet {
 			fileName=fileName+".xls";
 			writeToStream(workbook, result, response, fileName);
 		}catch(Exception e){
+			e.printStackTrace();
 			throw new ServletException("Cannot download template - " + fileName, e);
 		}
 	}

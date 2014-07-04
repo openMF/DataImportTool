@@ -12,10 +12,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openmf.mifos.dataimport.dto.Approval;
 import org.openmf.mifos.dataimport.dto.Transaction;
-import org.openmf.mifos.dataimport.dto.loan.DisbursalData;
 import org.openmf.mifos.dataimport.dto.loan.GroupLoan;
 import org.openmf.mifos.dataimport.dto.loan.Loan;
-import org.openmf.mifos.dataimport.dto.loan.LoanDisbursal;
 import org.openmf.mifos.dataimport.handler.loan.LoanDataImportHandler;
 import org.openmf.mifos.dataimport.http.RestClient;
 
@@ -39,7 +37,7 @@ public class LoanImportHandlerTest {
         Assert.assertEquals(2, handler.getLoanRepayments().size());
         Loan loan = handler.getLoans().get(0);
         Approval loanApproval = handler.getApprovalDates().get(0);
-        DisbursalData loanDisbursal = handler.getDisbursalDates().get(0);
+//        DisbursalData loanDisbursal = handler.getDisbursalDates().get(0);
         Transaction loanRepayment = handler.getLoanRepayments().get(0);
         Assert.assertEquals("1", loan.getClientId());
         Assert.assertEquals("1", handler.getIdByName(book.getSheet("Clients"), "Arsene K Wenger").toString());

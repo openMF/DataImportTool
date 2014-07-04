@@ -91,7 +91,6 @@ public class SavingsTransactionDataImportHandler extends AbstractDataImportHandl
             try {
                 Gson gson = new Gson();
                 String payload = gson.toJson(transaction);
-                logger.info("ID: "+transaction.getAccountId()+" : "+payload);
                 restClient.post("savingsaccounts/" + transaction.getAccountId() + "/transactions?command=" + transaction.getTransactionType(), payload);
                 
                 Cell statusCell = savingsTransactionSheet.getRow(transaction.getRowIndex()).createCell(STATUS_COL);

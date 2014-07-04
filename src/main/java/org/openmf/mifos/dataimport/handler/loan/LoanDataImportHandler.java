@@ -11,11 +11,10 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.Approval;
 import org.openmf.mifos.dataimport.dto.Charge;
-import org.openmf.mifos.dataimport.dto.loan.DisbursalData;
 import org.openmf.mifos.dataimport.dto.Transaction;
+import org.openmf.mifos.dataimport.dto.loan.DisbursalData;
 import org.openmf.mifos.dataimport.dto.loan.GroupLoan;
 import org.openmf.mifos.dataimport.dto.loan.Loan;
-import org.openmf.mifos.dataimport.dto.loan.LoanDisbursToSavings;
 import org.openmf.mifos.dataimport.dto.loan.LoanDisbursal;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
@@ -24,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -82,7 +80,6 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     // ArrayList<LoanDisbursal>();
     private List<Transaction> loanRepayments = new ArrayList<Transaction>();
     private List<DisbursalData> disbursalDates = new ArrayList<DisbursalData>();
-    private List<LoanDisbursToSavings> disbursalDate = new ArrayList<LoanDisbursToSavings>();
     private final RestClient restClient;
     private final Workbook workbook;
 
@@ -330,7 +327,6 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     private String uploadLoan(int rowIndex) {
         Gson gson = new Gson();
         String payload = gson.toJson(loans.get(rowIndex));
-        logger.info(payload);
         String response = restClient.post("loans", payload);
 
         return response;
@@ -346,7 +342,6 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         if (approvalDates.get(rowIndex) != null) {
             Gson gson = new Gson();
             String payload = gson.toJson(approvalDates.get(rowIndex));
-            logger.info(payload);
             restClient.post("loans/" + loanId + "?command=approve", payload);
         }
         return 2;
@@ -360,11 +355,9 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
             Gson gson = new Gson();
             if (linkAccountId != null && linkAccountId != "") {
                 String payload = gson.toJson(disbusalData.getLoanDisbursal());
-                logger.info(payload);
                 restClient.post("loans/" + loanId + "?command=disbursetosavings", payload);
             } else {
                 String payload = gson.toJson(disbusalData.getLoanDisbursal());
-                logger.info(payload);
                 restClient.post("loans/" + loanId + "?command=disburse", payload);
             }
         }
@@ -374,7 +367,6 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     private Integer uploadLoanRepayment(String loanId, int rowIndex) {
         Gson gson = new Gson();
         String payload = gson.toJson(loanRepayments.get(rowIndex));
-        logger.info(payload);
         restClient.post("loans/" + loanId + "/transactions?command=repayment", payload);
         return 4;
     }

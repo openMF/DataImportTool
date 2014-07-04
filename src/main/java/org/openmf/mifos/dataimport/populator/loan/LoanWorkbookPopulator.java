@@ -262,14 +262,13 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	CellRangeAddressList paymentTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), DISBURSED_PAYMENT_TYPE_COL, DISBURSED_PAYMENT_TYPE_COL);
 	        	CellRangeAddressList repaymentTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), REPAYMENT_TYPE_COL, REPAYMENT_TYPE_COL);
 	        	CellRangeAddressList lastrepaymentDateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LAST_REPAYMENT_DATE_COL, LAST_REPAYMENT_DATE_COL);
-	        	CellRangeAddressList externalIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), EXTERNAL_ID_COL, EXTERNAL_ID_COL);
-	        	CellRangeAddressList chargeIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_1,CHARGE_ID_1);
-	        	CellRangeAddressList chargeamountRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_1, CHARGE_AMOUNT_1);
-	        	CellRangeAddressList duedateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_1, CHARGE_DUE_DATE_1);
-	        	CellRangeAddressList chargeId1Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2,CHARGE_ID_1);
-	        	CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_2, CHARGE_AMOUNT_1);
-	        	CellRangeAddressList duedate2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_2, CHARGE_DUE_DATE_1);
-	        	CellRangeAddressList lintAccountIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LINK_ACCOUNT_ID, LINK_ACCOUNT_ID);
+//	        	CellRangeAddressList chargeIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_1,CHARGE_ID_1);
+//	        	CellRangeAddressList chargeamountRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_1, CHARGE_AMOUNT_1);
+//	        	CellRangeAddressList duedateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_1, CHARGE_DUE_DATE_1);
+//	        	CellRangeAddressList chargeId1Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2,CHARGE_ID_1);
+//	        	CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_2, CHARGE_AMOUNT_1);
+//	        	CellRangeAddressList duedate2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_2, CHARGE_DUE_DATE_1);
+//	        	CellRangeAddressList lintAccountIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LINK_ACCOUNT_ID, LINK_ACCOUNT_ID);
 	        	
 	        	DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet)worksheet);
 	        	
