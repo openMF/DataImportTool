@@ -215,22 +215,20 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
                     LOCKIN_PERIOD_FREQUENCY_COL, LOCKIN_PERIOD_FREQUENCY_COL);
             CellRangeAddressList applyWithdrawalFeeForTransfersRange = new CellRangeAddressList(1,
                     SpreadsheetVersion.EXCEL97.getLastRowIndex(), APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS);
-            CellRangeAddressList externalIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-                    EXTERNAL_ID_COL, EXTERNAL_ID_COL);
-            CellRangeAddressList chargeIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_1_COL,
-                    CHARGE_ID_1_COL);
-            CellRangeAddressList chargeamountRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-                    CHARGE_AMOUNT_1_COL, CHARGE_AMOUNT_1_COL);
-            CellRangeAddressList feeOnMonthDayRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-                    FEE_ON_MONTH_DAY_1_COL, FEE_ON_MONTH_DAY_1_COL);
-            CellRangeAddressList chargeId2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2_COL,
-                    CHARGE_ID_2_COL);
-            CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-                    CHARGE_AMOUNT_2_COL, CHARGE_AMOUNT_2_COL);
-            CellRangeAddressList feeOnMonthDay2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-                    FEE_ON_MONTH_DAY_2_COL, FEE_ON_MONTH_DAY_2_COL);
+//            CellRangeAddressList chargeIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_1_COL,
+//                    CHARGE_ID_1_COL);
+//            CellRangeAddressList chargeamountRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+//                    CHARGE_AMOUNT_1_COL, CHARGE_AMOUNT_1_COL);
+//            CellRangeAddressList feeOnMonthDayRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+//                    FEE_ON_MONTH_DAY_1_COL, FEE_ON_MONTH_DAY_1_COL);
+//            CellRangeAddressList chargeId2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2_COL,
+//                    CHARGE_ID_2_COL);
+//            CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+//                    CHARGE_AMOUNT_2_COL, CHARGE_AMOUNT_2_COL);
+//            CellRangeAddressList feeOnMonthDay2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+//                    FEE_ON_MONTH_DAY_2_COL, FEE_ON_MONTH_DAY_2_COL);
             CellRangeAddressList allowOverdraftRange = new CellRangeAddressList(1,SpreadsheetVersion.EXCEL97.getLastRowIndex(),ALLOW_OVER_DRAFT_COL,ALLOW_OVER_DRAFT_COL);
-            CellRangeAddressList overdraftLimitRange = new CellRangeAddressList(1,SpreadsheetVersion.EXCEL97.getLastRowIndex(),OVER_DRAFT_LIMIT_COL,OVER_DRAFT_LIMIT_COL);
+//            CellRangeAddressList overdraftLimitRange = new CellRangeAddressList(1,SpreadsheetVersion.EXCEL97.getLastRowIndex(),OVER_DRAFT_LIMIT_COL,OVER_DRAFT_LIMIT_COL);
              
 
             DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet) worksheet);

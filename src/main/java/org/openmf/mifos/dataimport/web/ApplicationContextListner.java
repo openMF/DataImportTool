@@ -52,6 +52,6 @@ public class ApplicationContextListner implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(@SuppressWarnings("unused") ServletContextEvent sce) {
-		// TODO Auto-generated method stub
+		
 	} 
 }

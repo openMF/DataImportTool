@@ -253,7 +253,6 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
     private String uploadSavings(int rowIndex) {
         Gson gson = new Gson();
         String payload = gson.toJson(savings.get(rowIndex));
-        logger.info(payload);
         String response = restClient.post("savingsaccounts", payload);
         return response;
     }
@@ -268,9 +267,7 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         Gson gson = new Gson();
         if (approvalDates.get(rowIndex) != null) {
             String payload = gson.toJson(approvalDates.get(rowIndex));
-            logger.info(payload);
-            String response = restClient.post("savingsaccounts/" + savingsId + "?command=approve", payload);
-            logger.info(response);
+            restClient.post("savingsaccounts/" + savingsId + "?command=approve", payload);
         }
         return 2;
     }

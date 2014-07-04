@@ -78,7 +78,8 @@ public abstract class AbstractWorkbookPopulator implements WorkbookPopulator {
     			writeString(nameCol, row, client.getDisplayName().replaceAll("[ )(] ", "_") + "("+client.getId() + ")");
     			writeDate(activationDateCol, row, client.getActivationDate().get(2) + "/" + client.getActivationDate().get(1) + "/" + client.getActivationDate().get(0), dateCellStyle);
     		}
-    		
+    		if(groups == null)
+    		    return;
     		for(CompactGroup group: groups) {
 			Row row = sheet.getRow(++rowIndex);
 			if(row == null)

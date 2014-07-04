@@ -9,10 +9,8 @@ public class DisbursalData {
 	public DisbursalData(String linkAccountId, LoanDisbursal loanDisbursal) {
 		this.linkAccountId = linkAccountId;
 		this.loanDisbursal = loanDisbursal;
-		
 	}	
 	
-
 	public String getLinkAccountId() {
 		return this.linkAccountId;
 	}

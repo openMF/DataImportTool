@@ -2,7 +2,7 @@ package org.openmf.mifos.dataimport.dto.loan;
 
 import java.util.Locale;
 
-public class LoanDisbursToSavings {
+public class LoanDisbursalToSavings {
 
     private final transient Integer rowIndex;
 
@@ -14,7 +14,7 @@ public class LoanDisbursToSavings {
 
     private final String note;
 
-    public LoanDisbursToSavings(String actualDisbursementDate, Integer rowIndex) {
+    public LoanDisbursalToSavings(String actualDisbursementDate, Integer rowIndex) {
         this.actualDisbursementDate = actualDisbursementDate;
         this.rowIndex = rowIndex;
         this.dateFormat = "dd MMMM yyyy";
