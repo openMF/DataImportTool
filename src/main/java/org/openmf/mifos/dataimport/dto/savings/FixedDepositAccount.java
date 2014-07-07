@@ -1,0 +1,132 @@
+package org.openmf.mifos.dataimport.dto.savings;
+
+import java.util.Locale;
+
+public class FixedDepositAccount {
+	
+	private final transient Integer rowIndex;
+
+    private final transient String status;
+
+    private final String clientId;
+
+    private final String fieldOfficerId;
+
+    private final String productId;
+
+    private final String submittedOnDate;
+
+    private final String interestCompoundingPeriodType;
+
+    private final String interestPostingPeriodType;
+
+    private final String interestCalculationType;
+
+    private final String interestCalculationDaysInYearType;
+
+    private final String lockinPeriodFrequency;
+
+    private final String lockinPeriodFrequencyType;
+    
+    private final String depositAmount;
+
+    private final String depositPeriod;
+
+    private final String depositPeriodFrequencyId;
+
+    private final String dateFormat;
+
+    private final Locale locale;
+
+    public FixedDepositAccount(String clientId, String productId, String fieldOfficerId, String submittedOnDate,
+            String interestCompoundingPeriodType, String interestPostingPeriodType,
+            String interestCalculationType, String interestCalculationDaysInYearType,
+            String lockinPeriodFrequency, String lockinPeriodFrequencyType, String depositAmount, String depositPeriod,
+            String depositPeriodFrequencyId, Integer rowIndex, String status) {
+        this.clientId = clientId;
+        this.productId = productId;
+        this.fieldOfficerId = fieldOfficerId;
+        this.submittedOnDate = submittedOnDate;
+        this.interestCompoundingPeriodType = interestCompoundingPeriodType;
+        this.interestPostingPeriodType = interestPostingPeriodType;
+        this.interestCalculationType = interestCalculationType;
+        this.interestCalculationDaysInYearType = interestCalculationDaysInYearType;
+        this.lockinPeriodFrequency = lockinPeriodFrequency;
+        this.lockinPeriodFrequencyType = lockinPeriodFrequencyType;
+        this.depositAmount = depositAmount;
+        this.depositPeriod = depositPeriod;
+        this.depositPeriodFrequencyId = depositPeriodFrequencyId;
+        this.rowIndex = rowIndex;
+        this.status = status;
+        this.dateFormat = "dd MMMM yyyy";
+        this.locale = Locale.ENGLISH;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getFieldOfficerId() {
+        return fieldOfficerId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public String getInterestCompoundingPeriodType() {
+        return interestCompoundingPeriodType;
+    }
+
+    public String getInterestPostingPeriodType() {
+        return interestPostingPeriodType;
+    }
+
+    public String getInterestCalculationType() {
+        return interestCalculationType;
+    }
+
+    public String getInterestCalculationDaysInYearType() {
+        return interestCalculationDaysInYearType;
+    }
+
+    public String getLockinPeriodFrequency() {
+        return lockinPeriodFrequency;
+    }
+
+    public String getLockinPeriodFrequencyType() {
+        return lockinPeriodFrequencyType;
+    }
+
+    public String getDateFormat() {
+        return dateFormat;
+    }
+
+    public Locale getLocale() {
+        return locale;
+    }
+
+    public Integer getRowIndex() {
+        return rowIndex;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getSubmittedOnDate() {
+        return submittedOnDate;
+    }
+
+	public String getDepositAmount() {
+		return depositAmount;
+	}
+
+	public String getDepositPeriod() {
+		return depositPeriod;
+	}
+
+	public String getDepositPeriodFrequencyId() {
+		return depositPeriodFrequencyId;
+	}
+}
