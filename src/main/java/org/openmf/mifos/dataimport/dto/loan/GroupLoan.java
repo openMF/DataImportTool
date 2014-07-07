@@ -2,7 +2,6 @@ package org.openmf.mifos.dataimport.dto.loan;
 
 public class GroupLoan extends Loan{
 	
-	private final String groupId;
 	
 	public GroupLoan(String loanType, String groupId, String productId,	String loanOfficerId, String submittedOnDate, String fundId,
 			String principal, String numberOfRepayments, String repaymentEvery,	String repaymentFrequencyType, String loanTermFrequency,
@@ -14,13 +13,8 @@ public class GroupLoan extends Loan{
 		super(loanType, null, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments, repaymentEvery, repaymentFrequencyType,
 				loanTermFrequency, loanTermFrequencyType, interestRatePerPeriod, expectedDisbursementDate, amortizationType, interestType,
 				interestCalculationPeriodType, inArrearsTolerance, transactionProcessingStrategyId, graceOnPrincipalPayment,
-				graceOnInterestPayment, graceOnInterestCharged,	interestChargedFromDate, repaymentsStartingFromDate, rowIndex, status, externalId, null,null,linkAccountId );
+				graceOnInterestPayment, graceOnInterestCharged,	interestChargedFromDate, repaymentsStartingFromDate, rowIndex, status, externalId, groupId, null,linkAccountId );
 		
-		this.groupId = groupId;
 	   }
-
-	public String getGroupId() {
-		return groupId;
-	}
 
 }

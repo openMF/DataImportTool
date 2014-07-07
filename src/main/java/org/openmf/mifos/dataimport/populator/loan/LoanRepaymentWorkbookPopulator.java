@@ -123,7 +123,7 @@ public class LoanRepaymentWorkbookPopulator extends AbstractWorkbookPopulator {
             } 
        } catch (Exception e) {
            result.addError(e.getMessage());
-           logger.error(e.getMessage());
+           e.printStackTrace();
        }
        return result;	
     }
@@ -147,7 +147,8 @@ public class LoanRepaymentWorkbookPopulator extends AbstractWorkbookPopulator {
     			writeDate(LOOKUP_LOAN_DISBURSEMENT_DATE_COL, row, loan.getTimeline().getActualDisbursementDate().get(2) + "/" + loan.getTimeline().getActualDisbursementDate().get(1) + "/" + loan.getTimeline().getActualDisbursementDate().get(0), dateCellStyle);
     		}
 	   } catch (Exception e) {
-		result.addError(e.getMessage());
+		   e.printStackTrace();
+		   result.addError(e.getMessage());
 	    }
     	return result;
     }
@@ -226,6 +227,7 @@ public class LoanRepaymentWorkbookPopulator extends AbstractWorkbookPopulator {
             worksheet.addValidationData(repaymentDateValidation);
         	
     	} catch (RuntimeException re) {
+    		re.printStackTrace();
     		result.addError(re.getMessage());
     	}
        return result;
