@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.Approval;
-import org.openmf.mifos.dataimport.dto.savings.FixedDepositAccount;
+import org.openmf.mifos.dataimport.dto.savings.RecurringDepositAccount;
 import org.openmf.mifos.dataimport.dto.savings.SavingsActivation;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class FixedDepositImportHandler extends AbstractDataImportHandler {
+public class RecurringDepositImportHandler extends AbstractDataImportHandler{
 	
 	private static final Logger logger = LoggerFactory.getLogger(FixedDepositImportHandler.class);
 
@@ -38,12 +38,20 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
     private static final int INTEREST_CALCULATION_DAYS_IN_YEAR_COL = 10;
     private static final int LOCKIN_PERIOD_COL = 11;
     private static final int LOCKIN_PERIOD_FREQUENCY_COL = 12;
-    private static final int DEPOSIT_AMOUNT_COL = 13;
+    private static final int RECURRING_DEPOSIT_AMOUNT_COL = 13;
     private static final int DEPOSIT_PERIOD_COL = 14;
     private static final int DEPOSIT_PERIOD_FREQUENCY_COL = 15;
-    private static final int STATUS_COL = 16;
-    private static final int SAVINGS_ID_COL = 17;
-    private static final int FAILURE_REPORT_COL = 18;
+    private static final int DEPOSIT_FREQUENCY_COL = 16;
+    private static final int DEPOSIT_FREQUENCY_TYPE_COL = 17;
+    private static final int DEPOSIT_START_DATE_COL = 18;
+    private static final int IS_MANDATORY_DEPOSIT_COL = 19;
+    private static final int ALLOW_WITHDRAWAL_COL = 20;
+    private static final int FREQ_SAME_AS_GROUP_CENTER_COL = 21;
+    private static final int ADJUST_ADVANCE_PAYMENTS_COL = 22;
+
+    private static final int STATUS_COL = 23;
+    private static final int SAVINGS_ID_COL = 24;
+    private static final int FAILURE_REPORT_COL = 25;
 
 
     @SuppressWarnings("CPD-END")
@@ -51,11 +59,11 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
 
     private final Workbook workbook;
 
-    private List<FixedDepositAccount> savings = new ArrayList<FixedDepositAccount>();
+    private List<RecurringDepositAccount> savings = new ArrayList<RecurringDepositAccount>();
     private List<Approval> approvalDates = new ArrayList<Approval>();
     private List<SavingsActivation> activationDates = new ArrayList<SavingsActivation>();
 
-    public FixedDepositImportHandler(Workbook workbook, RestClient client) {
+    public RecurringDepositImportHandler(Workbook workbook, RestClient client) {
         this.workbook = workbook;
         this.restClient = client;
     }
@@ -85,7 +93,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
 	@Override
 	public Result upload() {
 		Result result = new Result();
-        Sheet savingsSheet = workbook.getSheet("FixedDeposit");
+        Sheet savingsSheet = workbook.getSheet("RecurringDeposit");
         restClient.createAuthToken();
         int progressLevel = 0;
         String savingsId;
@@ -134,7 +142,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         return result;
 	}
 	
-	private FixedDepositAccount parseAsSavings(Row row) {
+	private RecurringDepositAccount parseAsSavings(Row row) {
         String status = readAsString(STATUS_COL, row);
         String productName = readAsString(PRODUCT_COL, row);
         String productId = getIdByName(workbook.getSheet("Products"), productName).toString();
@@ -183,7 +191,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         else if (lockinPeriodFrequencyType.equalsIgnoreCase("Months"))
             lockinPeriodFrequencyTypeId = "2";
         else if (lockinPeriodFrequencyType.equalsIgnoreCase("Years")) lockinPeriodFrequencyTypeId = "3";
-        String depositAmount = readAsString(DEPOSIT_AMOUNT_COL, row);
+        String depositAmount = readAsString(RECURRING_DEPOSIT_AMOUNT_COL, row);
         String depositPeriod = readAsString(DEPOSIT_PERIOD_COL, row);
         String depositPeriodFrequency = readAsString(DEPOSIT_PERIOD_FREQUENCY_COL, row);
         String depositPeriodFrequencyId = "";
@@ -194,14 +202,31 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         else if (depositPeriodFrequency.equalsIgnoreCase("Months"))
         	depositPeriodFrequencyId = "2";
         else if (depositPeriodFrequency.equalsIgnoreCase("Years")) depositPeriodFrequencyId = "3";
-         	
+        
+        String recurringFrequency = readAsString(DEPOSIT_FREQUENCY_COL, row);
+        String recurringFrequencyType = readAsString(DEPOSIT_FREQUENCY_TYPE_COL, row);
+        String recurringFrequencyTypeId = "";
+        if (recurringFrequencyType.equalsIgnoreCase("Days"))
+        	recurringFrequencyTypeId = "0";
+        else if (recurringFrequencyType.equalsIgnoreCase("Weeks"))
+        	recurringFrequencyTypeId = "1";
+        else if (recurringFrequencyType.equalsIgnoreCase("Months"))
+        	recurringFrequencyTypeId = "2";
+        else if (recurringFrequencyType.equalsIgnoreCase("Years")) recurringFrequencyTypeId = "3";
+        String depositStartDate = readAsDate(DEPOSIT_START_DATE_COL, row);
+        String allowWithdrawal = readAsBoolean(ALLOW_WITHDRAWAL_COL, row).toString();
+        String isMandatoryDeposit = readAsBoolean(IS_MANDATORY_DEPOSIT_COL, row).toString();
+        String inheritCalendar = readAsBoolean(FREQ_SAME_AS_GROUP_CENTER_COL, row).toString();
+        String adjustAdvancePayments = readAsBoolean(ADJUST_ADVANCE_PAYMENTS_COL, row).toString();
         String clientName = readAsString(CLIENT_NAME_COL, row);
 
         String clientId = getIdByName(workbook.getSheet("Clients"), clientName).toString();
-        return new FixedDepositAccount(clientId, productId, fieldOfficerId, submittedOnDate,
+        return new RecurringDepositAccount(clientId, productId, fieldOfficerId, submittedOnDate,
                 interestCompoundingPeriodTypeId, interestPostingPeriodTypeId, interestCalculationTypeId,
                 interestCalculationDaysInYearTypeId, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
-                depositAmount, depositPeriod, depositPeriodFrequencyId, row.getRowNum(), status);
+                depositAmount, depositPeriod, depositPeriodFrequencyId, depositStartDate,
+                recurringFrequency, recurringFrequencyTypeId, inheritCalendar, isMandatoryDeposit,
+                allowWithdrawal, adjustAdvancePayments, row.getRowNum(), status);
     }
 
     private Approval parseAsSavingsApproval(Row row) {
@@ -232,7 +257,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
     private String uploadSavings(int rowIndex) {
         Gson gson = new Gson();
         String payload = gson.toJson(savings.get(rowIndex));
-        String response = restClient.post("fixeddepositaccounts", payload);
+        String response = restClient.post("recurringdepositaccounts", payload);
         return response;
     }
 
@@ -269,7 +294,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         writeString(FAILURE_REPORT_COL, rowHeader, "Report");
     }
 
-    public List<FixedDepositAccount> getSavings() {
+    public List<RecurringDepositAccount> getSavings() {
         return savings;
     }
 

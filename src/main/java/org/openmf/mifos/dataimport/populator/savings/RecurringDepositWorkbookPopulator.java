@@ -16,19 +16,19 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddressList;
-import org.openmf.mifos.dataimport.dto.savings.FixedDepositProduct;
+import org.openmf.mifos.dataimport.dto.savings.RecurringDepositProduct;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.populator.AbstractWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.ClientSheetPopulator;
 import org.openmf.mifos.dataimport.populator.OfficeSheetPopulator;
 import org.openmf.mifos.dataimport.populator.PersonnelSheetPopulator;
 
-public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
+public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator {
 	
-    private OfficeSheetPopulator officeSheetPopulator;
+	private OfficeSheetPopulator officeSheetPopulator;
     private ClientSheetPopulator clientSheetPopulator;
     private PersonnelSheetPopulator personnelSheetPopulator;
-    private FixedDepositProductSheetPopulator productSheetPopulator;
+    private RecurringDepositProductSheetPopulator productSheetPopulator;
     
     @SuppressWarnings("CPD-START")
     private static final int OFFICE_NAME_COL = 0;
@@ -44,9 +44,18 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int INTEREST_CALCULATION_DAYS_IN_YEAR_COL = 10;
     private static final int LOCKIN_PERIOD_COL = 11;
     private static final int LOCKIN_PERIOD_FREQUENCY_COL = 12;
-    private static final int DEPOSIT_AMOUNT_COL = 13;
+    private static final int RECURRING_DEPOSIT_AMOUNT_COL = 13;
     private static final int DEPOSIT_PERIOD_COL = 14;
     private static final int DEPOSIT_PERIOD_FREQUENCY_COL = 15;
+    private static final int DEPOSIT_FREQUENCY_COL = 16;
+    private static final int DEPOSIT_FREQUENCY_TYPE_COL = 17;
+    private static final int DEPOSIT_START_DATE_COL = 18;
+    private static final int IS_MANDATORY_DEPOSIT_COL = 19;
+    private static final int ALLOW_WITHDRAWAL_COL = 20;
+    private static final int FREQ_SAME_AS_GROUP_CENTER_COL = 21;
+    private static final int ADJUST_ADVANCE_PAYMENTS_COL = 22;
+    
+    
    
     private static final int LOOKUP_CLIENT_NAME_COL = 31;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 32;
@@ -55,15 +64,15 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
 
     @SuppressWarnings("CPD-END")
     
-    public FixedDepositWorkbookPopulator(OfficeSheetPopulator officeSheetPopulator, ClientSheetPopulator clientSheetPopulator,
-            PersonnelSheetPopulator personnelSheetPopulator,
-            FixedDepositProductSheetPopulator productSheetPopulator) {
+    public RecurringDepositWorkbookPopulator(OfficeSheetPopulator officeSheetPopulator, ClientSheetPopulator clientSheetPopulator,
+            PersonnelSheetPopulator personnelSheetPopulator, RecurringDepositProductSheetPopulator productSheetPopulator) {
         this.officeSheetPopulator = officeSheetPopulator;
         this.clientSheetPopulator = clientSheetPopulator;
         this.personnelSheetPopulator = personnelSheetPopulator;
         this.productSheetPopulator = productSheetPopulator;
     }
-
+    
+    
 	@Override
 	public Result downloadAndParse() {
 		Result result = officeSheetPopulator.downloadAndParse();
@@ -75,20 +84,20 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
 
 	@Override
 	public Result populate(Workbook workbook) {
-		Sheet fixedDepositSheet = workbook.createSheet("FixedDeposit");
+		Sheet recurringDepositSheet = workbook.createSheet("RecurringDeposit");
         Result result = officeSheetPopulator.populate(workbook);
         if (result.isSuccess()) result = clientSheetPopulator.populate(workbook);
         if (result.isSuccess()) result = personnelSheetPopulator.populate(workbook);
         if (result.isSuccess()) result = productSheetPopulator.populate(workbook);
-        if (result.isSuccess()) result = setRules(fixedDepositSheet);
-        if (result.isSuccess()) result = setDefaults(fixedDepositSheet);
+        if (result.isSuccess()) result = setRules(recurringDepositSheet);
+        if (result.isSuccess()) result = setDefaults(recurringDepositSheet);
         if (result.isSuccess())
-            setClientAndGroupDateLookupTable(fixedDepositSheet, clientSheetPopulator.getClients(), null,
+            setClientAndGroupDateLookupTable(recurringDepositSheet, clientSheetPopulator.getClients(), null,
                     LOOKUP_CLIENT_NAME_COL, LOOKUP_ACTIVATION_DATE_COL);
-        setLayout(fixedDepositSheet);
+        setLayout(recurringDepositSheet);
         return result;
 	}
-
+	
 	private Result setRules(Sheet worksheet) {
 		Result result = new Result();
         try {
@@ -118,9 +127,21 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
             CellRangeAddressList lockinPeriodFrequencyRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
                     LOCKIN_PERIOD_FREQUENCY_COL, LOCKIN_PERIOD_FREQUENCY_COL);
             CellRangeAddressList depositAmountRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-            		DEPOSIT_AMOUNT_COL, DEPOSIT_AMOUNT_COL);
+            		RECURRING_DEPOSIT_AMOUNT_COL, RECURRING_DEPOSIT_AMOUNT_COL);
             CellRangeAddressList depositPeriodTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
             		DEPOSIT_PERIOD_FREQUENCY_COL, DEPOSIT_PERIOD_FREQUENCY_COL);
+            CellRangeAddressList depositFrequencyTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+            		DEPOSIT_FREQUENCY_TYPE_COL, DEPOSIT_FREQUENCY_TYPE_COL);
+            CellRangeAddressList isMandatoryDepositRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+            		IS_MANDATORY_DEPOSIT_COL, IS_MANDATORY_DEPOSIT_COL);
+            CellRangeAddressList allowWithdrawalRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+            		ALLOW_WITHDRAWAL_COL, ALLOW_WITHDRAWAL_COL);
+            CellRangeAddressList adjustAdvancePaymentRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+            		ADJUST_ADVANCE_PAYMENTS_COL, ADJUST_ADVANCE_PAYMENTS_COL);
+            CellRangeAddressList sameFreqAsGroupRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+            		FREQ_SAME_AS_GROUP_CENTER_COL, FREQ_SAME_AS_GROUP_CENTER_COL);
+            CellRangeAddressList depositStartDateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
+            		DEPOSIT_START_DATE_COL, DEPOSIT_START_DATE_COL);
             
             DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet) worksheet);
 
@@ -151,7 +172,11 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
             DataValidationConstraint frequency = validationHelper.createExplicitListConstraint(new String[] { "Days",
                     "Weeks", "Months", "Years" });
             DataValidationConstraint depositConstraint = validationHelper.createDecimalConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=INDIRECT(CONCATENATE(\"Min_Deposit_\",$C1))", "=INDIRECT(CONCATENATE(\"Max_Deposit_\",$C1))");
-
+            DataValidationConstraint booleanConstraint = validationHelper.createExplicitListConstraint(new String[] {
+                    "True", "False" });
+            DataValidationConstraint depositStartDateConstraint = validationHelper.createDateConstraint(
+                    DataValidationConstraint.OperatorType.BETWEEN, "=$G1", "=TODAY()", "dd/mm/yy");
+            
             DataValidation officeValidation = validationHelper.createValidation(officeNameConstraint, officeNameRange);
             DataValidation clientValidation = validationHelper.createValidation(clientNameConstraint, clientNameRange);
             DataValidation productNameValidation = validationHelper.createValidation(productNameConstraint, productNameRange);
@@ -168,11 +193,22 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
                     lockinPeriodFrequencyRange);
             DataValidation depositPeriodTypeValidation = validationHelper.createValidation(frequency,
             		depositPeriodTypeRange);
+            DataValidation depositFrequencyTypeValidation = validationHelper.createValidation(frequency,
+            		depositFrequencyTypeRange);
             DataValidation submittedDateValidation = validationHelper.createValidation(submittedDateConstraint, submittedDateRange);
             DataValidation approvalDateValidation = validationHelper.createValidation(approvalDateConstraint, approvedDateRange);
             DataValidation activationDateValidation = validationHelper.createValidation(activationDateConstraint, activationDateRange);
             DataValidation  depositAmountValidation = validationHelper.createValidation(depositConstraint, depositAmountRange);
-            
+            DataValidation isMandatoryDepositValidation = validationHelper.createValidation(
+                    booleanConstraint, isMandatoryDepositRange);
+            DataValidation allowWithdrawalValidation = validationHelper.createValidation(
+                    booleanConstraint, allowWithdrawalRange);
+            DataValidation adjustAdvancePaymentValidation = validationHelper.createValidation(
+                    booleanConstraint, adjustAdvancePaymentRange);
+            DataValidation sameFreqAsGroupValidation = validationHelper.createValidation(
+                    booleanConstraint, sameFreqAsGroupRange);
+            DataValidation depositStartDateValidation = validationHelper.createValidation(
+            		depositStartDateConstraint, depositStartDateRange);
             
             worksheet.addValidationData(officeValidation);
             worksheet.addValidationData(clientValidation);
@@ -188,6 +224,12 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
             worksheet.addValidationData(lockinPeriodFrequencyValidation);
             worksheet.addValidationData(depositPeriodTypeValidation);
             worksheet.addValidationData(depositAmountValidation);
+            worksheet.addValidationData(depositFrequencyTypeValidation);
+            worksheet.addValidationData(isMandatoryDepositValidation);
+            worksheet.addValidationData(allowWithdrawalValidation);
+            worksheet.addValidationData(adjustAdvancePaymentValidation);
+            worksheet.addValidationData(sameFreqAsGroupValidation);
+            worksheet.addValidationData(depositStartDateValidation);
 
         } catch (RuntimeException re) {
         	re.printStackTrace();
@@ -199,7 +241,7 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
 	private void setNames(Sheet worksheet) {
 		Workbook savingsWorkbook = worksheet.getWorkbook();
         ArrayList<String> officeNames = new ArrayList<String>(Arrays.asList(officeSheetPopulator.getOfficeNames()));
-        List<FixedDepositProduct> products = productSheetPopulator.getProducts();
+        List<RecurringDepositProduct> products = productSheetPopulator.getProducts();
 
         // Office Names
         Name officeGroup = savingsWorkbook.createName();
@@ -244,8 +286,11 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
     		Name minDepositName = savingsWorkbook.createName();
     		Name maxDepositName = savingsWorkbook.createName();
     		Name minDepositTermTypeName = savingsWorkbook.createName();
+    		Name allowWithdrawalName = savingsWorkbook.createName();
+    		Name mandatoryDepositName = savingsWorkbook.createName();
+    		Name adjustAdvancePaymentsName = savingsWorkbook.createName();
             
-            FixedDepositProduct product = products.get(i);
+            RecurringDepositProduct product = products.get(i);
             String productName = product.getName().replaceAll("[ ]", "_");
             
             interestCompoundingPeriodName.setNameName("Interest_Compouding_" + productName);
@@ -255,6 +300,9 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
             minDepositName.setNameName("Min_Deposit_" + productName);
             maxDepositName.setNameName("Max_Deposit_" + productName);
             depositName.setNameName("Deposit_" + productName);
+            allowWithdrawalName.setNameName("Allow_Withdrawal_" + productName);
+            mandatoryDepositName.setNameName("Mandatory_Deposit_" + productName);
+            adjustAdvancePaymentsName.setNameName("Adjust_Advance_" + productName);
             interestCompoundingPeriodName.setRefersToFormula("Products!$E$" + (i + 2));
             interestPostingPeriodName.setRefersToFormula("Products!$F$" + (i + 2));
             interestCalculationName.setRefersToFormula("Products!$G$" + (i + 2));
@@ -262,6 +310,9 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
             depositName.setRefersToFormula("Products!$N$" + (i + 2));
             minDepositName.setRefersToFormula("Products!$L$" + (i + 2));
             maxDepositName.setRefersToFormula("Products!$M$" + (i + 2));
+            allowWithdrawalName.setRefersToFormula("Products!$Y$" + (i + 2));
+            mandatoryDepositName.setRefersToFormula("Products!$X$" + (i + 2));
+            adjustAdvancePaymentsName.setRefersToFormula("Products!$Z$" + (i + 2));
             
             if(product.getMinDepositTermType() != null) {
             	minDepositTermTypeName.setNameName("Term_Type_" + productName);
@@ -299,10 +350,16 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
                         + "))),\"\",INDIRECT(CONCATENATE(\"Lockin_Period_\",$C" + (rowNo + 1) + ")))");
                 writeFormula(LOCKIN_PERIOD_FREQUENCY_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Lockin_Frequency_\",$C" + (rowNo + 1)
                         + "))),\"\",INDIRECT(CONCATENATE(\"Lockin_Frequency_\",$C" + (rowNo + 1) + ")))");
-                writeFormula(DEPOSIT_AMOUNT_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Deposit_\",$C" + (rowNo + 1)
+                writeFormula(RECURRING_DEPOSIT_AMOUNT_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Deposit_\",$C" + (rowNo + 1)
                         + "))),\"\",INDIRECT(CONCATENATE(\"Deposit_\",$C" + (rowNo + 1) + ")))");
                 writeFormula(DEPOSIT_PERIOD_FREQUENCY_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Term_Type_\",$C" + (rowNo + 1)
                         + "))),\"\",INDIRECT(CONCATENATE(\"Term_Type_\",$C" + (rowNo + 1) + ")))");
+                writeFormula(IS_MANDATORY_DEPOSIT_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Mandatory_Deposit_\",$C" + (rowNo + 1)
+                        + "))),\"\",INDIRECT(CONCATENATE(\"Mandatory_Deposit_\",$C" + (rowNo + 1) + ")))");
+                writeFormula(ALLOW_WITHDRAWAL_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Allow_Withdrawal_\",$C" + (rowNo + 1)
+                        + "))),\"\",INDIRECT(CONCATENATE(\"Allow_Withdrawal_\",$C" + (rowNo + 1) + ")))");
+                writeFormula(ADJUST_ADVANCE_PAYMENTS_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Adjust_Advance_\",$C" + (rowNo + 1)
+                        + "))),\"\",INDIRECT(CONCATENATE(\"Adjust_Advance_\",$C" + (rowNo + 1) + ")))");
             }
         } catch (RuntimeException re) {
         	re.printStackTrace();
@@ -310,6 +367,7 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
         }
         return result;
 	}
+
 
 	private void setLayout(Sheet worksheet) {
 		Row rowHeader = worksheet.createRow(0);
@@ -327,9 +385,16 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
         worksheet.setColumnWidth(INTEREST_CALCULATION_DAYS_IN_YEAR_COL, 3000);
         worksheet.setColumnWidth(LOCKIN_PERIOD_COL, 3000);
         worksheet.setColumnWidth(LOCKIN_PERIOD_FREQUENCY_COL, 3000);
-        worksheet.setColumnWidth(DEPOSIT_AMOUNT_COL, 3000);
+        worksheet.setColumnWidth(RECURRING_DEPOSIT_AMOUNT_COL, 3000);
         worksheet.setColumnWidth(DEPOSIT_PERIOD_COL, 3000);
         worksheet.setColumnWidth(DEPOSIT_PERIOD_FREQUENCY_COL, 3000);
+        worksheet.setColumnWidth(DEPOSIT_FREQUENCY_COL, 3000);
+        worksheet.setColumnWidth(DEPOSIT_FREQUENCY_TYPE_COL, 3000);
+        worksheet.setColumnWidth(DEPOSIT_START_DATE_COL, 3000);
+        worksheet.setColumnWidth(IS_MANDATORY_DEPOSIT_COL, 3000);
+        worksheet.setColumnWidth(ALLOW_WITHDRAWAL_COL, 3000);
+        worksheet.setColumnWidth(ADJUST_ADVANCE_PAYMENTS_COL, 3000);
+        worksheet.setColumnWidth(FREQ_SAME_AS_GROUP_CENTER_COL, 3000);
 
         worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
         worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
@@ -346,11 +411,18 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
         writeString(INTEREST_CALCULATION_COL, rowHeader, "Interest Calculated*");
         writeString(INTEREST_CALCULATION_DAYS_IN_YEAR_COL, rowHeader, "# Days in Year*");
         writeString(LOCKIN_PERIOD_COL, rowHeader, "Locked In For");
-        writeString(DEPOSIT_AMOUNT_COL, rowHeader, "Deposit Amount");
+        writeString(RECURRING_DEPOSIT_AMOUNT_COL, rowHeader, "Recurring Deposit Amount");
         writeString(DEPOSIT_PERIOD_COL, rowHeader, "Deposit Period");
+        writeString(DEPOSIT_FREQUENCY_COL, rowHeader, "Deposit Frequency");
+        writeString(DEPOSIT_START_DATE_COL, rowHeader, "Deposit Start Date");
+        writeString(IS_MANDATORY_DEPOSIT_COL, rowHeader, "Is Mandatory Deposit?");
+        writeString(ALLOW_WITHDRAWAL_COL, rowHeader, "Allow Withdrawal?");
+        writeString(ADJUST_ADVANCE_PAYMENTS_COL, rowHeader, "Adjust Advance Payments Toward Future Installments ");
+        writeString(FREQ_SAME_AS_GROUP_CENTER_COL, rowHeader, "Deposit Frequency Same as Group/Center meeting");
 
         writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
         writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");
 	}
+
 
 }

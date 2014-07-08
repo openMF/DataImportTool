@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.Currency;
-import org.openmf.mifos.dataimport.dto.savings.FixedDepositProduct;
+import org.openmf.mifos.dataimport.dto.savings.RecurringDepositProduct;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
 import org.openmf.mifos.dataimport.populator.AbstractWorkbookPopulator;
@@ -21,9 +21,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-public class FixedDepositProductSheetPopulator extends AbstractWorkbookPopulator {
+public class RecurringDepositProductSheetPopulator extends AbstractWorkbookPopulator {
 	
-	private static final Logger logger = LoggerFactory.getLogger(FixedDepositProductSheetPopulator.class);
+private static final Logger logger = LoggerFactory.getLogger(RecurringDepositProductSheetPopulator.class);
 	
     private final RestClient client;
 	
@@ -52,10 +52,13 @@ public class FixedDepositProductSheetPopulator extends AbstractWorkbookPopulator
 	private static final int PRECLOSURE_INTEREST_TYPE_COL = 20;
 	private static final int IN_MULTIPLES_OF_DEPOSIT_TERM_COL = 21;
 	private static final int IN_MULTIPLES_OF_DEPOSIT_TERM_TYPE_COL = 22;
+	private static final int IS_MANDATORY_DEPOSIT_COL = 23;
+	private static final int ALLOW_WITHDRAWAL_COL = 24;
+	private static final int ADJUST_ADVANCE_COL = 25;
 	
-	private List<FixedDepositProduct> products;
+	private List<RecurringDepositProduct> products;
 	
-	public FixedDepositProductSheetPopulator(RestClient client) {
+	public RecurringDepositProductSheetPopulator(RestClient client) {
         this.client = client;
     }
 	
@@ -64,20 +67,20 @@ public class FixedDepositProductSheetPopulator extends AbstractWorkbookPopulator
     	Result result = new Result();
         try {
         	client.createAuthToken();
-        	products = new ArrayList<FixedDepositProduct>();
-            content = client.get("fixeddepositproducts");
+        	products = new ArrayList<RecurringDepositProduct>();
+            content = client.get("recurringdepositproducts");
             Gson gson = new Gson();
             JsonElement json = new JsonParser().parse(content);
             JsonArray array = json.getAsJsonArray();
             Iterator<JsonElement> iterator = array.iterator();
             while(iterator.hasNext()) {
             	json = iterator.next();
-            	FixedDepositProduct product = gson.fromJson(json, FixedDepositProduct.class);
+            	RecurringDepositProduct product = gson.fromJson(json, RecurringDepositProduct.class);
             	products.add(product);
             }
         } catch (Exception e) {
             result.addError(e.getMessage());
-            logger.error(e.getMessage());
+            e.printStackTrace();
         }
         return result;
     }
@@ -92,7 +95,7 @@ public class FixedDepositProductSheetPopulator extends AbstractWorkbookPopulator
 	            CellStyle dateCellStyle = workbook.createCellStyle();
 	            short df = workbook.createDataFormat().getFormat("dd-mmm");
 	            dateCellStyle.setDataFormat(df);
-	            for(FixedDepositProduct product : products) {
+	            for(RecurringDepositProduct product : products) {
 	            	Row row = productSheet.createRow(rowIndex++);
 	            	writeInt(ID_COL, row, product.getId());
 	            	writeString(NAME_COL, row, product.getName().trim().replaceAll("[ )(]", "_"));
@@ -123,7 +126,12 @@ public class FixedDepositProductSheetPopulator extends AbstractWorkbookPopulator
 	            		writeString(PRECLOSURE_INTEREST_TYPE_COL, row, product.getPreClosureInterestOnType().getValue());
 	            	if(product.getInMultiplesOfDepositTermType() != null)
 	            		writeString(IN_MULTIPLES_OF_DEPOSIT_TERM_TYPE_COL, row, product.getInMultiplesOfDepositTermType().getValue());
-	            	
+	            	if(product.getAllowWithdrawal() != null)
+	            		writeString(ALLOW_WITHDRAWAL_COL, row, product.getAllowWithdrawal());
+	            	if(product.getAdjustAdvanceTowardsFuturePayments() != null)
+	            		writeString(ADJUST_ADVANCE_COL, row, product.getAdjustAdvanceTowardsFuturePayments());
+	            	if(product.getIsMandatoryDeposit() != null)
+	            		writeString(IS_MANDATORY_DEPOSIT_COL, row, product.getIsMandatoryDeposit());
 	            	if(product.getLockinPeriodFrequency() != null)
 	            	    writeInt(LOCKIN_PERIOD_COL, row, product.getLockinPeriodFrequency());
 	            	if(product.getLockinPeriodFrequencyType() != null)
@@ -165,6 +173,9 @@ public class FixedDepositProductSheetPopulator extends AbstractWorkbookPopulator
         worksheet.setColumnWidth(PRECLOSURE_INTEREST_TYPE_COL, 3000);
         worksheet.setColumnWidth(IN_MULTIPLES_OF_DEPOSIT_TERM_COL, 3000);
         worksheet.setColumnWidth(IN_MULTIPLES_OF_DEPOSIT_TERM_TYPE_COL, 3000);
+        worksheet.setColumnWidth(IS_MANDATORY_DEPOSIT_COL, 3000);
+        worksheet.setColumnWidth(ALLOW_WITHDRAWAL_COL, 3000);
+        worksheet.setColumnWidth(ADJUST_ADVANCE_COL, 3000);
         
         writeString(ID_COL, rowHeader, "ID");
         writeString(NAME_COL, rowHeader, "Name");
@@ -189,10 +200,13 @@ public class FixedDepositProductSheetPopulator extends AbstractWorkbookPopulator
         writeString(PRECLOSURE_INTEREST_TYPE_COL, rowHeader, "Penal Interest Type");
         writeString(IN_MULTIPLES_OF_DEPOSIT_TERM_COL, rowHeader, "Multiples of Deposit Term");
         writeString(IN_MULTIPLES_OF_DEPOSIT_TERM_TYPE_COL, rowHeader, "Multiples of Deposit Term Type");
+        writeString(IS_MANDATORY_DEPOSIT_COL, rowHeader, "Is Mandatory Deposit?");
+        writeString(ALLOW_WITHDRAWAL_COL, rowHeader, "Allow Withdrawal?");
+        writeString(ADJUST_ADVANCE_COL, rowHeader, "Adjust Advance Towards Future Payments?");
 	}
 	
 	
-	public List<FixedDepositProduct> getProducts() {
+	public List<RecurringDepositProduct> getProducts() {
 		 return products;
 	 }
 	

@@ -109,7 +109,12 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
             interestCompoundingPeriodTypeId = "1";
         else if (interestCompoundingPeriodType.equalsIgnoreCase("Monthly"))
             interestCompoundingPeriodTypeId = "4";
-        else if (interestCompoundingPeriodType.equalsIgnoreCase("Semi-Annual")) interestCompoundingPeriodTypeId = "6";
+        else if (interestCompoundingPeriodType.equalsIgnoreCase("Quarterly"))
+            interestCompoundingPeriodTypeId = "5";
+        else if (interestCompoundingPeriodType.equalsIgnoreCase("Semi-Annual"))
+        	interestCompoundingPeriodTypeId = "6";
+        else if (interestCompoundingPeriodType.equalsIgnoreCase("Annually"))
+        	interestCompoundingPeriodTypeId = "7";
         String interestPostingPeriodType = readAsString(INTEREST_POSTING_PERIOD_COL, row);
         String interestPostingPeriodTypeId = "";
         if (interestPostingPeriodType.equalsIgnoreCase("Monthly"))
@@ -118,7 +123,8 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
             interestPostingPeriodTypeId = "5";
         else if (interestPostingPeriodType.equalsIgnoreCase("Annually"))
             interestPostingPeriodTypeId = "7";
-        else if (interestPostingPeriodType.equalsIgnoreCase("BiAnnual")) interestPostingPeriodTypeId = "6";
+        else if (interestPostingPeriodType.equalsIgnoreCase("BiAnnual"))
+        	interestPostingPeriodTypeId = "6";
         String interestCalculationType = readAsString(INTEREST_CALCULATION_COL, row);
         String interestCalculationTypeId = "";
         if (interestCalculationType.equalsIgnoreCase("Daily Balance"))
