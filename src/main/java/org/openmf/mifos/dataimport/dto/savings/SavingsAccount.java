@@ -37,8 +37,6 @@ public class SavingsAccount {
 
     private final String withdrawalFeeForTransfers;
 
-    private final String monthDayFormat;
-
     private final String dateFormat;
 
     private final String externalId;
@@ -73,7 +71,6 @@ public class SavingsAccount {
         this.status = status;
         this.dateFormat = "dd MMMM yyyy";
         this.locale = Locale.ENGLISH;
-        this.monthDayFormat = "dd MMM";
         this.externalId = externalId;
         this.charges = charges;
         this.allowOverdraft= allowOverdraft;
@@ -126,10 +123,6 @@ public class SavingsAccount {
 
     public String getDateFormat() {
         return dateFormat;
-    }
-
-    public String getMonthDayFormat() {
-        return monthDayFormat;
     }
 
     public Locale getLocale() {

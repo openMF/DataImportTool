@@ -47,7 +47,8 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int DEPOSIT_AMOUNT_COL = 13;
     private static final int DEPOSIT_PERIOD_COL = 14;
     private static final int DEPOSIT_PERIOD_FREQUENCY_COL = 15;
-   
+    private static final int EXTERNAL_ID_COL = 16;
+    
     private static final int LOOKUP_CLIENT_NAME_COL = 31;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 32;
     
@@ -150,7 +151,7 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
                     "360 Days", "365 Days" });
             DataValidationConstraint frequency = validationHelper.createExplicitListConstraint(new String[] { "Days",
                     "Weeks", "Months", "Years" });
-            DataValidationConstraint depositConstraint = validationHelper.createDecimalConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=INDIRECT(CONCATENATE(\"Min_Deposit_\",$C1))", "=INDIRECT(CONCATENATE(\"Max_Deposit_\",$C1))");
+            DataValidationConstraint depositConstraint = validationHelper.createDecimalConstraint(DataValidationConstraint.OperatorType.GREATER_OR_EQUAL, "=INDIRECT(CONCATENATE(\"Min_Deposit_\",$C1))", null);
 
             DataValidation officeValidation = validationHelper.createValidation(officeNameConstraint, officeNameRange);
             DataValidation clientValidation = validationHelper.createValidation(clientNameConstraint, clientNameRange);
@@ -330,6 +331,7 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
         worksheet.setColumnWidth(DEPOSIT_AMOUNT_COL, 3000);
         worksheet.setColumnWidth(DEPOSIT_PERIOD_COL, 3000);
         worksheet.setColumnWidth(DEPOSIT_PERIOD_FREQUENCY_COL, 3000);
+        worksheet.setColumnWidth(EXTERNAL_ID_COL, 3000);
 
         worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
         worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
@@ -348,6 +350,7 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
         writeString(LOCKIN_PERIOD_COL, rowHeader, "Locked In For");
         writeString(DEPOSIT_AMOUNT_COL, rowHeader, "Deposit Amount");
         writeString(DEPOSIT_PERIOD_COL, rowHeader, "Deposit Period");
+        writeString(EXTERNAL_ID_COL, rowHeader, "External Id");
 
         writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
         writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");

@@ -23,7 +23,7 @@ import com.google.gson.JsonParser;
 
 public class RecurringDepositImportHandler extends AbstractDataImportHandler{
 	
-	private static final Logger logger = LoggerFactory.getLogger(FixedDepositImportHandler.class);
+	private static final Logger logger = LoggerFactory.getLogger(RecurringDepositImportHandler.class);
 
     @SuppressWarnings("CPD-START")
     private static final int CLIENT_NAME_COL = 1;
@@ -48,10 +48,11 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
     private static final int ALLOW_WITHDRAWAL_COL = 20;
     private static final int FREQ_SAME_AS_GROUP_CENTER_COL = 21;
     private static final int ADJUST_ADVANCE_PAYMENTS_COL = 22;
+    private static final int EXTERNAL_ID_COL = 23;
 
-    private static final int STATUS_COL = 23;
-    private static final int SAVINGS_ID_COL = 24;
-    private static final int FAILURE_REPORT_COL = 25;
+    private static final int STATUS_COL = 24;
+    private static final int SAVINGS_ID_COL = 25;
+    private static final int FAILURE_REPORT_COL = 26;
 
 
     @SuppressWarnings("CPD-END")
@@ -71,7 +72,7 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
 	@Override
 	public Result parse() {
 		Result result = new Result();
-        Sheet savingsSheet = workbook.getSheet("FixedDeposit");
+        Sheet savingsSheet = workbook.getSheet("RecurringDeposit");
         Integer noOfEntries = getNumberOfRows(savingsSheet, 0);
         for (int rowIndex = 1; rowIndex < noOfEntries; rowIndex++) {
             Row row;
@@ -219,6 +220,7 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
         String inheritCalendar = readAsBoolean(FREQ_SAME_AS_GROUP_CENTER_COL, row).toString();
         String adjustAdvancePayments = readAsBoolean(ADJUST_ADVANCE_PAYMENTS_COL, row).toString();
         String clientName = readAsString(CLIENT_NAME_COL, row);
+        String externalId = readAsString(EXTERNAL_ID_COL, row);
 
         String clientId = getIdByName(workbook.getSheet("Clients"), clientName).toString();
         return new RecurringDepositAccount(clientId, productId, fieldOfficerId, submittedOnDate,
@@ -226,7 +228,7 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
                 interestCalculationDaysInYearTypeId, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
                 depositAmount, depositPeriod, depositPeriodFrequencyId, depositStartDate,
                 recurringFrequency, recurringFrequencyTypeId, inheritCalendar, isMandatoryDeposit,
-                allowWithdrawal, adjustAdvancePayments, row.getRowNum(), status);
+                allowWithdrawal, adjustAdvancePayments, externalId, row.getRowNum(), status);
     }
 
     private Approval parseAsSavingsApproval(Row row) {

@@ -45,18 +45,12 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
     private static final int LOCKIN_PERIOD_COL = 17;
     private static final int LOCKIN_PERIOD_FREQUENCY_COL = 18;
     private static final int APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS = 19;
-    private static final int STATUS_COL = 20;
-    private static final int SAVINGS_ID_COL = 21;
-    private static final int FAILURE_REPORT_COL = 22;
-    private static final int ALLOW_OVER_DRAFT_COL = 23;
-    private static final int OVER_DRAFT_LIMIT_COL = 24;
-    private static final int EXTERNAL_ID_COL = 25;
-    private static final int CHARGE_ID_1_COL = 26;
-    private static final int CHARGE_AMOUNT_1_COL = 27;
-    private static final int FEE_ON_MONTH_DAY_1_COL = 28;
-    private static final int CHARGE_ID_2_COL = 37;
-    private static final int CHARGE_AMOUNT_2_COL = 38;
-    private static final int FEE_ON_MONTH_DAY_2_COL = 39;
+    private static final int ALLOW_OVER_DRAFT_COL = 20;
+    private static final int OVER_DRAFT_LIMIT_COL = 21;
+    private static final int EXTERNAL_ID_COL = 22;
+    private static final int STATUS_COL = 23;
+    private static final int SAVINGS_ID_COL = 24;
+    private static final int FAILURE_REPORT_COL = 25;
 
 
     @SuppressWarnings("CPD-END")
@@ -153,17 +147,10 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         String externalId = readAsString(EXTERNAL_ID_COL, row);
         List<Charge> charges = new ArrayList<Charge>();
 
-        String charge1 = readAsString(CHARGE_ID_1_COL, row);
-        String charge2 = readAsString(CHARGE_ID_2_COL, row);
+        
         String allowOverdraft = readAsBoolean(ALLOW_OVER_DRAFT_COL, row).toString();
         String overdraftLimit = readAsString(OVER_DRAFT_LIMIT_COL, row);
 
-        if (!charge1.equalsIgnoreCase("")) {
-            charges.add(new Charge(readAsString(CHARGE_ID_1_COL, row), readAsString(CHARGE_AMOUNT_1_COL, row), readAsDate(FEE_ON_MONTH_DAY_1_COL, row)));
-        }
-        if (!charge2.equalsIgnoreCase("")) {
-            charges.add(new Charge(readAsString(CHARGE_ID_2_COL, row), readAsString(CHARGE_AMOUNT_2_COL, row), readAsDate(FEE_ON_MONTH_DAY_2_COL, row)));
-        }
 
         if (savingsType.equals("individual")) {
             String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();

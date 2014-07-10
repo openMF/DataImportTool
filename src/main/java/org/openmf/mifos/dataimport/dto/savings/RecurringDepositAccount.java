@@ -46,7 +46,9 @@ public class RecurringDepositAccount {
     
     private final String allowWithdrawal;
     
-    private final String adjustAdvanceTowardsFuturePayment;
+    private final String adjustAdvanceTowardsFuturePayments;
+    
+    private final String externalId;
 
     private final String dateFormat;
 
@@ -59,7 +61,8 @@ public class RecurringDepositAccount {
             String depositPeriod, String depositPeriodFrequencyId,
             String expectedFirstDepositOnDate, String recurringFrequency, String recurringFrequencyType,
             String isCalendarInherited, String isMandatoryDeposit, String allowWithdrawal,
-            String adjustAdvanceTowardsFuturePayment, Integer rowIndex, String status) {
+            String adjustAdvanceTowardsFuturePayments, String externalId,
+            Integer rowIndex, String status) {
         this.clientId = clientId;
         this.productId = productId;
         this.fieldOfficerId = fieldOfficerId;
@@ -77,9 +80,10 @@ public class RecurringDepositAccount {
         this.isCalendarInherited = isCalendarInherited;
         this.isMandatoryDeposit = isMandatoryDeposit;
         this.allowWithdrawal = allowWithdrawal;
-        this.adjustAdvanceTowardsFuturePayment = adjustAdvanceTowardsFuturePayment;
+        this.adjustAdvanceTowardsFuturePayments = adjustAdvanceTowardsFuturePayments;
         this.recurringFrequency = recurringFrequency;
         this.recurringFrequencyType = recurringFrequencyType;
+        this.externalId = externalId;
         this.rowIndex = rowIndex;
         this.status = status;
         this.dateFormat = "dd MMMM yyyy";
@@ -178,7 +182,11 @@ public class RecurringDepositAccount {
 		return allowWithdrawal;
 	}
 
-	public String getAdjustAdvanceTowardsFuturePayment() {
-		return adjustAdvanceTowardsFuturePayment;
+	public String getAdjustAdvanceTowardsFuturePayments() {
+		return adjustAdvanceTowardsFuturePayments;
+	}
+
+	public String getExternalId() {
+		return externalId;
 	}
 }

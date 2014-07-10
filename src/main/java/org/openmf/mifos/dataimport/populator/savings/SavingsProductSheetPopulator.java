@@ -42,6 +42,9 @@ private static final Logger logger = LoggerFactory.getLogger(SavingsProductSheet
 	private static final int CURRENCY_COL = 10;
 	private static final int DECIMAL_PLACES_COL = 11;
 	private static final int IN_MULTIPLES_OF_COL = 12;
+	private static final int WITHDRAWAL_FEE_COL = 13;
+	private static final int ALLOW_OVERDRAFT_COL = 14;
+	private static final int OVERDRAFT_LIMIT_COL = 15;
 	
 	private List<SavingsProduct> products;
 	
@@ -102,6 +105,10 @@ private static final Logger logger = LoggerFactory.getLogger(SavingsProductSheet
 	            	writeInt(DECIMAL_PLACES_COL, row, currency.getDecimalPlaces());
 	            	if(currency.getInMultiplesOf() != null)
 	            		writeInt(IN_MULTIPLES_OF_COL, row, currency.getInMultiplesOf());
+	            	writeString(WITHDRAWAL_FEE_COL, row, product.getWithdrawalFeeForTransfers());
+	            	writeString(ALLOW_OVERDRAFT_COL, row, product.getAllowOverdraft());
+	            	if(product.getOverdraftLimit() != null)
+	            	    writeInt(OVERDRAFT_LIMIT_COL, row, product.getOverdraftLimit());
 	            }
 	        	productSheet.protectSheet("");
     	} catch (RuntimeException re) {
@@ -127,6 +134,9 @@ private static final Logger logger = LoggerFactory.getLogger(SavingsProductSheet
         worksheet.setColumnWidth(CURRENCY_COL, 2000);
         worksheet.setColumnWidth(DECIMAL_PLACES_COL, 3000);
         worksheet.setColumnWidth(IN_MULTIPLES_OF_COL, 3500);
+        worksheet.setColumnWidth(WITHDRAWAL_FEE_COL, 3500);
+        worksheet.setColumnWidth(ALLOW_OVERDRAFT_COL, 3500);
+        worksheet.setColumnWidth(OVERDRAFT_LIMIT_COL, 3500);
         
         writeString(ID_COL, rowHeader, "ID");
         writeString(NAME_COL, rowHeader, "Name");
@@ -141,6 +151,9 @@ private static final Logger logger = LoggerFactory.getLogger(SavingsProductSheet
         writeString(CURRENCY_COL, rowHeader, "Currency");
         writeString(DECIMAL_PLACES_COL, rowHeader, "Decimal Places");
         writeString(IN_MULTIPLES_OF_COL, rowHeader, "In Multiples Of");
+        writeString(WITHDRAWAL_FEE_COL, rowHeader, "Withdrawal Fee for Transfers?");
+        writeString(ALLOW_OVERDRAFT_COL, rowHeader, "Apply Overdraft");
+        writeString(OVERDRAFT_LIMIT_COL, rowHeader, "Overdraft Limit");
 	}
 	
 	public List<SavingsProduct> getProducts() {

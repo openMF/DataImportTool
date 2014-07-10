@@ -9,6 +9,7 @@ import org.openmf.mifos.dataimport.handler.client.GroupDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanRepaymentDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.FixedDepositImportHandler;
+import org.openmf.mifos.dataimport.handler.savings.RecurringDepositImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.SavingsDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.SavingsTransactionDataImportHandler;
 import org.openmf.mifos.dataimport.http.MifosRestClient;
@@ -34,6 +35,8 @@ public class ImportHandlerFactory {
     	    return new SavingsTransactionDataImportHandler(workbook, new MifosRestClient());
         } else if(workbook.getSheetIndex("FixedDeposit") == 0) {
         	return new FixedDepositImportHandler(workbook, new MifosRestClient());
+        } else if(workbook.getSheetIndex("RecurringDeposit") == 0) {
+        	return new RecurringDepositImportHandler(workbook, new MifosRestClient());
         }
         throw new IllegalArgumentException("No work sheet found for processing : active sheet " + workbook.getSheetName(0));
     }

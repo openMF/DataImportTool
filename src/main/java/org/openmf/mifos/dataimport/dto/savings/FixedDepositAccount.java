@@ -33,6 +33,8 @@ public class FixedDepositAccount {
     private final String depositPeriod;
 
     private final String depositPeriodFrequencyId;
+    
+    private final String externalId;
 
     private final String dateFormat;
 
@@ -42,7 +44,7 @@ public class FixedDepositAccount {
             String interestCompoundingPeriodType, String interestPostingPeriodType,
             String interestCalculationType, String interestCalculationDaysInYearType,
             String lockinPeriodFrequency, String lockinPeriodFrequencyType, String depositAmount, String depositPeriod,
-            String depositPeriodFrequencyId, Integer rowIndex, String status) {
+            String depositPeriodFrequencyId, String externalId, Integer rowIndex, String status) {
         this.clientId = clientId;
         this.productId = productId;
         this.fieldOfficerId = fieldOfficerId;
@@ -56,6 +58,7 @@ public class FixedDepositAccount {
         this.depositAmount = depositAmount;
         this.depositPeriod = depositPeriod;
         this.depositPeriodFrequencyId = depositPeriodFrequencyId;
+        this.externalId = externalId;
         this.rowIndex = rowIndex;
         this.status = status;
         this.dateFormat = "dd MMMM yyyy";
@@ -128,5 +131,9 @@ public class FixedDepositAccount {
 
 	public String getDepositPeriodFrequencyId() {
 		return depositPeriodFrequencyId;
+	}
+
+	public String getExternalId() {
+		return externalId;
 	}
 }

@@ -41,9 +41,10 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
     private static final int DEPOSIT_AMOUNT_COL = 13;
     private static final int DEPOSIT_PERIOD_COL = 14;
     private static final int DEPOSIT_PERIOD_FREQUENCY_COL = 15;
-    private static final int STATUS_COL = 16;
-    private static final int SAVINGS_ID_COL = 17;
-    private static final int FAILURE_REPORT_COL = 18;
+    private static final int EXTERNAL_ID_COL = 16;
+    private static final int STATUS_COL = 17;
+    private static final int SAVINGS_ID_COL = 18;
+    private static final int FAILURE_REPORT_COL = 19;
 
 
     @SuppressWarnings("CPD-END")
@@ -194,14 +195,14 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         else if (depositPeriodFrequency.equalsIgnoreCase("Months"))
         	depositPeriodFrequencyId = "2";
         else if (depositPeriodFrequency.equalsIgnoreCase("Years")) depositPeriodFrequencyId = "3";
-         	
+        String externalId = readAsString(EXTERNAL_ID_COL, row); 	
         String clientName = readAsString(CLIENT_NAME_COL, row);
 
         String clientId = getIdByName(workbook.getSheet("Clients"), clientName).toString();
         return new FixedDepositAccount(clientId, productId, fieldOfficerId, submittedOnDate,
                 interestCompoundingPeriodTypeId, interestPostingPeriodTypeId, interestCalculationTypeId,
                 interestCalculationDaysInYearTypeId, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
-                depositAmount, depositPeriod, depositPeriodFrequencyId, row.getRowNum(), status);
+                depositAmount, depositPeriod, depositPeriodFrequencyId, externalId, row.getRowNum(), status);
     }
 
     private Approval parseAsSavingsApproval(Row row) {

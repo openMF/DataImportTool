@@ -54,7 +54,7 @@ public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator
     private static final int ALLOW_WITHDRAWAL_COL = 20;
     private static final int FREQ_SAME_AS_GROUP_CENTER_COL = 21;
     private static final int ADJUST_ADVANCE_PAYMENTS_COL = 22;
-    
+    private static final int EXTERNAL_ID_COL = 23;
     
    
     private static final int LOOKUP_CLIENT_NAME_COL = 31;
@@ -171,7 +171,7 @@ public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator
                     "360 Days", "365 Days" });
             DataValidationConstraint frequency = validationHelper.createExplicitListConstraint(new String[] { "Days",
                     "Weeks", "Months", "Years" });
-            DataValidationConstraint depositConstraint = validationHelper.createDecimalConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=INDIRECT(CONCATENATE(\"Min_Deposit_\",$C1))", "=INDIRECT(CONCATENATE(\"Max_Deposit_\",$C1))");
+            DataValidationConstraint depositConstraint = validationHelper.createDecimalConstraint(DataValidationConstraint.OperatorType.GREATER_OR_EQUAL, "=INDIRECT(CONCATENATE(\"Min_Deposit_\",$C1))", "");
             DataValidationConstraint booleanConstraint = validationHelper.createExplicitListConstraint(new String[] {
                     "True", "False" });
             DataValidationConstraint depositStartDateConstraint = validationHelper.createDateConstraint(
@@ -395,6 +395,7 @@ public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator
         worksheet.setColumnWidth(ALLOW_WITHDRAWAL_COL, 3000);
         worksheet.setColumnWidth(ADJUST_ADVANCE_PAYMENTS_COL, 3000);
         worksheet.setColumnWidth(FREQ_SAME_AS_GROUP_CENTER_COL, 3000);
+        worksheet.setColumnWidth(EXTERNAL_ID_COL, 3000);
 
         worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
         worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
@@ -419,6 +420,7 @@ public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator
         writeString(ALLOW_WITHDRAWAL_COL, rowHeader, "Allow Withdrawal?");
         writeString(ADJUST_ADVANCE_PAYMENTS_COL, rowHeader, "Adjust Advance Payments Toward Future Installments ");
         writeString(FREQ_SAME_AS_GROUP_CENTER_COL, rowHeader, "Deposit Frequency Same as Group/Center meeting");
+        writeString(EXTERNAL_ID_COL, rowHeader, "External Id");
 
         writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
         writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");
