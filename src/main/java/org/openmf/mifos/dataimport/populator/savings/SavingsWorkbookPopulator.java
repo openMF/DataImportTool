@@ -57,17 +57,11 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int LOCKIN_PERIOD_COL = 17;
     private static final int LOCKIN_PERIOD_FREQUENCY_COL = 18;
     private static final int APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS = 19;
-    private static final int ALLOW_OVER_DRAFT_COL = 23;
-    private static final int OVER_DRAFT_LIMIT_COL= 24;
-    private static final int EXTERNAL_ID_COL = 25;
-    private static final int CHARGE_ID_1_COL = 26;
-    private static final int CHARGE_AMOUNT_1_COL = 27;
-    private static final int FEE_ON_MONTH_DAY_1_COL = 28;
+    private static final int ALLOW_OVER_DRAFT_COL = 20;
+    private static final int OVER_DRAFT_LIMIT_COL= 21;
+    private static final int EXTERNAL_ID_COL = 22;
     private static final int LOOKUP_CLIENT_NAME_COL = 31;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 32;
-    private static final int CHARGE_ID_2_COL = 37;
-    private static final int CHARGE_AMOUNT_2_COL = 38;
-    private static final int FEE_ON_MONTH_DAY_2_COL = 39;
 
 
     @SuppressWarnings("CPD-END")
@@ -136,14 +130,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
         worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
         worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
         worksheet.setColumnWidth(EXTERNAL_ID_COL, 6000);
-
-        worksheet.setColumnWidth(CHARGE_ID_1_COL, 6000);
-        worksheet.setColumnWidth(CHARGE_AMOUNT_1_COL, 6000);
-        worksheet.setColumnWidth(FEE_ON_MONTH_DAY_1_COL, 6000);
-        
-        worksheet.setColumnWidth(CHARGE_ID_2_COL, 6000);
-        worksheet.setColumnWidth(CHARGE_AMOUNT_2_COL, 6000);
-        worksheet.setColumnWidth(FEE_ON_MONTH_DAY_2_COL, 6000);
         
         worksheet.setColumnWidth(ALLOW_OVER_DRAFT_COL, 6000);
         worksheet.setColumnWidth(OVER_DRAFT_LIMIT_COL, 6000);
@@ -171,13 +157,6 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
         writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
         writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");
         writeString(EXTERNAL_ID_COL, rowHeader, "External Id");
-
-        writeString(CHARGE_ID_1_COL, rowHeader, "Savings Fee Id 1 ");
-        writeString(CHARGE_AMOUNT_1_COL, rowHeader, "Savings Fee Amount ");
-        writeString(FEE_ON_MONTH_DAY_1_COL, rowHeader, "Savings Fee on Date ");
-        writeString(CHARGE_ID_2_COL, rowHeader, "Savings Fee Id 2 ");
-        writeString(CHARGE_AMOUNT_2_COL, rowHeader, "Savings Fee Amount_2 ");
-        writeString(FEE_ON_MONTH_DAY_2_COL, rowHeader, "Savings Fee on Date_2 ");
         
         writeString(ALLOW_OVER_DRAFT_COL, rowHeader, "Is Overdraft Allowed ");
         writeString(OVER_DRAFT_LIMIT_COL, rowHeader,"  Maximum Overdraft Amount Limit ");
@@ -215,20 +194,8 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
                     LOCKIN_PERIOD_FREQUENCY_COL, LOCKIN_PERIOD_FREQUENCY_COL);
             CellRangeAddressList applyWithdrawalFeeForTransfersRange = new CellRangeAddressList(1,
                     SpreadsheetVersion.EXCEL97.getLastRowIndex(), APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS);
-//            CellRangeAddressList chargeIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_1_COL,
-//                    CHARGE_ID_1_COL);
-//            CellRangeAddressList chargeamountRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-//                    CHARGE_AMOUNT_1_COL, CHARGE_AMOUNT_1_COL);
-//            CellRangeAddressList feeOnMonthDayRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-//                    FEE_ON_MONTH_DAY_1_COL, FEE_ON_MONTH_DAY_1_COL);
-//            CellRangeAddressList chargeId2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2_COL,
-//                    CHARGE_ID_2_COL);
-//            CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-//                    CHARGE_AMOUNT_2_COL, CHARGE_AMOUNT_2_COL);
-//            CellRangeAddressList feeOnMonthDay2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(),
-//                    FEE_ON_MONTH_DAY_2_COL, FEE_ON_MONTH_DAY_2_COL);
             CellRangeAddressList allowOverdraftRange = new CellRangeAddressList(1,SpreadsheetVersion.EXCEL97.getLastRowIndex(),ALLOW_OVER_DRAFT_COL,ALLOW_OVER_DRAFT_COL);
-//            CellRangeAddressList overdraftLimitRange = new CellRangeAddressList(1,SpreadsheetVersion.EXCEL97.getLastRowIndex(),OVER_DRAFT_LIMIT_COL,OVER_DRAFT_LIMIT_COL);
+           
              
 
             DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet) worksheet);
@@ -342,6 +309,12 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
                         + "))),\"\",INDIRECT(CONCATENATE(\"Lockin_Period_\",$D" + (rowNo + 1) + ")))");
                 writeFormula(LOCKIN_PERIOD_FREQUENCY_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Lockin_Frequency_\",$D" + (rowNo + 1)
                         + "))),\"\",INDIRECT(CONCATENATE(\"Lockin_Frequency_\",$D" + (rowNo + 1) + ")))");
+                writeFormula(APPLY_WITHDRAWAL_FEE_FOR_TRANSFERS, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Withdrawal_Fee_\",$D" + (rowNo + 1)
+                        + "))),\"\",INDIRECT(CONCATENATE(\"Withdrawal_Fee_\",$D" + (rowNo + 1) + ")))");
+                writeFormula(ALLOW_OVER_DRAFT_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Overdraft_\",$D" + (rowNo + 1)
+                        + "))),\"\",INDIRECT(CONCATENATE(\"Overdraft_\",$D" + (rowNo + 1) + ")))");
+                writeFormula(OVER_DRAFT_LIMIT_COL, row, "IF(ISERROR(INDIRECT(CONCATENATE(\"Overdraft_Limit_\",$D" + (rowNo + 1)
+                        + "))),\"\",INDIRECT(CONCATENATE(\"Overdraft_Limit_\",$D" + (rowNo + 1) + ")))");
             }
         } catch (RuntimeException re) {
             logger.error(re.getMessage());
@@ -408,6 +381,9 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
             Name currencyName = savingsWorkbook.createName();
             Name decimalPlacesName = savingsWorkbook.createName();
             Name inMultiplesOfName = savingsWorkbook.createName();
+            Name withdrawalFeeName = savingsWorkbook.createName();
+            Name allowOverdraftName = savingsWorkbook.createName();
+            Name overdraftLimitName = savingsWorkbook.createName();
             SavingsProduct product = products.get(i);
             String productName = product.getName().replaceAll("[ ]", "_");
             if (product.getNominalAnnualInterestRate() != null) {
@@ -420,12 +396,21 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
             daysInYearName.setNameName("Days_In_Year_" + productName);
             currencyName.setNameName("Currency_" + productName);
             decimalPlacesName.setNameName("Decimal_Places_" + productName);
+            withdrawalFeeName.setNameName("Withdrawal_Fee_" + productName);
+            allowOverdraftName.setNameName("Overdraft_" + productName);
+            
             interestCompoundingPeriodName.setRefersToFormula("Products!$D$" + (i + 2));
             interestPostingPeriodName.setRefersToFormula("Products!$E$" + (i + 2));
             interestCalculationName.setRefersToFormula("Products!$F$" + (i + 2));
             daysInYearName.setRefersToFormula("Products!$G$" + (i + 2));
             currencyName.setRefersToFormula("Products!$K$" + (i + 2));
             decimalPlacesName.setRefersToFormula("Products!$L$" + (i + 2));
+            withdrawalFeeName.setRefersToFormula("Products!$N$" + (i + 2));
+            allowOverdraftName.setRefersToFormula("Products!$O$" + (i + 2));
+            if (product.getOverdraftLimit() != null) {
+            	overdraftLimitName.setNameName("Overdraft_Limit_" + productName);
+            	overdraftLimitName.setRefersToFormula("Products!$P$" + (i + 2));
+            }
             if (product.getMinRequiredOpeningBalance() != null) {
                 minOpeningBalanceName.setNameName("Min_Balance_" + productName);
                 minOpeningBalanceName.setRefersToFormula("Products!$H$" + (i + 2));

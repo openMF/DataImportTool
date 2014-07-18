@@ -41,9 +41,10 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
     private static final int DEPOSIT_AMOUNT_COL = 13;
     private static final int DEPOSIT_PERIOD_COL = 14;
     private static final int DEPOSIT_PERIOD_FREQUENCY_COL = 15;
-    private static final int STATUS_COL = 16;
-    private static final int SAVINGS_ID_COL = 17;
-    private static final int FAILURE_REPORT_COL = 18;
+    private static final int EXTERNAL_ID_COL = 16;
+    private static final int STATUS_COL = 17;
+    private static final int SAVINGS_ID_COL = 18;
+    private static final int FAILURE_REPORT_COL = 19;
 
 
     @SuppressWarnings("CPD-END")
@@ -75,7 +76,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
                     activationDates.add(parseAsSavingsActivation(row));
                 }
             } catch (RuntimeException re) {
-                logger.error("row = " + rowIndex, re);
+                re.printStackTrace();
                 result.addError("Row = " + rowIndex + " , " + re.getMessage());
             }
         }
@@ -147,7 +148,12 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
             interestCompoundingPeriodTypeId = "1";
         else if (interestCompoundingPeriodType.equalsIgnoreCase("Monthly"))
             interestCompoundingPeriodTypeId = "4";
-        else if (interestCompoundingPeriodType.equalsIgnoreCase("Semi-Annual")) interestCompoundingPeriodTypeId = "6";
+        else if (interestCompoundingPeriodType.equalsIgnoreCase("Quarterly"))
+            interestCompoundingPeriodTypeId = "5";
+        else if (interestCompoundingPeriodType.equalsIgnoreCase("Semi-Annual"))
+        	interestCompoundingPeriodTypeId = "6";
+        else if (interestCompoundingPeriodType.equalsIgnoreCase("Annually"))
+        	interestCompoundingPeriodTypeId = "7";
         String interestPostingPeriodType = readAsString(INTEREST_POSTING_PERIOD_COL, row);
         String interestPostingPeriodTypeId = "";
         if (interestPostingPeriodType.equalsIgnoreCase("Monthly"))
@@ -156,7 +162,8 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
             interestPostingPeriodTypeId = "5";
         else if (interestPostingPeriodType.equalsIgnoreCase("Annually"))
             interestPostingPeriodTypeId = "7";
-        else if (interestPostingPeriodType.equalsIgnoreCase("BiAnnual")) interestPostingPeriodTypeId = "6";
+        else if (interestPostingPeriodType.equalsIgnoreCase("BiAnnual"))
+        	interestPostingPeriodTypeId = "6";
         String interestCalculationType = readAsString(INTEREST_CALCULATION_COL, row);
         String interestCalculationTypeId = "";
         if (interestCalculationType.equalsIgnoreCase("Daily Balance"))
@@ -188,14 +195,14 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         else if (depositPeriodFrequency.equalsIgnoreCase("Months"))
         	depositPeriodFrequencyId = "2";
         else if (depositPeriodFrequency.equalsIgnoreCase("Years")) depositPeriodFrequencyId = "3";
-         	
+        String externalId = readAsString(EXTERNAL_ID_COL, row); 	
         String clientName = readAsString(CLIENT_NAME_COL, row);
 
         String clientId = getIdByName(workbook.getSheet("Clients"), clientName).toString();
         return new FixedDepositAccount(clientId, productId, fieldOfficerId, submittedOnDate,
                 interestCompoundingPeriodTypeId, interestPostingPeriodTypeId, interestCalculationTypeId,
                 interestCalculationDaysInYearTypeId, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
-                depositAmount, depositPeriod, depositPeriodFrequencyId, row.getRowNum(), status);
+                depositAmount, depositPeriod, depositPeriodFrequencyId, externalId, row.getRowNum(), status);
     }
 
     private Approval parseAsSavingsApproval(Row row) {

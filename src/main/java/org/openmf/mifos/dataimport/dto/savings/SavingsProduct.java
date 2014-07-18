@@ -1,7 +1,5 @@
 package org.openmf.mifos.dataimport.dto.savings;
 
-import java.util.ArrayList;
-
 import org.openmf.mifos.dataimport.dto.Currency;
 import org.openmf.mifos.dataimport.dto.Type;
 
@@ -29,18 +27,16 @@ public class SavingsProduct {
 
     private final Type lockinPeriodFrequencyType;
 
-    private final Double withdrawalFeeAmount;
-
-    private final Type withdrawalFeeType;
-
-    private final Double annualFeeAmount;
-
-    private final ArrayList<Integer> annualFeeOnMonthDay;
+    private final String withdrawalFeeForTransfers;
+    
+    private final String allowOverdraft;
+    
+    private final Integer overdraftLimit;
 
     public SavingsProduct(Integer id, String name, Currency currency, Double nominalAnnualInterestRate, Type interestCompoundingPeriodType,
             Type interestPostingPeriodType, Type interestCalculationType, Type interestCalculationDaysInYearType,
-            Double minRequiredOpeningBalance, Integer lockinPeriodFrequency, Type lockinPeriodFrequencyType, Double withdrawalFeeAmount,
-            Type withdrawalFeeType, Double annualFeeAmount, ArrayList<Integer> annualFeeOnMonthDay) {
+            Double minRequiredOpeningBalance, Integer lockinPeriodFrequency, Type lockinPeriodFrequencyType, String withdrawalFeeForTransfers,
+            String allowOverdraft, Integer overdraftLimit) {
         this.id = id;
         this.name = name;
         this.currency = currency;
@@ -52,10 +48,9 @@ public class SavingsProduct {
         this.minRequiredOpeningBalance = minRequiredOpeningBalance;
         this.lockinPeriodFrequency = lockinPeriodFrequency;
         this.lockinPeriodFrequencyType = lockinPeriodFrequencyType;
-        this.withdrawalFeeAmount = withdrawalFeeAmount;
-        this.withdrawalFeeType = withdrawalFeeType;
-        this.annualFeeAmount = annualFeeAmount;
-        this.annualFeeOnMonthDay = annualFeeOnMonthDay;
+        this.withdrawalFeeForTransfers = withdrawalFeeForTransfers;
+        this.overdraftLimit = overdraftLimit;
+        this.allowOverdraft = allowOverdraft;
     }
 
     public Integer getId() {
@@ -102,19 +97,15 @@ public class SavingsProduct {
         return this.lockinPeriodFrequencyType;
     }
 
-    public Double getWithdrawalFeeAmount() {
-        return this.withdrawalFeeAmount;
-    }
+	public String getWithdrawalFeeForTransfers() {
+		return withdrawalFeeForTransfers;
+	}
 
-    public Type getWithdrawalFeeType() {
-        return this.withdrawalFeeType;
-    }
+	public String getAllowOverdraft() {
+		return allowOverdraft;
+	}
 
-    public Double getAnnualFeeAmount() {
-        return this.annualFeeAmount;
-    }
-
-    public ArrayList<Integer> getAnnualFeeOnMonthDay() {
-        return this.annualFeeOnMonthDay;
-    }
+	public Integer getOverdraftLimit() {
+		return overdraftLimit;
+	}
 }

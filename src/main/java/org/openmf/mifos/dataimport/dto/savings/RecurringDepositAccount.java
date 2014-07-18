@@ -2,8 +2,8 @@ package org.openmf.mifos.dataimport.dto.savings;
 
 import java.util.Locale;
 
-public class FixedDepositAccount {
-	
+public class RecurringDepositAccount {
+
 	private final transient Integer rowIndex;
 
     private final transient String status;
@@ -28,11 +28,25 @@ public class FixedDepositAccount {
 
     private final String lockinPeriodFrequencyType;
     
-    private final String depositAmount;
+    private final String mandatoryRecommendedDepositAmount;
 
     private final String depositPeriod;
 
     private final String depositPeriodFrequencyId;
+    
+    private final String expectedFirstDepositOnDate;
+    
+    private final String recurringFrequency;
+    
+    private final String recurringFrequencyType;
+    
+    private final String isCalendarInherited;
+    
+    private final String isMandatoryDeposit;
+    
+    private final String allowWithdrawal;
+    
+    private final String adjustAdvanceTowardsFuturePayments;
     
     private final String externalId;
 
@@ -40,11 +54,15 @@ public class FixedDepositAccount {
 
     private final Locale locale;
 
-    public FixedDepositAccount(String clientId, String productId, String fieldOfficerId, String submittedOnDate,
+    public RecurringDepositAccount(String clientId, String productId, String fieldOfficerId, String submittedOnDate,
             String interestCompoundingPeriodType, String interestPostingPeriodType,
             String interestCalculationType, String interestCalculationDaysInYearType,
-            String lockinPeriodFrequency, String lockinPeriodFrequencyType, String depositAmount, String depositPeriod,
-            String depositPeriodFrequencyId, String externalId, Integer rowIndex, String status) {
+            String lockinPeriodFrequency, String lockinPeriodFrequencyType, String mandatoryRecommendedDepositAmount,
+            String depositPeriod, String depositPeriodFrequencyId,
+            String expectedFirstDepositOnDate, String recurringFrequency, String recurringFrequencyType,
+            String isCalendarInherited, String isMandatoryDeposit, String allowWithdrawal,
+            String adjustAdvanceTowardsFuturePayments, String externalId,
+            Integer rowIndex, String status) {
         this.clientId = clientId;
         this.productId = productId;
         this.fieldOfficerId = fieldOfficerId;
@@ -55,9 +73,16 @@ public class FixedDepositAccount {
         this.interestCalculationDaysInYearType = interestCalculationDaysInYearType;
         this.lockinPeriodFrequency = lockinPeriodFrequency;
         this.lockinPeriodFrequencyType = lockinPeriodFrequencyType;
-        this.depositAmount = depositAmount;
+        this.mandatoryRecommendedDepositAmount = mandatoryRecommendedDepositAmount;
         this.depositPeriod = depositPeriod;
         this.depositPeriodFrequencyId = depositPeriodFrequencyId;
+        this.expectedFirstDepositOnDate = expectedFirstDepositOnDate;
+        this.isCalendarInherited = isCalendarInherited;
+        this.isMandatoryDeposit = isMandatoryDeposit;
+        this.allowWithdrawal = allowWithdrawal;
+        this.adjustAdvanceTowardsFuturePayments = adjustAdvanceTowardsFuturePayments;
+        this.recurringFrequency = recurringFrequency;
+        this.recurringFrequencyType = recurringFrequencyType;
         this.externalId = externalId;
         this.rowIndex = rowIndex;
         this.status = status;
@@ -121,8 +146,8 @@ public class FixedDepositAccount {
         return submittedOnDate;
     }
 
-	public String getDepositAmount() {
-		return depositAmount;
+	public String getMandatoryRecommendedDepositAmount() {
+		return mandatoryRecommendedDepositAmount;
 	}
 
 	public String getDepositPeriod() {
@@ -131,6 +156,34 @@ public class FixedDepositAccount {
 
 	public String getDepositPeriodFrequencyId() {
 		return depositPeriodFrequencyId;
+	}
+
+	public String getExpectedFirstDepositOnDate() {
+		return expectedFirstDepositOnDate;
+	}
+
+	public String getRecurringFrequency() {
+		return recurringFrequency;
+	}
+
+	public String getIsCalendarInherited() {
+		return isCalendarInherited;
+	}
+
+	public String getRecurringFrequencyType() {
+		return recurringFrequencyType;
+	}
+
+	public String getIsMandatoryDeposit() {
+		return isMandatoryDeposit;
+	}
+
+	public String getAllowWithdrawal() {
+		return allowWithdrawal;
+	}
+
+	public String getAdjustAdvanceTowardsFuturePayments() {
+		return adjustAdvanceTowardsFuturePayments;
 	}
 
 	public String getExternalId() {
