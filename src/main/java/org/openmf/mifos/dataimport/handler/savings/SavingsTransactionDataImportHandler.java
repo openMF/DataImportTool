@@ -37,7 +37,7 @@ public class SavingsTransactionDataImportHandler extends AbstractDataImportHandl
     private static final int ROUTING_CODE_COL = 11;	
     private static final int RECEIPT_NO_COL = 12;
     private static final int BANK_NO_COL = 13;
-    private static final int STATUS_COL = 13;
+    private static final int STATUS_COL = 14;
     
     public SavingsTransactionDataImportHandler(Workbook workbook, RestClient client) {
         this.workbook = workbook;
@@ -109,7 +109,7 @@ public class SavingsTransactionDataImportHandler extends AbstractDataImportHandl
         }
         savingsTransactionSheet.setColumnWidth(STATUS_COL, 15000);
     	writeString(STATUS_COL, savingsTransactionSheet.getRow(0), "Status");
-        return result;
+		return result;
     }
     
     public List<Transaction> getSavingsTransactions() {

@@ -205,6 +205,20 @@ fieldset {border: 0;margin: 0 0 15px 0;}
 			</form>
 		</div>
 	</div>
+	<div class="step clearfix">
+		<div class="stepCount">Step 14:</div> 
+		<div class="stepContent">
+			<p>Download template to help Add Journal Entries. </p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="journalentries" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
 	
 </div>
 </div>

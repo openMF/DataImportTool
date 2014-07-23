@@ -3,6 +3,7 @@ package org.openmf.mifos.dataimport.populator;
 import java.io.IOException;
 
 import org.openmf.mifos.dataimport.http.MifosRestClient;
+import org.openmf.mifos.dataimport.populator.accounting.AddJournalEntriesWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.client.CenterWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.client.ClientWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.client.GroupWorkbookPopulator;
@@ -46,6 +47,8 @@ public class WorkbookPopulatorFactory {
 	        else if(template.trim().equals("recurringDeposit"))
 	        	return new RecurringDepositWorkbookPopulator(new OfficeSheetPopulator(restClient), new ClientSheetPopulator(restClient),
 	        			 new PersonnelSheetPopulator(Boolean.TRUE, restClient), new RecurringDepositProductSheetPopulator(restClient));
+	        else if(template.trim().equals("journalentries"))
+	        	return new AddJournalEntriesWorkbookPopulator(new OfficeSheetPopulator(restClient), new GlAccountSheetPopulator(restClient),new ExtrasSheetPopulator(restClient));
 	        throw new IllegalArgumentException("Can't find populator.");
 	    }
 }
