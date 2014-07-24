@@ -48,6 +48,7 @@ public class OfficeSheetPopulator extends AbstractWorkbookPopulator {
         } catch (Exception e) {
             result.addError(e.getMessage());
             logger.error(e.getMessage());
+            e.printStackTrace();
         }
         return result;
     }
@@ -65,6 +66,7 @@ public class OfficeSheetPopulator extends AbstractWorkbookPopulator {
     	} catch (Exception e) {
     		result.addError(e.getMessage());
     		logger.error(e.getMessage());
+    		 e.printStackTrace();
     	}
         return result;
     }

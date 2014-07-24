@@ -3,6 +3,7 @@ package org.openmf.mifos.dataimport.handler;
 import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.openmf.mifos.dataimport.handler.accounting.AddJournalEntriesHandler;
 import org.openmf.mifos.dataimport.handler.client.CenterDataImportHandler;
 import org.openmf.mifos.dataimport.handler.client.ClientDataImportHandler;
 import org.openmf.mifos.dataimport.handler.client.GroupDataImportHandler;
@@ -37,7 +38,10 @@ public class ImportHandlerFactory {
         	return new FixedDepositImportHandler(workbook, new MifosRestClient());
         } else if(workbook.getSheetIndex("RecurringDeposit") == 0) {
         	return new RecurringDepositImportHandler(workbook, new MifosRestClient());
+        }else if(workbook.getSheetIndex("AddJournalEntries") == 0) {
+        	return new AddJournalEntriesHandler(workbook, new MifosRestClient());
         }
+        
         throw new IllegalArgumentException("No work sheet found for processing : active sheet " + workbook.getSheetName(0));
     }
 

@@ -147,7 +147,9 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
                             return ((Double)row.getCell(cell.getColumnIndex() - 1).getNumericCellValue()).intValue(); 
                     	else if(sheetName.equals("Extras"))
                     		return ((Double)row.getCell(cell.getColumnIndex() - 1).getNumericCellValue()).intValue();
-                    	else if(sheetName.equals("Clients") || sheetName.equals("Center")|| sheetName.equals("Groups") || sheetName.equals("Staff")) 
+                    	else if(sheetName.equals("GlAccounts"))
+                    		return ((Double)row.getCell(cell.getColumnIndex() - 1).getNumericCellValue()).intValue();
+                    	else if(sheetName.equals("Clients") || sheetName.equals("Center")|| sheetName.equals("Groups") || sheetName.equals("Staff") ) 
                     		return ((Double)row.getCell(cell.getColumnIndex() + 1).getNumericCellValue()).intValue();
                     }
             }
@@ -165,4 +167,22 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
         return 0;
     }
 
+	protected String getCodeByName(Sheet sheet, String name) {
+		String sheetName = sheet.getSheetName();
+		sheetName.equals("Extras");
+		{
+			for (Row row : sheet) {
+				for (Cell cell : row) {
+					if (cell.getCellType() == Cell.CELL_TYPE_STRING
+							&& cell.getRichStringCellValue().getString().trim()
+									.equals(name)) {
+							return row.getCell(cell.getColumnIndex() - 1)
+									.getStringCellValue().toString();
+
+					}
+				}
+			}
+		}
+		return "";
+	}
 }

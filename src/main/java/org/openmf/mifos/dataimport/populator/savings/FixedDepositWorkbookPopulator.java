@@ -193,6 +193,7 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
         } catch (RuntimeException re) {
         	re.printStackTrace();
             result.addError(re.getMessage());
+            re.printStackTrace();
         }
         return result;
 	}
@@ -308,6 +309,7 @@ public class FixedDepositWorkbookPopulator extends AbstractWorkbookPopulator {
         } catch (RuntimeException re) {
         	re.printStackTrace();
             result.addError(re.getMessage());
+            re.printStackTrace();
         }
         return result;
 	}
