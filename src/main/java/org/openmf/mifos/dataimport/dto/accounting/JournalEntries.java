@@ -5,7 +5,7 @@ import java.util.Locale;
 
 import org.openmf.mifos.dataimport.dto.CreditDebit;
 
-public class AddJournalEntries {
+public class JournalEntries {
 
 	private final transient Integer rowIndex;
 
@@ -19,12 +19,6 @@ public class AddJournalEntries {
 	
 	private final String currencyCode;
 	
-	//private final String transactionTypeId;
-	
-	//private final String glAccountId;
-	
-	//private final String amount;
-	
 	private final String paymentTypeId;
 	
 	private List<CreditDebit> debits;
@@ -32,7 +26,7 @@ public class AddJournalEntries {
 	private List<CreditDebit> credits;
 
 	
-	public AddJournalEntries(String officeId, String transactionDate,
+	public JournalEntries(String officeId, String transactionDate,
 			String currencyCode, String paymentTypeId,Integer rowIndex, List<CreditDebit> credits,
 			List<CreditDebit> debits) {
 		
@@ -40,9 +34,6 @@ public class AddJournalEntries {
 		this.transactionDate = transactionDate;
 		this.rowIndex = rowIndex;
 		this.currencyCode = currencyCode;
-		//this.transactionTypeId = transactionTypeId;
-		//this.glAccountId= glAccountId;
-		//this.amount = amount;
 		this.paymentTypeId= paymentTypeId;
 		this.credits = credits;
 		this.debits = debits;
@@ -82,18 +73,6 @@ public class AddJournalEntries {
 	public List<CreditDebit> getDebits() {
 		return debits;
 	}
-
-	//public String getGlAccountId() {
-	//	return glAccountId;
-	//}
-
-	// String getAmount() {
-	//	return amount;
-	//}
-
-	//public String getTransactionTypeId() {
-	//	return transactionTypeId;
-	//}
 
 	public String getPaymentTypeId() {
 		return paymentTypeId;

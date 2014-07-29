@@ -67,17 +67,13 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int TOTAL_AMOUNT_REPAID_COL = 28;
     private static final int LAST_REPAYMENT_DATE_COL = 29;
     private static final int REPAYMENT_TYPE_COL = 30;
-    private static final int EXTERNAL_ID_COL = 34;
-    private static final int CHARGE_ID_1 = 35;
-    private static final int CHARGE_AMOUNT_1 = 36;
-    private static final int CHARGE_DUE_DATE_1 = 37;
-    private static final int CHARGE_ID_2 = 38;
-    private static final int CHARGE_AMOUNT_2 = 39;
-    private static final int CHARGE_DUE_DATE_2 = 40; 
-    private static final int LOOKUP_CLIENT_NAME_COL = 42;
-    private static final int LOOKUP_ACTIVATION_DATE_COL = 43;
-    private static final int GROUP_ID = 41;
-    private static final int LINK_ACCOUNT_ID = 44;
+    private static final int EXTERNAL_ID_COL = 31;
+    private static final int GROUP_ID = 32;
+    private static final int LINK_ACCOUNT_ID = 33;
+    private static final int CHARGE_ID_1 = 37;
+    private static final int CHARGE_ID_4 = 46;
+    private static final int LOOKUP_CLIENT_NAME_COL = 60;
+    private static final int LOOKUP_ACTIVATION_DATE_COL = 61;
     @SuppressWarnings("CPD-END")
 	
 	public LoanWorkbookPopulator(OfficeSheetPopulator officeSheetPopulator, ClientSheetPopulator clientSheetPopulator,
@@ -168,12 +164,6 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
             worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
             worksheet.setColumnWidth( EXTERNAL_ID_COL, 6000);
-            worksheet.setColumnWidth(CHARGE_ID_1, 6000);
-            worksheet.setColumnWidth(CHARGE_AMOUNT_1, 6000);
-            worksheet.setColumnWidth(CHARGE_DUE_DATE_1, 6000);
-            worksheet.setColumnWidth(CHARGE_ID_2, 6000);
-            worksheet.setColumnWidth(CHARGE_AMOUNT_2, 6000);
-            worksheet.setColumnWidth(CHARGE_DUE_DATE_2, 6000);
             worksheet.setColumnWidth(GROUP_ID, 6000);
             worksheet.setColumnWidth(LINK_ACCOUNT_ID, 6000);
             
@@ -208,28 +198,33 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
             writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
             writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");
             writeString(EXTERNAL_ID_COL, rowHeader, "External Id");
-            writeString(CHARGE_ID_1,rowHeader,"Charge Id");
-            writeString(CHARGE_AMOUNT_1, rowHeader, "Charged Amount");
-            writeString(CHARGE_DUE_DATE_1, rowHeader, "Charged On Date");
-            writeString(CHARGE_ID_2,rowHeader,"Charge Id");
-            writeString(CHARGE_AMOUNT_2, rowHeader, "Charged Amount");
-            writeString(CHARGE_DUE_DATE_2, rowHeader, "Charged On Date");
+            for(int i = CHARGE_ID_1; i <= CHARGE_ID_4; i = i + 3) {
+	            writeString(i,rowHeader,"Charge Id");
+	            writeString(i + 1, rowHeader, "Charged Amount");
+	            writeString(i + 2, rowHeader, "Charged On Date");
+            }
             writeString(GROUP_ID, rowHeader, "GROUP ID");
             writeString(LINK_ACCOUNT_ID, rowHeader, "Linked Account No.");
             
             CellStyle borderStyle = worksheet.getWorkbook().createCellStyle();
-            CellStyle doubleBorderStyle = worksheet.getWorkbook().createCellStyle();
+            CellStyle leftBorderStyle = worksheet.getWorkbook().createCellStyle();
+            CellStyle rightBorderStyle = worksheet.getWorkbook().createCellStyle();
             borderStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            doubleBorderStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            doubleBorderStyle.setBorderRight(CellStyle.BORDER_THICK);
-            for(int colNo = 0; colNo < 35; colNo++) {
+            for(int colNo = 0; colNo < 57; colNo++) {
             	Cell cell = rowHeader.getCell(colNo);
             	if(cell == null)
             		rowHeader.createCell(colNo);
             	rowHeader.getCell(colNo).setCellStyle(borderStyle);
             }
-            rowHeader.getCell(FIRST_REPAYMENT_COL).setCellStyle(doubleBorderStyle);
-            rowHeader.getCell(REPAYMENT_TYPE_COL).setCellStyle(doubleBorderStyle);
+            leftBorderStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            leftBorderStyle.setBorderLeft(CellStyle.BORDER_THICK);
+            rowHeader.getCell(CHARGE_ID_1).setCellStyle(leftBorderStyle);
+            rightBorderStyle.setBorderBottom(CellStyle.BORDER_THIN);
+            rightBorderStyle.setBorderRight(CellStyle.BORDER_THICK);
+            rowHeader.getCell(FIRST_REPAYMENT_COL).setCellStyle(rightBorderStyle);
+            rowHeader.getCell(REPAYMENT_TYPE_COL).setCellStyle(rightBorderStyle);
+            rowHeader.getCell(LINK_ACCOUNT_ID).setCellStyle(rightBorderStyle);
+            
 	    }
 	    
 	    private Result setRules(Sheet worksheet) {
@@ -262,13 +257,6 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	CellRangeAddressList paymentTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), DISBURSED_PAYMENT_TYPE_COL, DISBURSED_PAYMENT_TYPE_COL);
 	        	CellRangeAddressList repaymentTypeRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), REPAYMENT_TYPE_COL, REPAYMENT_TYPE_COL);
 	        	CellRangeAddressList lastrepaymentDateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LAST_REPAYMENT_DATE_COL, LAST_REPAYMENT_DATE_COL);
-//	        	CellRangeAddressList chargeIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_1,CHARGE_ID_1);
-//	        	CellRangeAddressList chargeamountRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_1, CHARGE_AMOUNT_1);
-//	        	CellRangeAddressList duedateRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_1, CHARGE_DUE_DATE_1);
-//	        	CellRangeAddressList chargeId1Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_ID_2,CHARGE_ID_1);
-//	        	CellRangeAddressList chargeamount2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_AMOUNT_2, CHARGE_AMOUNT_1);
-//	        	CellRangeAddressList duedate2Range = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), CHARGE_DUE_DATE_2, CHARGE_DUE_DATE_1);
-//	        	CellRangeAddressList lintAccountIdRange = new CellRangeAddressList(1, SpreadsheetVersion.EXCEL97.getLastRowIndex(), LINK_ACCOUNT_ID, LINK_ACCOUNT_ID);
 	        	
 	        	DataValidationHelper validationHelper = new HSSFDataValidationHelper((HSSFSheet)worksheet);
 	        	
@@ -279,7 +267,7 @@ public class LoanWorkbookPopulator extends AbstractWorkbookPopulator {
 	        	DataValidationConstraint clientNameConstraint = validationHelper.createFormulaListConstraint("IF($B1=\"Group\",INDIRECT(CONCATENATE(\"Group_\",$A1)),INDIRECT(CONCATENATE(\"Client_\",$A1)))");
 	        	DataValidationConstraint productNameConstraint = validationHelper.createFormulaListConstraint("Products");
 	        	DataValidationConstraint loanOfficerNameConstraint = validationHelper.createFormulaListConstraint("INDIRECT(CONCATENATE(\"Staff_\",$A1))");
-	        	DataValidationConstraint submittedDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=IF(INDIRECT(CONCATENATE(\"START_DATE_\",$D1))>VLOOKUP($C1,$AQ$2:$AR$" + (clientSheetPopulator.getClientsSize() + groupSheetPopulator.getGroupsSize() + 1) + ",2,FALSE),INDIRECT(CONCATENATE(\"START_DATE_\",$D1)),VLOOKUP($C1,$AQ$2:$AR$" + (clientSheetPopulator.getClientsSize() + groupSheetPopulator.getGroupsSize() + 1) + ",2,FALSE))", "=TODAY()", "dd/mm/yy");
+	        	DataValidationConstraint submittedDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=IF(INDIRECT(CONCATENATE(\"START_DATE_\",$D1))>VLOOKUP($C1,$BI$2:$BJ$" + (clientSheetPopulator.getClientsSize() + groupSheetPopulator.getGroupsSize() + 1) + ",2,FALSE),INDIRECT(CONCATENATE(\"START_DATE_\",$D1)),VLOOKUP($C1,$BI$2:$BJ$" + (clientSheetPopulator.getClientsSize() + groupSheetPopulator.getGroupsSize() + 1) + ",2,FALSE))", "=TODAY()", "dd/mm/yy");
 	        	DataValidationConstraint approvalDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=$F1", "=TODAY()", "dd/mm/yy");
 	        	DataValidationConstraint disbursedDateConstraint = validationHelper.createDateConstraint(DataValidationConstraint.OperatorType.BETWEEN, "=$G1", "=TODAY()", "dd/mm/yy");
 	        	DataValidationConstraint paymentTypeConstraint = validationHelper.createFormulaListConstraint("PaymentTypes");

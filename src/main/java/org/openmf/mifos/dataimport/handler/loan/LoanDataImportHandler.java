@@ -60,18 +60,15 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
     private static final int TOTAL_AMOUNT_REPAID_COL = 28;
     private static final int LAST_REPAYMENT_DATE_COL = 29;
     private static final int REPAYMENT_TYPE_COL = 30;
-    private static final int STATUS_COL = 31;
-    private static final int LOAN_ID_COL = 32;
-    private static final int FAILURE_REPORT_COL = 33;
-    private static final int EXTERNAL_ID_COL = 34;
-    private static final int CHARGE_ID_1 = 35;
-    private static final int CHARGE_AMOUNT_1 = 36;
-    private static final int CHARGE_DUE_DATE_1 = 37;
-    private static final int CHARGE_ID_2 = 38;
-    private static final int CHARGE_AMOUNT_2 = 39;
-    private static final int CHARGE_DUE_DATE_2 = 40;
-    private static final int GROUP_ID = 41;
-    private static final int LINK_ACCOUNT_ID = 44;
+    private static final int EXTERNAL_ID_COL = 31;
+    private static final int GROUP_ID = 32;
+    private static final int LINK_ACCOUNT_ID = 33;
+    private static final int STATUS_COL = 34;
+    private static final int LOAN_ID_COL = 35;
+    private static final int FAILURE_REPORT_COL = 36;
+    private static final int CHARGE_ID_1 = 37;
+    private static final int CHARGE_ID_4 = 46;
+    
 
     @SuppressWarnings("CPD-END")
     private List<Loan> loans = new ArrayList<Loan>();
@@ -181,22 +178,19 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         String firstRepaymentOnDate = readAsDate(FIRST_REPAYMENT_COL, row);
         String loanType = readAsString(LOAN_TYPE_COL, row).toLowerCase(Locale.ENGLISH);
         String clientOrGroupName = readAsString(CLIENT_NAME_COL, row);
-
+        String linkAccountId = readAsString(LINK_ACCOUNT_ID, row);
+        String groupId = readAsString(GROUP_ID, row);
+        
         List<Charge> charges = new ArrayList<Charge>();
 
-        String charge1 = readAsString(CHARGE_ID_1, row);
-        String charge2 = readAsString(CHARGE_ID_2, row);
-        String groupId = readAsString(GROUP_ID, row);
-        String linkAccountId = readAsString(LINK_ACCOUNT_ID, row);
-
-        if (!charge1.equalsIgnoreCase("")) {
-            charges.add(new Charge(readAsString(CHARGE_ID_1, row), readAsString(CHARGE_AMOUNT_1, row), readAsDate(CHARGE_DUE_DATE_1, row)));
+        for(int i = CHARGE_ID_1; i <= CHARGE_ID_4; i = i + 3) {
+        	String charge = readAsString(i, row);
+	        if (!charge.equalsIgnoreCase("")) {
+	            charges.add(new Charge(readAsString(i, row), readAsString(i + 1, row), readAsDate(i + 2, row)));
+	        }
         }
-
-        if (!charge2.equalsIgnoreCase("")) {
-
-            charges.add(new Charge(readAsString(CHARGE_ID_2, row), readAsString(CHARGE_AMOUNT_2, row), readAsDate(CHARGE_DUE_DATE_2, row)));
-        }
+        
+        
         if (loanType.equals("individual")) {
             String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();
             return new Loan(loanType, clientId, productId, loanOfficerId, submittedOnDate, fundId, principal, numberOfRepayments,
