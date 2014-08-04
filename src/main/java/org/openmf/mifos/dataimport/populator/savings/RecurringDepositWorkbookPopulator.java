@@ -171,7 +171,7 @@ public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator
                     "360 Days", "365 Days" });
             DataValidationConstraint frequency = validationHelper.createExplicitListConstraint(new String[] { "Days",
                     "Weeks", "Months", "Years" });
-            DataValidationConstraint depositConstraint = validationHelper.createDecimalConstraint(DataValidationConstraint.OperatorType.GREATER_OR_EQUAL, "=INDIRECT(CONCATENATE(\"Min_Deposit_\",$C1))", "");
+            DataValidationConstraint depositConstraint = validationHelper.createDecimalConstraint(DataValidationConstraint.OperatorType.GREATER_OR_EQUAL, "=INDIRECT(CONCATENATE(\"Min_Deposit_\",$C1))", null);
             DataValidationConstraint booleanConstraint = validationHelper.createExplicitListConstraint(new String[] {
                     "True", "False" });
             DataValidationConstraint depositStartDateConstraint = validationHelper.createDateConstraint(

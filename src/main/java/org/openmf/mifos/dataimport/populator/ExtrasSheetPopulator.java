@@ -12,8 +12,6 @@ import org.openmf.mifos.dataimport.dto.PaymentType;
 import org.openmf.mifos.dataimport.dto.loan.Fund;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -21,9 +19,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 public class ExtrasSheetPopulator extends AbstractWorkbookPopulator {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(ExtrasSheetPopulator.class);
 
 	private final RestClient client;
 
@@ -113,16 +108,16 @@ public class ExtrasSheetPopulator extends AbstractWorkbookPopulator {
 						.trim().replaceAll("[ )(]", "_"));
 			}
 			int currencyCodeRowIndex = 1;
-			for (Currency currencie : currencies) {
+			for (Currency currency : currencies) {
 				Row row;
-				if (paymentTypeRowIndex < fundRowIndex)
+				if (currencyCodeRowIndex < fundRowIndex && currencyCodeRowIndex < paymentTypeRowIndex)
 					row = extrasSheet.getRow(currencyCodeRowIndex++);
 				else
 					row = extrasSheet.createRow(currencyCodeRowIndex++);
 
-				writeString(CURRENCY_NAME_COL, row, currencie.getName().trim()
+				writeString(CURRENCY_NAME_COL, row, currency.getName().trim()
 						.replaceAll("[ )(]", "_"));
-				writeString(CURRENCY_CODE_COL, row, currencie.getCode());
+				writeString(CURRENCY_CODE_COL, row, currency.getCode());
 			}
 			extrasSheet.protectSheet("");
 		} catch (Exception e) {
