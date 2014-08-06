@@ -190,12 +190,12 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         String linkAccountId = readAsString(LINK_ACCOUNT_ID, row);
 
         if (!charge1.equalsIgnoreCase("")) {
-            charges.add(new Charge(readAsString(CHARGE_ID_1, row), readAsString(CHARGE_AMOUNT_1, row), readAsDate(CHARGE_DUE_DATE_1, row)));
+            charges.add(new Charge(readAsString(CHARGE_ID_1, row), readAsDouble(CHARGE_AMOUNT_1, row), readAsDate(CHARGE_DUE_DATE_1, row)));
         }
 
         if (!charge2.equalsIgnoreCase("")) {
 
-            charges.add(new Charge(readAsString(CHARGE_ID_2, row), readAsString(CHARGE_AMOUNT_2, row), readAsDate(CHARGE_DUE_DATE_2, row)));
+            charges.add(new Charge(readAsString(CHARGE_ID_2, row), readAsDouble(CHARGE_AMOUNT_2, row), readAsDate(CHARGE_DUE_DATE_2, row)));
         }
         if (loanType.equals("individual")) {
             String clientId = getIdByName(workbook.getSheet("Clients"), clientOrGroupName).toString();

@@ -115,7 +115,7 @@ public class ExtrasSheetPopulator extends AbstractWorkbookPopulator {
 			int currencyCodeRowIndex = 1;
 			for (Currency currencie : currencies) {
 				Row row;
-				if (paymentTypeRowIndex < fundRowIndex)
+				if (currencyCodeRowIndex < paymentTypeRowIndex)
 					row = extrasSheet.getRow(currencyCodeRowIndex++);
 				else
 					row = extrasSheet.createRow(currencyCodeRowIndex++);

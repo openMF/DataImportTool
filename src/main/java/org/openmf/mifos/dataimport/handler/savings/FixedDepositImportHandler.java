@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.Approval;
+import org.openmf.mifos.dataimport.dto.Charge;
 import org.openmf.mifos.dataimport.dto.savings.FixedDepositAccount;
 import org.openmf.mifos.dataimport.dto.savings.SavingsActivation;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
@@ -45,6 +46,12 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
     private static final int STATUS_COL = 17;
     private static final int SAVINGS_ID_COL = 18;
     private static final int FAILURE_REPORT_COL = 19;
+    private static final int CHARGE_ID_1 = 18;
+    private static final int CHARGE_AMOUNT_1 = 19;
+    private static final int CHARGE_DUE_DATE_1 = 20;
+    private static final int CHARGE_ID_2 = 21;
+    private static final int CHARGE_AMOUNT_2 = 22;
+    private static final int CHARGE_DUE_DATE_2 = 23;
 
 
     @SuppressWarnings("CPD-END")
@@ -197,12 +204,27 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         else if (depositPeriodFrequency.equalsIgnoreCase("Years")) depositPeriodFrequencyId = "3";
         String externalId = readAsString(EXTERNAL_ID_COL, row); 	
         String clientName = readAsString(CLIENT_NAME_COL, row);
+        
+        List<Charge> charges = new ArrayList<Charge>();
+        
+        String charge1 = readAsString(CHARGE_ID_1, row);
+        String charge2 = readAsString(CHARGE_ID_2, row);
+       
+        if (!charge1.equalsIgnoreCase("")) {
+            charges.add(new Charge(readAsString(CHARGE_ID_1, row), readAsDouble(CHARGE_AMOUNT_1, row), readAsDate(CHARGE_DUE_DATE_1, row)));
+        }
+
+        if (!charge2.equalsIgnoreCase("")) {
+
+            charges.add(new Charge(readAsString(CHARGE_ID_2, row), readAsDouble(CHARGE_AMOUNT_2, row), readAsDate(CHARGE_DUE_DATE_2, row)));
+        }
+
 
         String clientId = getIdByName(workbook.getSheet("Clients"), clientName).toString();
         return new FixedDepositAccount(clientId, productId, fieldOfficerId, submittedOnDate,
                 interestCompoundingPeriodTypeId, interestPostingPeriodTypeId, interestCalculationTypeId,
                 interestCalculationDaysInYearTypeId, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
-                depositAmount, depositPeriod, depositPeriodFrequencyId, externalId, row.getRowNum(), status);
+                depositAmount, depositPeriod, depositPeriodFrequencyId, externalId, charges,row.getRowNum(), status);
     }
 
     private Approval parseAsSavingsApproval(Row row) {

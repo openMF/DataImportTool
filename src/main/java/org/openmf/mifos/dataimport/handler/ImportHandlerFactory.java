@@ -10,6 +10,7 @@ import org.openmf.mifos.dataimport.handler.client.GroupDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanRepaymentDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.FixedDepositImportHandler;
+import org.openmf.mifos.dataimport.handler.savings.RecurringDepositAccountTransactionDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.RecurringDepositImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.SavingsDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.SavingsTransactionDataImportHandler;
@@ -38,6 +39,8 @@ public class ImportHandlerFactory {
         	return new FixedDepositImportHandler(workbook, new MifosRestClient());
         } else if(workbook.getSheetIndex("RecurringDeposit") == 0) {
         	return new RecurringDepositImportHandler(workbook, new MifosRestClient());
+        } else if(workbook.getSheetIndex("RecurringDepositTransaction") == 0) {
+        	return new RecurringDepositAccountTransactionDataImportHandler(workbook, new MifosRestClient());
         }else if(workbook.getSheetIndex("AddJournalEntries") == 0) {
         	return new AddJournalEntriesHandler(workbook, new MifosRestClient());
         }

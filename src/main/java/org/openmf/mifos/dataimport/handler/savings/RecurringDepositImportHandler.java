@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.Approval;
+import org.openmf.mifos.dataimport.dto.Charge;
 import org.openmf.mifos.dataimport.dto.savings.RecurringDepositAccount;
 import org.openmf.mifos.dataimport.dto.savings.SavingsActivation;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
@@ -49,6 +50,13 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
     private static final int FREQ_SAME_AS_GROUP_CENTER_COL = 21;
     private static final int ADJUST_ADVANCE_PAYMENTS_COL = 22;
     private static final int EXTERNAL_ID_COL = 23;
+    
+    private static final int CHARGE_ID_1 = 28;
+    private static final int CHARGE_AMOUNT_1 = 29;
+    private static final int CHARGE_DUE_DATE_1 = 30;
+    private static final int CHARGE_ID_2 = 33;
+    private static final int CHARGE_AMOUNT_2 = 34;
+    private static final int CHARGE_DUE_DATE_2 = 35;
 
     private static final int STATUS_COL = 24;
     private static final int SAVINGS_ID_COL = 25;
@@ -221,6 +229,19 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
         String adjustAdvancePayments = readAsBoolean(ADJUST_ADVANCE_PAYMENTS_COL, row).toString();
         String clientName = readAsString(CLIENT_NAME_COL, row);
         String externalId = readAsString(EXTERNAL_ID_COL, row);
+        List<Charge> charges = new ArrayList<Charge>();
+        
+        String charge1 = readAsString(CHARGE_ID_1, row);
+        String charge2 = readAsString(CHARGE_ID_2, row);
+       
+        if (!charge1.equalsIgnoreCase("")) {
+            charges.add(new Charge(readAsString(CHARGE_ID_1, row), readAsDouble(CHARGE_AMOUNT_1, row), readAsDate(CHARGE_DUE_DATE_1, row)));
+        }
+
+        if (!charge2.equalsIgnoreCase("")) {
+
+            charges.add(new Charge(readAsString(CHARGE_ID_2, row), readAsDouble(CHARGE_AMOUNT_2, row), readAsDate(CHARGE_DUE_DATE_2, row)));
+        }
 
         String clientId = getIdByName(workbook.getSheet("Clients"), clientName).toString();
         return new RecurringDepositAccount(clientId, productId, fieldOfficerId, submittedOnDate,
@@ -228,7 +249,7 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
                 interestCalculationDaysInYearTypeId, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
                 depositAmount, depositPeriod, depositPeriodFrequencyId, depositStartDate,
                 recurringFrequency, recurringFrequencyTypeId, inheritCalendar, isMandatoryDeposit,
-                allowWithdrawal, adjustAdvancePayments, externalId, row.getRowNum(), status);
+                allowWithdrawal, adjustAdvancePayments, externalId,charges, row.getRowNum(), status);
     }
 
     private Approval parseAsSavingsApproval(Row row) {
