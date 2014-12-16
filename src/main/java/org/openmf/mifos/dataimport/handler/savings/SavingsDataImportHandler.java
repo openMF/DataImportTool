@@ -51,6 +51,12 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
     private static final int STATUS_COL = 23;
     private static final int SAVINGS_ID_COL = 24;
     private static final int FAILURE_REPORT_COL = 25;
+    private static final int CHARGE_ID_1 = 34;
+    private static final int CHARGE_AMOUNT_1 = 35;
+    private static final int CHARGE_DUE_DATE_1 = 36;
+    private static final int CHARGE_ID_2 = 37;
+    private static final int CHARGE_AMOUNT_2 = 38;
+    private static final int CHARGE_DUE_DATE_2 = 39;
 
 
     @SuppressWarnings("CPD-END")
@@ -150,6 +156,18 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         
         String allowOverdraft = readAsBoolean(ALLOW_OVER_DRAFT_COL, row).toString();
         String overdraftLimit = readAsString(OVER_DRAFT_LIMIT_COL, row);
+       
+        String charge1 = readAsString(CHARGE_ID_1, row);
+        String charge2 = readAsString(CHARGE_ID_2, row);
+       
+        if (!charge1.equalsIgnoreCase("")) {
+            charges.add(new Charge(readAsString(CHARGE_ID_1, row), readAsDouble(CHARGE_AMOUNT_1, row), readAsDate(CHARGE_DUE_DATE_1, row)));
+        }
+
+        if (!charge2.equalsIgnoreCase("")) {
+
+            charges.add(new Charge(readAsString(CHARGE_ID_2, row), readAsDouble(CHARGE_AMOUNT_2, row), readAsDate(CHARGE_DUE_DATE_2, row)));
+        }
 
 
         if (savingsType.equals("individual")) {

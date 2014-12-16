@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.CreditDebit;
-import org.openmf.mifos.dataimport.dto.accounting.JournalEntries;
+import org.openmf.mifos.dataimport.dto.accounting.AddJournalEntries;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.handler.savings.SavingsTransactionDataImportHandler;
@@ -19,14 +19,14 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
-public class JournalEntriesImportHandler extends AbstractDataImportHandler {
+public class AddJournalEntriesHandler extends AbstractDataImportHandler {
 	private static final Logger logger = LoggerFactory
 			.getLogger(SavingsTransactionDataImportHandler.class);
 
 	private final RestClient restClient;
 	private final Workbook workbook;
 
-	private List<JournalEntries> gltransaction;
+	private List<AddJournalEntries> gltransaction;
 
 	List<CreditDebit> credits = new ArrayList<CreditDebit>();
 	List<CreditDebit> debits = new ArrayList<CreditDebit>();
@@ -53,10 +53,10 @@ public class JournalEntriesImportHandler extends AbstractDataImportHandler {
 
 	private static final int STATUS_COL = 9;
 
-	public JournalEntriesImportHandler(Workbook workbook, RestClient client) {
+	public AddJournalEntriesHandler(Workbook workbook, RestClient client) {
 		this.workbook = workbook;
 		this.restClient = client;
-		gltransaction = new ArrayList<JournalEntries>();
+		gltransaction = new ArrayList<AddJournalEntries>();
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class JournalEntriesImportHandler extends AbstractDataImportHandler {
 		// boolean isNewTransaction = false;
 		String currentTransactionId = "";
 		String prevTransactionId = "";
-		JournalEntries journalEntry = null;
+		AddJournalEntries journalEntry = null;
 
 		Sheet addJournalEntriesSheet = workbook.getSheet("AddJournalEntries");
 		Integer noOfEntries = getNumberOfRows(addJournalEntriesSheet, 4);
@@ -135,7 +135,7 @@ public class JournalEntriesImportHandler extends AbstractDataImportHandler {
 		return result;
 	}
 
-	private JournalEntries parseAsaddJournalEntries(Row row) {
+	private AddJournalEntries parseAsaddJournalEntries(Row row) {
 		String transactionDateCheck = readAsDate(TRANSACION_ON_DATE_COL, row);
 		if (!transactionDateCheck.equals(""))
 			transactionDate = transactionDateCheck;
@@ -174,7 +174,7 @@ public class JournalEntriesImportHandler extends AbstractDataImportHandler {
 					AMOUNT_DEBIT_COL, row)));
 		}
 
-		return new JournalEntries(officeId, transactionDate, currencyCode,
+		return new AddJournalEntries(officeId, transactionDate, currencyCode,
 				paymentTypeId, row.getRowNum(), credits, debits);
 
 	}
@@ -184,7 +184,7 @@ public class JournalEntriesImportHandler extends AbstractDataImportHandler {
 		Result result = new Result();
 		Sheet addJournalEntriesSheet = workbook.getSheet("AddJournalEntries");
 		restClient.createAuthToken();
-		for (JournalEntries transaction : gltransaction) {
+		for (AddJournalEntries transaction : gltransaction) {
 			try {
 				Gson gson = new Gson();
 				String payload = gson.toJson(transaction);

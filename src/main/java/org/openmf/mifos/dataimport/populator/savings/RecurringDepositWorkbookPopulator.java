@@ -55,6 +55,12 @@ public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator
     private static final int FREQ_SAME_AS_GROUP_CENTER_COL = 21;
     private static final int ADJUST_ADVANCE_PAYMENTS_COL = 22;
     private static final int EXTERNAL_ID_COL = 23;
+    private static final int CHARGE_ID_1 = 28;
+    private static final int CHARGE_AMOUNT_1 = 29;
+    private static final int CHARGE_DUE_DATE_1 = 30;
+    private static final int CHARGE_ID_2 = 33;
+    private static final int CHARGE_AMOUNT_2 = 34;
+    private static final int CHARGE_DUE_DATE_2 = 35;
     
    
     private static final int LOOKUP_CLIENT_NAME_COL = 31;
@@ -396,6 +402,13 @@ public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator
         worksheet.setColumnWidth(ADJUST_ADVANCE_PAYMENTS_COL, 3000);
         worksheet.setColumnWidth(FREQ_SAME_AS_GROUP_CENTER_COL, 3000);
         worksheet.setColumnWidth(EXTERNAL_ID_COL, 3000);
+        
+        worksheet.setColumnWidth(CHARGE_ID_1, 6000);
+        worksheet.setColumnWidth(CHARGE_AMOUNT_1, 6000);
+        worksheet.setColumnWidth(CHARGE_DUE_DATE_1, 6000);
+        worksheet.setColumnWidth(CHARGE_ID_2, 6000);
+        worksheet.setColumnWidth(CHARGE_AMOUNT_2, 6000);
+        worksheet.setColumnWidth(CHARGE_DUE_DATE_2, 6000);
 
         worksheet.setColumnWidth(LOOKUP_CLIENT_NAME_COL, 6000);
         worksheet.setColumnWidth(LOOKUP_ACTIVATION_DATE_COL, 6000);
@@ -421,6 +434,13 @@ public class RecurringDepositWorkbookPopulator extends AbstractWorkbookPopulator
         writeString(ADJUST_ADVANCE_PAYMENTS_COL, rowHeader, "Adjust Advance Payments Toward Future Installments ");
         writeString(FREQ_SAME_AS_GROUP_CENTER_COL, rowHeader, "Deposit Frequency Same as Group/Center meeting");
         writeString(EXTERNAL_ID_COL, rowHeader, "External Id");
+        
+        writeString(CHARGE_ID_1,rowHeader,"Charge Id");
+        writeString(CHARGE_AMOUNT_1, rowHeader, "Charged Amount");
+        writeString(CHARGE_DUE_DATE_1, rowHeader, "Charged On Date");
+        writeString(CHARGE_ID_2,rowHeader,"Charge Id");
+        writeString(CHARGE_AMOUNT_2, rowHeader, "Charged Amount");
+        writeString(CHARGE_DUE_DATE_2, rowHeader, "Charged On Date");
 
         writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Client Name");
         writeString(LOOKUP_ACTIVATION_DATE_COL, rowHeader, "Client Activation Date");

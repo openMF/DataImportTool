@@ -45,6 +45,10 @@ public class AddJournalEntriesWorkbookPopulator extends
 
 	private static final int AMOUNT_DEBIT_COL = 8;
 
+	// private static final int DEBITS_GL_ACCOUNT_ID_COL= 6;;
+
+	// private static final int DEBITS_AMOUNT_COL= 7;
+
 	public AddJournalEntriesWorkbookPopulator(
 			OfficeSheetPopulator officeSheetPopulator,
 			GlAccountSheetPopulator glAccountSheetPopulator,
@@ -76,6 +80,8 @@ public class AddJournalEntriesWorkbookPopulator extends
 		if (result.isSuccess())
 			result = setRules(addJournalEntriesSheet);
 		if (result.isSuccess())
+			result = setDefaults(addJournalEntriesSheet);
+		if (result.isSuccess())
 			setLayout(addJournalEntriesSheet);
 
 		return result;
@@ -103,6 +109,22 @@ public class AddJournalEntriesWorkbookPopulator extends
 		writeString(AMOUNT_CREDIT_COL, rowHeader, "Amount*");
 		writeString(GL_ACCOUNT_ID_DEBIT_COL, rowHeader, "Debit Account Type*");
 		writeString(AMOUNT_DEBIT_COL, rowHeader, "Amount*");
+
+		// TODO Auto-generated method stub
+
+	}
+
+	private Result setDefaults(Sheet worksheet) {
+		Result result = new Result();
+		try {
+			for (Integer rowNo = 1; rowNo < 1000; rowNo++) {
+				Row row = worksheet.createRow(rowNo);
+			}
+		} catch (RuntimeException re) {
+			result.addError(re.getMessage());
+			re.printStackTrace();
+		}
+		return result;
 	}
 
 	private Result setRules(Sheet worksheet) {

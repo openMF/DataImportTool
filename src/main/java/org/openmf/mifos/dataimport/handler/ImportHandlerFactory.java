@@ -3,13 +3,15 @@ package org.openmf.mifos.dataimport.handler;
 import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.Workbook;
-import org.openmf.mifos.dataimport.handler.accounting.JournalEntriesImportHandler;
+import org.openmf.mifos.dataimport.handler.accounting.AddJournalEntriesHandler;
 import org.openmf.mifos.dataimport.handler.client.CenterDataImportHandler;
 import org.openmf.mifos.dataimport.handler.client.ClientDataImportHandler;
 import org.openmf.mifos.dataimport.handler.client.GroupDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanRepaymentDataImportHandler;
+import org.openmf.mifos.dataimport.handler.savings.ClosingOfSavingsAccountHandler;
 import org.openmf.mifos.dataimport.handler.savings.FixedDepositImportHandler;
+import org.openmf.mifos.dataimport.handler.savings.RecurringDepositAccountTransactionDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.RecurringDepositImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.SavingsDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.SavingsTransactionDataImportHandler;
@@ -38,9 +40,14 @@ public class ImportHandlerFactory {
         	return new FixedDepositImportHandler(workbook, new MifosRestClient());
         } else if(workbook.getSheetIndex("RecurringDeposit") == 0) {
         	return new RecurringDepositImportHandler(workbook, new MifosRestClient());
+        } else if(workbook.getSheetIndex("RecurringDepositTransaction") == 0) {
+        	return new RecurringDepositAccountTransactionDataImportHandler(workbook, new MifosRestClient());
+        }else if(workbook.getSheetIndex("ClosingOfSavingsAccounts") == 0) {
+            	return new ClosingOfSavingsAccountHandler(workbook, new MifosRestClient());
         }else if(workbook.getSheetIndex("AddJournalEntries") == 0) {
-        	return new JournalEntriesImportHandler(workbook, new MifosRestClient());
+        	return new AddJournalEntriesHandler(workbook, new MifosRestClient());
         }
+        
         
         throw new IllegalArgumentException("No work sheet found for processing : active sheet " + workbook.getSheetName(0));
     }

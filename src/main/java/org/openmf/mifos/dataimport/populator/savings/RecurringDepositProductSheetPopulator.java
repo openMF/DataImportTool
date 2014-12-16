@@ -105,17 +105,24 @@ private static final Logger logger = LoggerFactory.getLogger(RecurringDepositPro
 	            	writeString(INTEREST_POSTING_PERIOD_COL, row, product.getInterestPostingPeriodType().getValue());
 	            	writeString(INTEREST_CALCULATION_COL, row, product.getInterestCalculationType().getValue());
 	            	writeString(INTEREST_CALCULATION_DAYS_IN_YEAR_COL, row, product.getInterestCalculationDaysInYearType().getValue());
-	            	writeDouble(DEPOSIT_COL, row, product.getDepositAmount());
+	            	//writeDouble(DEPOSIT_COL, row, product.getDepositAmount());
 	            	writeString(PRECLOSURE_PENAL_APPLICABLE_COL, row, product.getPreClosurePenalApplicable());
-	            	writeInt(MIN_DEPOSIT_TERM_COL, row, product.getMinDepositTerm());
+	            	//writeInt(MIN_DEPOSIT_TERM_COL, row, product.getMinDepositTerm());
 	            	writeString(MIN_DEPOSIT_TERM_TYPE_COL, row, product.getMinDepositTermType().getValue());
 	            	
 	            	if(product.getMinDepositAmount() != null)
 	            		writeDouble(MIN_DEPOSIT_COL, row, product.getMinDepositAmount());
 	            	if(product.getMaxDepositAmount() != null)
 	            		writeDouble(MAX_DEPOSIT_COL, row, product.getMaxDepositAmount());
+	            	if(product.getDepositAmount() != null)
+	            		writeDouble(DEPOSIT_COL, row, product.getDepositAmount());
 	            	if(product.getMaxDepositTerm() != null)
 	            		writeInt(MAX_DEPOSIT_TERM_COL, row, product.getMaxDepositTerm());
+	            	
+	            	if(product.getMinDepositTerm() != null)
+	            		writeInt(MIN_DEPOSIT_TERM_COL, row, product.getMinDepositTerm());
+	            	
+	            	
 	            	if(product.getInMultiplesOfDepositTerm() != null)
 	            		writeInt(IN_MULTIPLES_OF_DEPOSIT_TERM_COL, row, product.getInMultiplesOfDepositTerm());
 	            	if(product.getPreClosurePenalInterest() != null)

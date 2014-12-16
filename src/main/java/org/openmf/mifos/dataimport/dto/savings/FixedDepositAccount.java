@@ -1,6 +1,9 @@
 package org.openmf.mifos.dataimport.dto.savings;
 
+import java.util.List;
 import java.util.Locale;
+
+import org.openmf.mifos.dataimport.dto.Charge;
 
 public class FixedDepositAccount {
 	
@@ -39,12 +42,14 @@ public class FixedDepositAccount {
     private final String dateFormat;
 
     private final Locale locale;
+    
+    private final List<Charge> charges;
 
     public FixedDepositAccount(String clientId, String productId, String fieldOfficerId, String submittedOnDate,
             String interestCompoundingPeriodType, String interestPostingPeriodType,
             String interestCalculationType, String interestCalculationDaysInYearType,
             String lockinPeriodFrequency, String lockinPeriodFrequencyType, String depositAmount, String depositPeriod,
-            String depositPeriodFrequencyId, String externalId, Integer rowIndex, String status) {
+            String depositPeriodFrequencyId, String externalId,List<Charge> charges, Integer rowIndex, String status) {
         this.clientId = clientId;
         this.productId = productId;
         this.fieldOfficerId = fieldOfficerId;
@@ -63,6 +68,7 @@ public class FixedDepositAccount {
         this.status = status;
         this.dateFormat = "dd MMMM yyyy";
         this.locale = Locale.ENGLISH;
+        this.charges = charges;
     }
 
     public String getClientId() {
@@ -135,5 +141,9 @@ public class FixedDepositAccount {
 
 	public String getExternalId() {
 		return externalId;
+	}
+
+	public List<Charge> getCharges() {
+		return charges;
 	}
 }

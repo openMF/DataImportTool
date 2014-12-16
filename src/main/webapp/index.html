@@ -205,8 +205,37 @@ fieldset {border: 0;margin: 0 0 15px 0;}
 			</form>
 		</div>
 	</div>
+	
 	<div class="step clearfix">
-		<div class="stepCount">Step 14:</div> 
+	    <div class="stepCount">Step 15:<br/><span>(Optional)</span></div>
+	    <div class="stepContent">
+		    <p>Download template to help facilitate import of Recurring Deposit Account Transaction  History.</p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="recurringDepositHistory" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
+	<div class="step clearfix">
+	    <div class="stepCount">Step 16:<br/><span>(Optional)</span></div>
+	    <div class="stepContent">
+		    <p>Download template to help facilitate import of Closing of savings account.</p>
+		    <form method="get" action="download" >
+		     <input type="hidden" name="template" value="closingOfSavingsAccounts" > 
+		     <input type="submit" value="Download" class="btn"  />
+		    </form>
+		    <form method="post" action="import" enctype="multipart/form-data">
+		            <input type="file" name="file"/>
+		            <input type="submit" class="btn"/>
+			</form>
+		</div>
+	</div>
+	<div class="step clearfix">
+		<div class="stepCount">Step 17:</div> 
 		<div class="stepContent">
 			<p>Download template to help Add Journal Entries. </p>
 		    <form method="get" action="download" >

@@ -3,10 +3,10 @@ package org.openmf.mifos.dataimport.dto;
 public class Charge {
 	
 	private final String chargeId;
-	private final String amount;
+	private final Double amount;
 	private final String dueDate;
 	
-	public Charge(String chargeId, String amount, String dueDate) {
+	public Charge(String chargeId, Double amount, String dueDate) {
 		this.chargeId = chargeId;
 		this.amount = amount;
 		this.dueDate = dueDate;
@@ -16,7 +16,7 @@ public class Charge {
 		return chargeId;
 	}
 
-	public String getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 

@@ -10,9 +10,11 @@ import org.openmf.mifos.dataimport.populator.client.GroupWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanProductSheetPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanRepaymentWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.loan.LoanWorkbookPopulator;
+import org.openmf.mifos.dataimport.populator.savings.ClosingOfSavingsAccountsWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.savings.FixedDepositProductSheetPopulator;
 import org.openmf.mifos.dataimport.populator.savings.FixedDepositWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.savings.RecurringDepositProductSheetPopulator;
+import org.openmf.mifos.dataimport.populator.savings.RecurringDepositTransactionWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.savings.RecurringDepositWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.savings.SavingsProductSheetPopulator;
 import org.openmf.mifos.dataimport.populator.savings.SavingsTransactionWorkbookPopulator;
@@ -47,6 +49,10 @@ public class WorkbookPopulatorFactory {
 	        else if(template.trim().equals("recurringDeposit"))
 	        	return new RecurringDepositWorkbookPopulator(new OfficeSheetPopulator(restClient), new ClientSheetPopulator(restClient),
 	        			 new PersonnelSheetPopulator(Boolean.TRUE, restClient), new RecurringDepositProductSheetPopulator(restClient));
+	        else if(template.trim().equals("recurringDepositHistory"))
+	        	 return new RecurringDepositTransactionWorkbookPopulator(restClient, new OfficeSheetPopulator(restClient), new ClientSheetPopulator(restClient), new ExtrasSheetPopulator(restClient));
+	        else if(template.trim().equals("closingOfSavingsAccounts"))
+	        	 return new ClosingOfSavingsAccountsWorkbookPopulator(restClient, new OfficeSheetPopulator(restClient), new ClientSheetPopulator(restClient));
 	        else if(template.trim().equals("journalentries"))
 	        	return new AddJournalEntriesWorkbookPopulator(new OfficeSheetPopulator(restClient), new GlAccountSheetPopulator(restClient),new ExtrasSheetPopulator(restClient));
 	        throw new IllegalArgumentException("Can't find populator.");
