@@ -1,6 +1,9 @@
 package org.openmf.mifos.dataimport.dto.savings;
 
+import java.util.List;
 import java.util.Locale;
+
+import org.openmf.mifos.dataimport.dto.Charge;
 
 public class RecurringDepositAccount {
 
@@ -49,6 +52,8 @@ public class RecurringDepositAccount {
     private final String adjustAdvanceTowardsFuturePayments;
     
     private final String externalId;
+    
+    private final List<Charge> charges;
 
     private final String dateFormat;
 
@@ -61,7 +66,7 @@ public class RecurringDepositAccount {
             String depositPeriod, String depositPeriodFrequencyId,
             String expectedFirstDepositOnDate, String recurringFrequency, String recurringFrequencyType,
             String isCalendarInherited, String isMandatoryDeposit, String allowWithdrawal,
-            String adjustAdvanceTowardsFuturePayments, String externalId,
+            String adjustAdvanceTowardsFuturePayments, String externalId,List<Charge> charges,
             Integer rowIndex, String status) {
         this.clientId = clientId;
         this.productId = productId;
@@ -84,6 +89,7 @@ public class RecurringDepositAccount {
         this.recurringFrequency = recurringFrequency;
         this.recurringFrequencyType = recurringFrequencyType;
         this.externalId = externalId;
+        this.charges = charges;
         this.rowIndex = rowIndex;
         this.status = status;
         this.dateFormat = "dd MMMM yyyy";
@@ -188,5 +194,9 @@ public class RecurringDepositAccount {
 
 	public String getExternalId() {
 		return externalId;
+	}
+
+	public List<Charge> getCharges() {
+		return charges;
 	}
 }

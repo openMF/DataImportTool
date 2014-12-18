@@ -62,6 +62,12 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
     private static final int EXTERNAL_ID_COL = 22;
     private static final int LOOKUP_CLIENT_NAME_COL = 31;
     private static final int LOOKUP_ACTIVATION_DATE_COL = 32;
+    private static final int CHARGE_ID_1 = 34;
+    private static final int CHARGE_AMOUNT_1 = 35;
+    private static final int CHARGE_DUE_DATE_1 = 36;
+    private static final int CHARGE_ID_2 = 37;
+    private static final int CHARGE_AMOUNT_2 = 38;
+    private static final int CHARGE_DUE_DATE_2 = 39;
 
 
     @SuppressWarnings("CPD-END")
@@ -133,6 +139,13 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
         
         worksheet.setColumnWidth(ALLOW_OVER_DRAFT_COL, 6000);
         worksheet.setColumnWidth(OVER_DRAFT_LIMIT_COL, 6000);
+        
+        worksheet.setColumnWidth(CHARGE_ID_1, 6000);
+        worksheet.setColumnWidth(CHARGE_AMOUNT_1, 6000);
+        worksheet.setColumnWidth(CHARGE_DUE_DATE_1, 6000);
+        worksheet.setColumnWidth(CHARGE_ID_2, 6000);
+        worksheet.setColumnWidth(CHARGE_AMOUNT_2, 6000);
+        worksheet.setColumnWidth(CHARGE_DUE_DATE_2, 6000);
 
         writeString(OFFICE_NAME_COL, rowHeader, "Office Name*");
         writeString(SAVINGS_TYPE_COL, rowHeader, "Individual/Group*");
@@ -160,6 +173,13 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
         
         writeString(ALLOW_OVER_DRAFT_COL, rowHeader, "Is Overdraft Allowed ");
         writeString(OVER_DRAFT_LIMIT_COL, rowHeader,"  Maximum Overdraft Amount Limit ");
+        
+        writeString(CHARGE_ID_1,rowHeader,"Charge Id");
+        writeString(CHARGE_AMOUNT_1, rowHeader, "Charged Amount");
+        writeString(CHARGE_DUE_DATE_1, rowHeader, "Charged On Date");
+        writeString(CHARGE_ID_2,rowHeader,"Charge Id");
+        writeString(CHARGE_AMOUNT_2, rowHeader, "Charged Amount");
+        writeString(CHARGE_DUE_DATE_2, rowHeader, "Charged On Date");
     }
 
     private Result setRules(Sheet worksheet) {

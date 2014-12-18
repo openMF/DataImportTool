@@ -9,6 +9,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.Approval;
+import org.openmf.mifos.dataimport.dto.Charge;
+import org.openmf.mifos.dataimport.dto.ClosingOfSavingsAccounts;
 import org.openmf.mifos.dataimport.dto.savings.FixedDepositAccount;
 import org.openmf.mifos.dataimport.dto.savings.SavingsActivation;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
@@ -45,6 +47,15 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
     private static final int STATUS_COL = 17;
     private static final int SAVINGS_ID_COL = 18;
     private static final int FAILURE_REPORT_COL = 19;
+    private static final int CHARGE_ID_1 = 18;
+    private static final int CHARGE_AMOUNT_1 = 19;
+    private static final int CHARGE_DUE_DATE_1 = 20;
+    private static final int CHARGE_ID_2 = 21;
+    private static final int CHARGE_AMOUNT_2 = 22;
+    private static final int CHARGE_DUE_DATE_2 = 23;
+    private static final int CLOSED_ON_DATE = 24;
+    private static final int ON_ACCOUNT_CLOSURE_ID = 25;
+    private static final int TO_SAVINGS_ACCOUNT_ID = 26;
 
 
     @SuppressWarnings("CPD-END")
@@ -55,6 +66,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
     private List<FixedDepositAccount> savings = new ArrayList<FixedDepositAccount>();
     private List<Approval> approvalDates = new ArrayList<Approval>();
     private List<SavingsActivation> activationDates = new ArrayList<SavingsActivation>();
+    private List<ClosingOfSavingsAccounts> closedOnDate = new ArrayList<ClosingOfSavingsAccounts>();
 
     public FixedDepositImportHandler(Workbook workbook, RestClient client) {
         this.workbook = workbook;
@@ -74,6 +86,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
                     savings.add(parseAsSavings(row));
                     approvalDates.add(parseAsSavingsApproval(row));
                     activationDates.add(parseAsSavingsActivation(row));
+                    closedOnDate.add(paseAsSavingsClosed(row));
                 }
             } catch (RuntimeException re) {
                 re.printStackTrace();
@@ -82,6 +95,7 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         }
         return result;
 	}
+
 
 	@Override
 	public Result upload() {
@@ -110,6 +124,8 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
                 if (progressLevel <= 1) progressLevel = uploadSavingsApproval(savingsId, i);
 
                 if (progressLevel <= 2) progressLevel = uploadSavingsActivation(savingsId, i);
+                
+                if (progressLevel <= 3) progressLevel = uploadSavingsClosing(savingsId, i);
 
                 statusCell.setCellValue("Imported");
                 statusCell.setCellStyle(getCellStyle(workbook, IndexedColors.LIGHT_GREEN));
@@ -197,12 +213,27 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         else if (depositPeriodFrequency.equalsIgnoreCase("Years")) depositPeriodFrequencyId = "3";
         String externalId = readAsString(EXTERNAL_ID_COL, row); 	
         String clientName = readAsString(CLIENT_NAME_COL, row);
+        
+        List<Charge> charges = new ArrayList<Charge>();
+        
+        String charge1 = readAsString(CHARGE_ID_1, row);
+        String charge2 = readAsString(CHARGE_ID_2, row);
+       
+        if (!charge1.equalsIgnoreCase("")) {
+            charges.add(new Charge(readAsString(CHARGE_ID_1, row), readAsDouble(CHARGE_AMOUNT_1, row), readAsDate(CHARGE_DUE_DATE_1, row)));
+        }
+
+        if (!charge2.equalsIgnoreCase("")) {
+
+            charges.add(new Charge(readAsString(CHARGE_ID_2, row), readAsDouble(CHARGE_AMOUNT_2, row), readAsDate(CHARGE_DUE_DATE_2, row)));
+        }
+
 
         String clientId = getIdByName(workbook.getSheet("Clients"), clientName).toString();
         return new FixedDepositAccount(clientId, productId, fieldOfficerId, submittedOnDate,
                 interestCompoundingPeriodTypeId, interestPostingPeriodTypeId, interestCalculationTypeId,
                 interestCalculationDaysInYearTypeId, lockinPeriodFrequency, lockinPeriodFrequencyTypeId,
-                depositAmount, depositPeriod, depositPeriodFrequencyId, externalId, row.getRowNum(), status);
+                depositAmount, depositPeriod, depositPeriodFrequencyId, externalId, charges,row.getRowNum(), status);
     }
 
     private Approval parseAsSavingsApproval(Row row) {
@@ -220,6 +251,17 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
         else
             return null;
     }
+    
+
+	private ClosingOfSavingsAccounts paseAsSavingsClosed(Row row) {
+		String closedOnDate = readAsDate(CLOSED_ON_DATE, row);
+		String onAccountClosureId = readAsString(ON_ACCOUNT_CLOSURE_ID, row);
+		String toSavingsAccountId = readAsString(TO_SAVINGS_ACCOUNT_ID, row);
+		if (!closedOnDate.equals(""))
+            return new ClosingOfSavingsAccounts(null, closedOnDate,onAccountClosureId,toSavingsAccountId, null, row.getRowNum());
+        else
+		return null;
+	}
     
     private int getProgressLevel(String status) {
         if (status.equals("") || status.equals("Creation failed."))
@@ -258,6 +300,16 @@ public class FixedDepositImportHandler extends AbstractDataImportHandler {
             String payload = gson.toJson(activationDates.get(rowIndex));
             logger.info(payload);
             restClient.post("savingsaccounts/" + savingsId + "?command=activate", payload);
+        }
+        return 3;
+    }
+    
+    private Integer uploadSavingsClosing(String savingsId, int rowIndex) {
+        Gson gson = new Gson();
+        if (closedOnDate.get(rowIndex) != null) {
+            String payload = gson.toJson(closedOnDate.get(rowIndex));
+            logger.info(payload);
+            restClient.post("fixeddepositaccounts/" + savingsId + "?command=prematureClose", payload);
         }
         return 3;
     }
