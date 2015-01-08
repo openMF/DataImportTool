@@ -31,16 +31,19 @@ public class AddGuarantorDataImportHandler extends AbstractDataImportHandler  {
 	    private static final int LOAN_ACCOUNT_NO_COL = 2;
 	    private static final int GUARANTO_TYPE_COL =3;
 	    private static final int CLIENT_RELATIONSHIP_TYPE_COL =4;
-	    private static final int ENTITY_ID_COL = 5;
-	    private static final int FIRST_NAME_COL = 6;
-	    private static final int LAST_NAME_COL = 7;
-	    private static final int ADDRESS_LINE_1_COL= 8;
-	    private static final int ADDRESS_LINE_2_COL = 9;
-	    private static final int CITY_COL = 10;
-	    private static final int DOB_COL = 11;
-	    private static final int ZIP_COL = 12;
-	    private static final int SAVINGS_ID=13;
-	    private static final int AMOUNT=14;
+	    
+	    private static final int ENTITY_ID_COL = 6;
+	    
+	    //private static final int ENTITY_ID_COL = 5;
+	    private static final int FIRST_NAME_COL = 7;
+	    private static final int LAST_NAME_COL = 8;
+	    private static final int ADDRESS_LINE_1_COL= 9;
+	    private static final int ADDRESS_LINE_2_COL = 10;
+	    private static final int CITY_COL = 11;
+	    private static final int DOB_COL = 12;
+	    private static final int ZIP_COL = 13;
+	    private static final int SAVINGS_ID=14;
+	    private static final int AMOUNT=15;
 	    private static final int STATUS_COL = 18;
 	    
 	    public AddGuarantorDataImportHandler(Workbook workbook, RestClient client) {
@@ -81,13 +84,12 @@ public class AddGuarantorDataImportHandler extends AbstractDataImportHandler  {
         String guarantorTypeId = "";
         if (guarantorType.equalsIgnoreCase("Internal"))
         	guarantorTypeId = "1";
-        else if (guarantorType.equalsIgnoreCase("External"))
+        else if(guarantorType.equalsIgnoreCase("External"))
         	guarantorTypeId = "3";
-   
-        
-        
+        String clientName = readAsString(ENTITY_ID_COL, row);
+        String entityId = getIdByName(workbook.getSheet("Clients"), clientName).toString();
         String clientRelationshipTypeId = readAsInt(CLIENT_RELATIONSHIP_TYPE_COL, row);
-        String entityId = readAsInt(ENTITY_ID_COL, row);
+        //String entityId = readAsInt(ENTITY_ID_COL, row);
         String firstname = readAsString(FIRST_NAME_COL, row);
         String lastname = readAsString(LAST_NAME_COL, row);
         String addressLine1 = readAsString(ADDRESS_LINE_1_COL, row);
