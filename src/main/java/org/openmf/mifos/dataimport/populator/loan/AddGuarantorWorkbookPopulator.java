@@ -86,36 +86,41 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
 	@Override
     public Result downloadAndParse() {
 		Result result =  officeSheetPopulator.downloadAndParse();
-		if(result.isSuccess()){
+				if(result.isSuccess()){
 			result = clientSheetPopulator.downloadAndParse();
+		}
+		if(result.isSuccess()) {
+			result=parseSavings();
 		}
 		if(result.isSuccess()){
 			result = parseLoans();
 		}
-		
-		if(result.isSuccess()) {
-			try {
-	        	restClient.createAuthToken();
-	            content = restClient.get("savingsaccounts?limit=-1");
-	            Gson gson = new Gson();
-	            JsonParser parser = new JsonParser();
-	            JsonObject obj = parser.parse(content).getAsJsonObject();
-	            JsonArray array = obj.getAsJsonArray("pageItems");
-	            Iterator<JsonElement> iterator = array.iterator();
-	            while(iterator.hasNext()) {
-	            	JsonElement json = iterator.next();
-	            	CompactSavingsAccount savingsAccount = gson.fromJson(json, CompactSavingsAccount.class);
-	            	if(savingsAccount.isActive())
-	            	  savings.add(savingsAccount);
-	            } 
-			} catch (Exception e) {
-		           result.addError(e.getMessage());
-		           logger.error(e.getMessage());
-		       }
-			}
-    	return result;
-    }
-	
+		return result;
+	}
+
+	private Result parseSavings()
+	{
+		Result result=new Result();
+		try {
+        	restClient.createAuthToken();
+            content = restClient.get("savingsaccounts?limit=-1");
+            Gson gson = new Gson();
+            JsonParser parser = new JsonParser();
+            JsonObject obj = parser.parse(content).getAsJsonObject();
+            JsonArray array = obj.getAsJsonArray("pageItems");
+            Iterator<JsonElement> iterator = array.iterator();
+            while(iterator.hasNext()) {
+            	JsonElement json = iterator.next();
+            	CompactSavingsAccount savingsAccount = gson.fromJson(json, CompactSavingsAccount.class);
+            	if(savingsAccount.isActive())
+            	  savings.add(savingsAccount);
+            } 
+		} catch (Exception e) {
+	           result.addError(e.getMessage());
+	           logger.error(e.getMessage());
+	       }
+	return result;
+	}	
 	
 	private Result parseLoans() {
     	Result result = new Result();
@@ -130,13 +135,12 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
             while(iterator.hasNext()) {
             	JsonElement json = iterator.next();
             	CompactLoan loan = gson.fromJson(json, CompactLoan.class);
-            	
+            	if(loan.isActive())
             	  loans.add(loan);
             } 
        } catch (Exception e) {
            result.addError(e.getMessage());
            logger.error(e.getMessage());
-           e.printStackTrace();
        }
        return result;	
     }
@@ -150,13 +154,12 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
 	    	if(result.isSuccess()){
 	    		result = clientSheetPopulator.populate(workbook);
 	    	}
-	    	if(result.isSuccess()) {
-	    		result = populateLoansTable(addGuarantorSheet);
-	    	}
 	    	if(result.isSuccess()){
 	    		result = populateSavingsTable(addGuarantorSheet);
 	    	}
-	        
+	    	if(result.isSuccess()) {
+	    		result = populateLoansTable(addGuarantorSheet);  
+	    	}
 	        if(result.isSuccess()) {
 	            result = setRules(addGuarantorSheet);
 	        }
@@ -171,14 +174,20 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
         short df = workbook.createDataFormat().getFormat("dd/mm/yy");
         dateCellStyle.setDataFormat(df);
 		int rowIndex = 1;
+		int rowNumberValidate=rowIndex+1;
     	Row row;
     	Collections.sort(savings, CompactSavingsAccount.ClientNameComparator);
     	try{
     		for(CompactSavingsAccount savingsAccount : savings) {
+    			if(addGuarantorSheet.getRow(rowNumberValidate)==null) {
     			row = addGuarantorSheet.createRow(rowIndex++);
+    			}
+    			else {
+    			row=addGuarantorSheet.getRow(rowIndex++);
+    			}
     			writeString(LOOKUP_SAVINGS_CLIENT_NAME_COL, row, savingsAccount.getClientName()  + "(" + savingsAccount.getClientId() + ")");
     			writeLong(LOOKUP_SAVINGS_ACCOUNT_NO_COL, row, Long.parseLong(savingsAccount.getAccountNo()));
-    	
+    			rowNumberValidate++;
     		}
 	    } catch (Exception e) {
 		result.addError(e.getMessage());
@@ -251,21 +260,27 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
     	}
         	return result;
 	}
-	private Result populateLoansTable(Sheet addGuaranterSheet) {
+	private Result populateLoansTable(Sheet addGuarantorSheet) {
     	Result result = new Result();
-    	int rowIndex = 1;
-    	Row row;
-    	Workbook workbook = addGuaranterSheet.getWorkbook();
+    	Workbook workbook = addGuarantorSheet.getWorkbook();
     	CellStyle dateCellStyle = workbook.createCellStyle();
         short df = workbook.createDataFormat().getFormat("dd/mm/yy");
         dateCellStyle.setDataFormat(df);
+        int rowIndex = 1;
+        int rowNumberValidate=rowIndex+1;
+    	Row row;
     	Collections.sort(loans, CompactLoan.ClientNameComparator);
     	try{
     		for(CompactLoan loan : loans) {
-    			row = addGuaranterSheet.createRow(rowIndex++);
-    			writeString(LOOKUP_CLIENT_NAME_COL, row, loan.getClientName()   + "(" + loan.getClientId() + ")");
+    			if(addGuarantorSheet.getRow(rowNumberValidate)==null){
+    			row = addGuarantorSheet.createRow(rowIndex++);
+    			}
+    			else{
+    			row= addGuarantorSheet.getRow(rowIndex++);
+    			}
+    			writeString(LOOKUP_CLIENT_NAME_COL, row, loan.getClientName() + "(" + loan.getClientId() + ")");
     			writeLong(LOOKUP_ACCOUNT_NO_COL, row, Long.parseLong(loan.getAccountNo()));
-    			
+    			rowNumberValidate++;
     		}
 	   } catch (Exception e) {
 		   e.printStackTrace();
@@ -324,15 +339,12 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
     		name.setNameName("Account_" + clientsWithActiveLoans.get(j).replaceAll(" ", "_") + "_" + clientIdsWithActiveLoans.get(j) + "_");
     		name.setRefersToFormula("guarantor!$CE$" + clientNameToBeginEndIndexes.get(clientsWithActiveLoans.get(j))[0] + ":$CE$" + clientNameToBeginEndIndexes.get(clientsWithActiveLoans.get(j))[1]);
     	}
-    	
     	///savings
-    	
-    	
     	//Counting clients with active savings and starting and end addresses of cells for naming
-    	
     	ArrayList<String> clientsWithActiveSavings = new ArrayList<String>();
     	ArrayList<String> clientIdsWithActiveSavings = new ArrayList<String>();
-    	
+    	clientName="";
+    	clientId="";
     	for(int i = 0; i < savings.size(); i++){
     		if(!clientName.equals(savings.get(i).getClientName())) {
     			endIndex = i + 1;
