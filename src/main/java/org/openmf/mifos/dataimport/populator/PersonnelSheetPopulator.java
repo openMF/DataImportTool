@@ -127,9 +127,11 @@ public class PersonnelSheetPopulator extends AbstractWorkbookPopulator {
 	        	
 	        	if(!fullStaffList.isEmpty()) {
 	        		for(String staffName : fullStaffList) {
-	        			int staffId = staffNameToStaffId.get(staffName);
+	        			Integer staffId = staffNameToStaffId.get(staffName);
+	        		    if(staffId!=null){
 	        		    writeString(STAFF_NAME_COL, row, staffName);
 	        		    writeInt(STAFF_ID_COL, row, staffId);
+	        		    }
 	        		    row = staffSheet.createRow(++rowIndex);	
 	        		}
 	        		officeNameToBeginEndIndexesOfStaff.put(officeIndex++, new Integer[]{startIndex, rowIndex});
