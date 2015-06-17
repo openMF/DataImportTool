@@ -7,6 +7,7 @@ import org.openmf.mifos.dataimport.handler.accounting.AddJournalEntriesHandler;
 import org.openmf.mifos.dataimport.handler.client.CenterDataImportHandler;
 import org.openmf.mifos.dataimport.handler.client.ClientDataImportHandler;
 import org.openmf.mifos.dataimport.handler.client.GroupDataImportHandler;
+import org.openmf.mifos.dataimport.handler.loan.AddGuarantorDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanDataImportHandler;
 import org.openmf.mifos.dataimport.handler.loan.LoanRepaymentDataImportHandler;
 import org.openmf.mifos.dataimport.handler.savings.ClosingOfSavingsAccountHandler;
@@ -46,7 +47,10 @@ public class ImportHandlerFactory {
             	return new ClosingOfSavingsAccountHandler(workbook, new MifosRestClient());
         }else if(workbook.getSheetIndex("AddJournalEntries") == 0) {
         	return new AddJournalEntriesHandler(workbook, new MifosRestClient());
+        }else if(workbook.getSheetIndex("guarantor") == 0) {
+        	return new AddGuarantorDataImportHandler(workbook, new MifosRestClient());
         }
+        
         
         
         throw new IllegalArgumentException("No work sheet found for processing : active sheet " + workbook.getSheetName(0));
