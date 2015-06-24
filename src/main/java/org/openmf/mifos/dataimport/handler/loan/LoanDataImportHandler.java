@@ -144,7 +144,7 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         else if (loanTermFrequency.equalsIgnoreCase("Weeks"))
             loanTermFrequencyId = "1";
         else if (loanTermFrequency.equalsIgnoreCase("Months")) loanTermFrequencyId = "2";
-        String nominalInterestRate = readAsString(NOMINAL_INTEREST_RATE_COL, row);
+        Double nominalInterestRate = readAsDouble(NOMINAL_INTEREST_RATE_COL, row);
         String amortization = readAsString(AMORTIZATION_COL, row);
         String amortizationId = "";
         if (amortization.equalsIgnoreCase("Equal principal payments"))

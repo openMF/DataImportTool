@@ -5,7 +5,7 @@ public class GroupLoan extends Loan{
 	
 	public GroupLoan(String loanType, String groupId, String productId,	String loanOfficerId, String submittedOnDate, String fundId,
 			String principal, String numberOfRepayments, String repaymentEvery,	String repaymentFrequencyType, String loanTermFrequency,
-			String loanTermFrequencyType, String interestRatePerPeriod,	String expectedDisbursementDate, String amortizationType,
+			String loanTermFrequencyType, Double interestRatePerPeriod,	String expectedDisbursementDate, String amortizationType,
 			String interestType, String interestCalculationPeriodType, String inArrearsTolerance, String transactionProcessingStrategyId,
 			String graceOnPrincipalPayment, String graceOnInterestPayment, String graceOnInterestCharged, String interestChargedFromDate,
 			String repaymentsStartingFromDate, Integer rowIndex, String status,String externalId,String linkAccountId) {
