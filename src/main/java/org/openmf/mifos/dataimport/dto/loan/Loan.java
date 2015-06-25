@@ -35,7 +35,7 @@ public class Loan {
 	
 	private final String loanTermFrequencyType;
 	
-	private final String interestRatePerPeriod;
+	private final Double interestRatePerPeriod;
 	
 	private final String expectedDisbursementDate;
 	
@@ -72,7 +72,7 @@ public class Loan {
 	private final String  linkAccountId;
 	
 	public Loan(String loanType, String clientId, String productId, String loanOfficerId, String submittedOnDate, String fundId, String principal, String numberOfRepayments, String repaymentEvery,
-			String repaymentFrequencyType,  String loanTermFrequency, String loanTermFrequencyType, String interestRatePerPeriod, String expectedDisbursementDate, String amortizationType,
+			String repaymentFrequencyType,  String loanTermFrequency, String loanTermFrequencyType, Double interestRatePerPeriod, String expectedDisbursementDate, String amortizationType,
 			String interestType, String interestCalculationPeriodType, String inArrearsTolerance, String transactionProcessingStrategyId, String graceOnPrincipalPayment,
 			String graceOnInterestPayment, String graceOnInterestCharged, String interestChargedFromDate, String repaymentsStartingFromDate, Integer rowIndex, String status,String externalId,String groupId, List<Charge> charges,String linkAccountId) {
 		this.amortizationType = amortizationType;
@@ -149,7 +149,7 @@ public class Loan {
 		return interestChargedFromDate;
 	}
 	
-	public String getInterestRatePerPeriod() {
+	public Double getInterestRatePerPeriod() {
 		return interestRatePerPeriod;
 	}
 	
