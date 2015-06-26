@@ -61,7 +61,7 @@ public class ExtrasSheetPopulator extends AbstractWorkbookPopulator {
 				funds.add(fund);
 			}
 			paymentTypes = new ArrayList<PaymentType>();
-			content = client.get("codes/12/codevalues");
+			content = client.get("paymenttypes");
 			json = new JsonParser().parse(content);
 			array = json.getAsJsonArray();
 			iterator = array.iterator();
