@@ -10,14 +10,9 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
 import org.openmf.mifos.dataimport.utils.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @WebListener
 public class ApplicationContextListner implements ServletContextListener {
-
-
-	private static final Logger logger = LoggerFactory.getLogger(ApplicationContextListner.class);
 
 	@Override
 	public void contextInitialized(@SuppressWarnings("unused") ServletContextEvent sce) {
@@ -34,7 +29,6 @@ public class ApplicationContextListner implements ServletContextListener {
 			readAndSetAsSysProp("mifos.tenant.id", "default", prop);
 			fis.close();
 		} catch (IOException e) {
-			logger.error("Unable to find dataimport.properties", e);
 			throw new IllegalStateException(e);
 		}
 	}
