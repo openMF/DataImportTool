@@ -26,8 +26,6 @@ import org.openmf.mifos.dataimport.http.RestClient;
 import org.openmf.mifos.dataimport.populator.AbstractWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.ClientSheetPopulator;
 import org.openmf.mifos.dataimport.populator.OfficeSheetPopulator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -37,7 +35,7 @@ import com.google.gson.JsonParser;
 
 
 public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
-	  private static final Logger logger = LoggerFactory.getLogger(AddGuarantorWorkbookPopulator.class);
+	   
 		
 		private final RestClient restClient;
 		
@@ -117,7 +115,7 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
             } 
 		} catch (Exception e) {
 	           result.addError(e.getMessage());
-	           logger.error(e.getMessage());
+	          
 	       }
 	return result;
 	}	
@@ -140,7 +138,7 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
             } 
        } catch (Exception e) {
            result.addError(e.getMessage());
-           logger.error(e.getMessage());
+          
        }
        return result;	
     }
@@ -191,7 +189,7 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
     		}
 	    } catch (Exception e) {
 		result.addError(e.getMessage());
-		logger.error(e.getMessage());
+		 
 	    }
     	return result;
     }
@@ -255,8 +253,6 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
     	
     	} catch (RuntimeException re) {
     		result.addError(re.getMessage());
-    		logger.error(re.getMessage());
-    	
     	}
         	return result;
 	}
@@ -285,7 +281,7 @@ public class AddGuarantorWorkbookPopulator extends AbstractWorkbookPopulator {
 	   } catch (Exception e) {
 		   e.printStackTrace();
 		   result.addError(e.getMessage());
-		   logger.error(e.getMessage());
+		  
 	    }
     	return result;
     }

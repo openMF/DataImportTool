@@ -12,14 +12,12 @@ import org.openmf.mifos.dataimport.dto.Transaction;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
 public class LoanRepaymentDataImportHandler extends AbstractDataImportHandler {
 
-	private static final Logger logger = LoggerFactory.getLogger(LoanRepaymentDataImportHandler.class);
+	 
 	
     private final RestClient restClient;
     private final Workbook workbook;
@@ -56,7 +54,6 @@ public class LoanRepaymentDataImportHandler extends AbstractDataImportHandler {
                 if(isNotImported(row, STATUS_COL))
                     loanRepayments.add(parseAsLoanRepayment(row));
             } catch (Exception e) {
-                logger.error("row = " + rowIndex, e);
                 result.addError("Row = " + rowIndex + " , " + e.getMessage());
             }
         }

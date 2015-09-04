@@ -12,13 +12,11 @@ import org.openmf.mifos.dataimport.dto.ClosingOfSavingsAccounts;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
 public class ClosingOfSavingsAccountHandler  extends AbstractDataImportHandler{
-	 private static final Logger logger = LoggerFactory.getLogger(ClosingOfSavingsAccountHandler.class);
+	  
 		
 		private final RestClient restClient;
 		 private final Workbook workbook;
@@ -52,7 +50,6 @@ public class ClosingOfSavingsAccountHandler  extends AbstractDataImportHandler{
                     closedOnDate.add(paseAsSavingsClosed(row));
                 }
             } catch (RuntimeException re) {
-            	logger.error("row = " + rowIndex, re);
                 result.addError("Row = " + rowIndex + " , " + re.getMessage());
             }
         }

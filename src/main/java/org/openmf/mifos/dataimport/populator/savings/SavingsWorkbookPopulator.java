@@ -23,12 +23,10 @@ import org.openmf.mifos.dataimport.populator.ClientSheetPopulator;
 import org.openmf.mifos.dataimport.populator.GroupSheetPopulator;
 import org.openmf.mifos.dataimport.populator.OfficeSheetPopulator;
 import org.openmf.mifos.dataimport.populator.PersonnelSheetPopulator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
 
-    private static final Logger logger = LoggerFactory.getLogger(SavingsWorkbookPopulator.class);
+     
 
     private OfficeSheetPopulator officeSheetPopulator;
     private ClientSheetPopulator clientSheetPopulator;
@@ -337,7 +335,7 @@ public class SavingsWorkbookPopulator extends AbstractWorkbookPopulator {
                         + "))),\"\",INDIRECT(CONCATENATE(\"Overdraft_Limit_\",$D" + (rowNo + 1) + ")))");
             }
         } catch (RuntimeException re) {
-            logger.error(re.getMessage());
+             
             result.addError(re.getMessage());
         }
         return result;

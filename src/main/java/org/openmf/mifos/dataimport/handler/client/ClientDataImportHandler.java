@@ -14,13 +14,11 @@ import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
 import org.openmf.mifos.dataimport.utils.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
 public class ClientDataImportHandler extends AbstractDataImportHandler {
-	private static final Logger logger = LoggerFactory.getLogger(ClientDataImportHandler.class);
+	 
 	
 	private static final int FIRST_NAME_COL = 0;
 	private static final int FULL_NAME_COL = 0;
@@ -59,7 +57,6 @@ public class ClientDataImportHandler extends AbstractDataImportHandler {
                     clients.add(parseAsClient(row));
                 }
             } catch (Exception e) {
-                logger.error("row = " + rowIndex, e);
                 result.addError("Row = " + rowIndex + " , " + e.getMessage());
             }
         }
