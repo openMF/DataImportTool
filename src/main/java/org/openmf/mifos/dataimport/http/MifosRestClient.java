@@ -12,15 +12,13 @@ import javax.net.ssl.SSLSession;
 
 import org.openmf.mifos.dataimport.dto.AuthToken;
 import org.openmf.mifos.dataimport.http.SimpleHttpRequest.Method;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
 
 public class MifosRestClient implements RestClient {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MifosRestClient.class);
+	 
     
     private final String baseURL;
 
@@ -111,7 +109,6 @@ public class MifosRestClient implements RestClient {
             SimpleHttpResponse response = new HttpRequestBuilder().withURL(url).withMethod(Method.POST)
                         .addHeader(Header.MIFOS_TENANT_ID, tenantId)
                         .addHeader(Header.CONTENT_TYPE, "application/json; charset=utf-8").execute();
-            logger.info("Status: "+response.getStatus());
             String content = readContentAndClose(response.getContent());
             AuthToken auth = new Gson().fromJson(content, AuthToken.class);
             authToken = auth.getBase64EncodedAuthenticationKey();

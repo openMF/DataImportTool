@@ -9,18 +9,14 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.AddGuarantor;
-import org.openmf.mifos.dataimport.dto.Transaction;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.openmf.mifos.dataimport.dto.AddGuarantor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
 public class AddGuarantorDataImportHandler extends AbstractDataImportHandler  {
-	private static final Logger logger = LoggerFactory.getLogger(AddGuarantorDataImportHandler.class);
+	 
 	
 	 private final RestClient restClient;
 	    private final Workbook workbook;
@@ -65,7 +61,6 @@ public class AddGuarantorDataImportHandler extends AbstractDataImportHandler  {
 	                	guarantors.add(parseAsGuarantor(row));
 	                    
 	            } catch (Exception e) {
-	                logger.error("row = " + rowIndex, e);
 	                result.addError("Row = " + rowIndex + " , " + e.getMessage());
 	            }
 	        }

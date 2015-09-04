@@ -17,8 +17,6 @@ import org.openmf.mifos.dataimport.dto.savings.SavingsActivation;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -26,7 +24,7 @@ import com.google.gson.JsonParser;
 
 public class SavingsDataImportHandler extends AbstractDataImportHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(SavingsDataImportHandler.class);
+     
 
     @SuppressWarnings("CPD-START")
     private static final int SAVINGS_TYPE_COL = 1;
@@ -88,7 +86,6 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
                     activationDates.add(parseAsSavingsActivation(row));
                 }
             } catch (RuntimeException re) {
-                logger.error("row = " + rowIndex, re);
                 result.addError("Row = " + rowIndex + " , " + re.getMessage());
             }
         }
@@ -287,7 +284,6 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         Gson gson = new Gson();
         if (activationDates.get(rowIndex) != null) {
             String payload = gson.toJson(activationDates.get(rowIndex));
-            logger.info(payload);
             restClient.post("savingsaccounts/" + savingsId + "?command=activate", payload);
         }
         return 3;

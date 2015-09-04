@@ -1,19 +1,17 @@
 package org.openmf.mifos.dataimport.populator;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.openmf.mifos.dataimport.dto.client.CompactCenter;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.openmf.mifos.dataimport.dto.client.CompactCenter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,7 +21,7 @@ import com.google.gson.JsonParser;
 
 public class CenterSheetPopulator extends AbstractWorkbookPopulator {
 
-	private static final Logger logger = LoggerFactory.getLogger(CenterSheetPopulator.class);
+	 
 
 	private final RestClient restClient;
 	private String content;
@@ -55,7 +53,6 @@ public class CenterSheetPopulator extends AbstractWorkbookPopulator {
 			parseOfficeNames();
 		} catch (Exception e) {
 			result.addError(e.getMessage());
-			logger.error(e.getMessage());
 		}
 		return result;
 	}
@@ -71,7 +68,6 @@ public class CenterSheetPopulator extends AbstractWorkbookPopulator {
 			centerSheet.protectSheet("");
 		} catch (Exception e) {
 			result.addError(e.getMessage());
-			logger.error(e.getMessage());
 		}
 		return result;
 	}

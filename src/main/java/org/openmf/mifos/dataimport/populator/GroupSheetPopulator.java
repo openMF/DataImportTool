@@ -12,8 +12,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.client.CompactGroup;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -23,7 +21,7 @@ import com.google.gson.JsonParser;
 
 public class GroupSheetPopulator extends AbstractWorkbookPopulator {
 	
-	private static final Logger logger = LoggerFactory.getLogger(GroupSheetPopulator.class);
+	 
 	
     private final RestClient restClient;
     private String content;
@@ -55,7 +53,7 @@ public class GroupSheetPopulator extends AbstractWorkbookPopulator {
             parseOfficeNames();
         } catch (Exception e) {
             result.addError(e.getMessage());
-            logger.error(e.getMessage());
+           
         }
     	return result;
     }
@@ -71,7 +69,7 @@ public class GroupSheetPopulator extends AbstractWorkbookPopulator {
     	     groupSheet.protectSheet("");
     	} catch (Exception e) {
     		result.addError(e.getMessage());
-    		logger.error(e.getMessage());
+    		 
     	}
         return result;
     }

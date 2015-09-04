@@ -19,15 +19,12 @@ import org.openmf.mifos.dataimport.handler.DataImportHandler;
 import org.openmf.mifos.dataimport.handler.ImportFormatType;
 import org.openmf.mifos.dataimport.handler.ImportHandlerFactory;
 import org.openmf.mifos.dataimport.handler.Result;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @WebServlet(name = "DataImportServlet", urlPatterns = {"/import"})
 @MultipartConfig(maxFileSize=10000000, fileSizeThreshold=10000000)
 public class DataImportServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final Logger logger = LoggerFactory.getLogger(DataImportServlet.class);
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -91,8 +88,8 @@ public class DataImportServlet extends HttpServlet {
         			+ "</body>"
         			+ "</html>");
         } else {
-        for(String e : result.getErrors())
-            logger.debug("Failed: " + e);
+//        for(String e : result.getErrors())
+//            logger.debug("Failed: " + e);
         String fileName = "Re-Upload.xls";
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-Disposition", "attachment;filename="+fileName);

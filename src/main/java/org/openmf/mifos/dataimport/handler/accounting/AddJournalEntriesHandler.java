@@ -5,23 +5,18 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.CreditDebit;
 import org.openmf.mifos.dataimport.dto.accounting.AddJournalEntries;
 import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
 import org.openmf.mifos.dataimport.handler.Result;
-import org.openmf.mifos.dataimport.handler.savings.SavingsTransactionDataImportHandler;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
 public class AddJournalEntriesHandler extends AbstractDataImportHandler {
-	private static final Logger logger = LoggerFactory
-			.getLogger(SavingsTransactionDataImportHandler.class);
 
 	private final RestClient restClient;
 	private final Workbook workbook;
@@ -122,7 +117,6 @@ public class AddJournalEntriesHandler extends AbstractDataImportHandler {
 					// }
 				}
 			} catch (RuntimeException re) {
-				logger.error("row = " + rowIndex, re);
 				result.addError("Row = " + rowIndex + " , " + re.getMessage());
 			}
 

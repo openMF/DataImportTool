@@ -12,8 +12,6 @@ import org.openmf.mifos.dataimport.dto.PaymentType;
 import org.openmf.mifos.dataimport.dto.loan.Fund;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -21,9 +19,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 public class ExtrasSheetPopulator extends AbstractWorkbookPopulator {
-
-	private static final Logger logger = LoggerFactory
-			.getLogger(ExtrasSheetPopulator.class);
 
 	private final RestClient client;
 

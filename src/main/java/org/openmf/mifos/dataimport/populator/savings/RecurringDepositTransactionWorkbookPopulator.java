@@ -26,8 +26,6 @@ import org.openmf.mifos.dataimport.populator.AbstractWorkbookPopulator;
 import org.openmf.mifos.dataimport.populator.ClientSheetPopulator;
 import org.openmf.mifos.dataimport.populator.ExtrasSheetPopulator;
 import org.openmf.mifos.dataimport.populator.OfficeSheetPopulator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -37,7 +35,7 @@ import com.google.gson.JsonParser;
 
 public class RecurringDepositTransactionWorkbookPopulator extends AbstractWorkbookPopulator {
 	
-    private static final Logger logger = LoggerFactory.getLogger(RecurringDepositTransactionWorkbookPopulator.class);
+     
 	
 	private final RestClient restClient;
 	
@@ -101,7 +99,7 @@ public class RecurringDepositTransactionWorkbookPopulator extends AbstractWorkbo
 	            } 
 	       } catch (Exception e) {
 	           result.addError(e.getMessage());
-	           logger.error(e.getMessage());
+	          
 	       }
 		}
     	return result;
@@ -145,7 +143,7 @@ public class RecurringDepositTransactionWorkbookPopulator extends AbstractWorkbo
     		}
 	    } catch (Exception e) {
 		result.addError(e.getMessage());
-		logger.error(e.getMessage());
+		 
 	    }
     	return result;
     }
@@ -245,7 +243,7 @@ public class RecurringDepositTransactionWorkbookPopulator extends AbstractWorkbo
     			writeFormula(OPENING_BALANCE_COL, row, "IF(ISERROR(VLOOKUP($C"+ (rowNo+1) +",$Q$2:$S$" + (savings.size() + 1) + ",3,FALSE)),\"\",VLOOKUP($C"+ (rowNo+1) +",$Q$2:$S$" + (savings.size() + 1) + ",3,FALSE))");
     		}
     	} catch (Exception e) {
-    		logger.error(e.getMessage());
+    		e.printStackTrace();
     	}
     }
     

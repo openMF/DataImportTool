@@ -8,14 +8,12 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
-import org.openmf.mifos.dataimport.handler.Result;
-import org.openmf.mifos.dataimport.http.RestClient;
 import org.openmf.mifos.dataimport.dto.client.Center;
 import org.openmf.mifos.dataimport.dto.client.Meeting;
 import org.openmf.mifos.dataimport.dto.client.WeeklyMeeting;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openmf.mifos.dataimport.handler.AbstractDataImportHandler;
+import org.openmf.mifos.dataimport.handler.Result;
+import org.openmf.mifos.dataimport.http.RestClient;
 import org.openmf.mifos.dataimport.utils.StringUtils;
 
 import com.google.gson.Gson;
@@ -23,7 +21,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class CenterDataImportHandler extends AbstractDataImportHandler   {
-	private static final Logger logger = LoggerFactory.getLogger(CenterDataImportHandler.class);
 	
 	@SuppressWarnings("CPD-START")
 	private static final int NAME_COL = 0;
@@ -71,7 +68,6 @@ public class CenterDataImportHandler extends AbstractDataImportHandler   {
 	                    meetings.add(parseAsMeeting(row));
 	                }
 	            } catch (Exception e) {
-	                logger.error("row = " + rowIndex, e);
 	                result.addError("Row = " + rowIndex + " , " + e.getMessage());
 	            }
 	        }

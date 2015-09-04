@@ -10,8 +10,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.openmf.mifos.dataimport.dto.accounting.GlAccount;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -20,8 +18,6 @@ import com.google.gson.JsonParser;
 
 public class GlAccountSheetPopulator extends AbstractWorkbookPopulator {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(GlAccountSheetPopulator.class);
 
 	private final RestClient client;
 	private static final int ID_COL = 0;
@@ -47,7 +43,7 @@ public class GlAccountSheetPopulator extends AbstractWorkbookPopulator {
             parseglAccounts();
         } catch (Exception e) {
             result.addError(e.getMessage());
-            logger.error(e.getMessage());
+           
         }
 		return result;
 	}
@@ -78,7 +74,7 @@ public class GlAccountSheetPopulator extends AbstractWorkbookPopulator {
         glAccountSheet.protectSheet("");
     	} catch (Exception e) {
     		result.addError(e.getMessage());
-    		logger.error(e.getMessage());
+    		 
     	}
         return result;
 	}
