@@ -139,3 +139,8 @@ To Dos
 2. Better workbook populator unit tests which will use FormulaEvaluator to evaluate if the data validation formulas and in-cell formulas embedded as Strings are not broken due to shifting of columns.
 3. Minor improvements to group related features once the release is stable (like sync repayments with meetings).
 
+Dev Setup
+=========
+1. Eclipsify using command gradle clean cleanEclipse eclipse
+2. Import into project into workspace
+When opened, in the package explorer of the java perspective, right-click import->General->Existing projects into workspace. In the dialog that opens, specify the root directory option by browsing to and selecting the DataImportTool directory.
