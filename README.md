@@ -1,6 +1,8 @@
 Data Import Tool
 ================
 
+[![Join the chat at https://gitter.im/openMF/DataImportTool](https://badges.gitter.im/openMF/DataImportTool.svg)](https://gitter.im/openMF/DataImportTool?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Generating Excel Templates and Importing Bulk Data - Using simple servlet and Apache POI.
 
 Build Status
