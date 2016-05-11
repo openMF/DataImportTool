@@ -58,7 +58,7 @@ public class MifosRestClient implements RestClient {
     public static final class Header {
         public static final String AUTHORIZATION = "Authorization";
         public static final String CONTENT_TYPE = "Content-Type";
-        public static final String MIFOS_TENANT_ID = "X-Mifos-Platform-TenantId";
+        public static final String MIFOS_TENANT_ID = "Fineract-Platform-TenantId";
     }
     
 
