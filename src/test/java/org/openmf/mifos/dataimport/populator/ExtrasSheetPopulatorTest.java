@@ -16,7 +16,6 @@ import org.openmf.mifos.dataimport.dto.PaymentType;
 import org.openmf.mifos.dataimport.dto.loan.Fund;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.openmf.mifos.dataimport.populator.ExtrasSheetPopulator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExtrasSheetPopulatorTest {

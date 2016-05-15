@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openmf.mifos.dataimport.dto.Transaction;
-import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.handler.loan.LoanRepaymentDataImportHandler;
 import org.openmf.mifos.dataimport.http.RestClient;
 

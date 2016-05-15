@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openmf.mifos.dataimport.dto.client.Client;
 import org.openmf.mifos.dataimport.dto.client.CorporateClient;
-import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.handler.client.ClientDataImportHandler;
 import org.openmf.mifos.dataimport.http.RestClient;
 

@@ -145,7 +145,7 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
                 } else 
                 	  groupId = readAsInt(GROUP_ID_COL, groupSheet.getRow(groups.get(i).getRowIndex()));
                 
-                if(meetings.get(i) != null)
+                if(meetings.get(i) != null && groups.get(i).getCenterId() == null)
                 	progressLevel = uploadGroupMeeting(groupId, i);
                 
                 statusCell.setCellValue("Imported");
@@ -197,7 +197,7 @@ public class GroupDataImportHandler extends AbstractDataImportHandler {
     	meeting.setGroupId(groupId);
     	meeting.setTitle("groups_" + groupId + "_CollectionMeeting");
     	String payload = new Gson().toJson(meeting);
-        restClient.post("groups/" + groupId + "/calendars", payload);
+        final String response =restClient.post("groups/" + groupId + "/calendars", payload);
         return 2;
    }
     

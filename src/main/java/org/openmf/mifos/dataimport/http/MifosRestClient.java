@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 
 public class MifosRestClient implements RestClient {
 	
-	 
     
     private final String baseURL;
 
@@ -58,7 +57,7 @@ public class MifosRestClient implements RestClient {
     public static final class Header {
         public static final String AUTHORIZATION = "Authorization";
         public static final String CONTENT_TYPE = "Content-Type";
-        public static final String MIFOS_TENANT_ID = "Fineract-Platform-TenantId";
+        public static final String FINERACT_TENANT_ID = "Fineract-Platform-TenantId";
     }
     
 
@@ -70,7 +69,7 @@ public class MifosRestClient implements RestClient {
                 SimpleHttpResponse response = new HttpRequestBuilder().withURL(url).withMethod(Method.POST)
                                 .addHeader(Header.AUTHORIZATION, "Basic " + authToken)
                                 .addHeader(Header.CONTENT_TYPE, "application/json; charset=utf-8")
-                                .addHeader(Header.MIFOS_TENANT_ID, tenantId)
+                                .addHeader(Header.FINERACT_TENANT_ID, tenantId)
                                 .withContent(payload).execute();
                 String content = readContentAndClose(response.getContent());
             if (response.getStatus() != HttpURLConnection.HTTP_OK) 
@@ -89,7 +88,7 @@ public class MifosRestClient implements RestClient {
     	try {
     		      SimpleHttpResponse response = new HttpRequestBuilder().withURL(url).withMethod(Method.GET)
     		    		          .addHeader(Header.AUTHORIZATION, "Basic " + authToken)
-    		    		          .addHeader(Header.MIFOS_TENANT_ID,tenantId)
+    		    		          .addHeader(Header.FINERACT_TENANT_ID,tenantId)
     		    		          .execute();
     		      String content = readContentAndClose(response.getContent());
     		      if(response.getStatus() != HttpURLConnection.HTTP_OK)
@@ -107,7 +106,7 @@ public class MifosRestClient implements RestClient {
         String url = baseURL + "authentication?username=" + userName + "&password=" + password;
         try {
             SimpleHttpResponse response = new HttpRequestBuilder().withURL(url).withMethod(Method.POST)
-                        .addHeader(Header.MIFOS_TENANT_ID, tenantId)
+                        .addHeader(Header.FINERACT_TENANT_ID, tenantId)
                         .addHeader(Header.CONTENT_TYPE, "application/json; charset=utf-8").execute();
             String content = readContentAndClose(response.getContent());
             AuthToken auth = new Gson().fromJson(content, AuthToken.class);
