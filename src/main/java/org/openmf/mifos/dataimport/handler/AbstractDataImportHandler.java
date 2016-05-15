@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellValue;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -67,10 +69,25 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
         	Cell c = row.getCell(colIndex);
         	if (c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
         		return "";
-            return c.getStringCellValue().trim();
+        	FormulaEvaluator eval = row.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
+        	if(c.getCellType() == Cell.CELL_TYPE_FORMULA) {
+        		CellValue val = eval.evaluate(c);
+        		String res = trimEmptyDecimalPortion(val.getStringValue());
+        		return res.trim();
+        	}
+        	String res = trimEmptyDecimalPortion(c.getStringCellValue().trim());
+            return res.trim();
         } catch (Exception e) {
+        	e.printStackTrace();
             return ((Double)row.getCell(colIndex).getNumericCellValue()).intValue() + "";
         }
+    }
+    
+    private String trimEmptyDecimalPortion(String result) {
+    	if(result != null && result.endsWith(".0"))
+    		return	result.split("\\.")[0];
+    	else
+    		return result;
     }
 
     protected String readAsDate(int colIndex, Row row) {

@@ -120,7 +120,7 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         String fundName = readAsString(FUND_NAME_COL, row);
         String fundId;
         if (fundName.equals(""))
-            fundId = "";
+            fundId = null;
         else
             fundId = getIdByName(workbook.getSheet("Extras"), fundName).toString();
         String principal = readAsDouble(PRINCIPAL_COL, row).toString();
@@ -160,17 +160,20 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         String arrearsTolerance = readAsString(ARREARS_TOLERANCE_COL, row);
         String repaymentStrategy = readAsString(REPAYMENT_STRATEGY_COL, row);
         String repaymentStrategyId = "";
-        if (repaymentStrategy.equalsIgnoreCase("Mifos style"))
+        if (repaymentStrategy.equalsIgnoreCase("Penalties, Fees, Interest, Principal order"))
             repaymentStrategyId = "1";
-        else if (repaymentStrategy.equalsIgnoreCase("Heavensfamily"))
+        else if (repaymentStrategy.equalsIgnoreCase("HeavensFamily Unique"))
             repaymentStrategyId = "2";
-        else if (repaymentStrategy.equalsIgnoreCase("Creocore"))
+        else if (repaymentStrategy.equalsIgnoreCase("Creocore Unique"))
             repaymentStrategyId = "3";
-        else if (repaymentStrategy.equalsIgnoreCase("RBI (India)"))
+        else if (repaymentStrategy.equalsIgnoreCase("Overdue/Due Fee/Int,Principal"))
             repaymentStrategyId = "4";
-        else if (repaymentStrategy.equalsIgnoreCase("Principal Interest Penalties Fees Order"))
+        else if (repaymentStrategy.equalsIgnoreCase("Principal, Interest, Penalties, Fees Order"))
             repaymentStrategyId = "5";
-        else if (repaymentStrategy.equalsIgnoreCase("Interest Principal Penalties Fees Order")) repaymentStrategyId = "6";
+        else if (repaymentStrategy.equalsIgnoreCase("Interest, Principal, Penalties, Fees Order"))
+        	repaymentStrategyId = "6";
+        else if(repaymentStrategy.equalsIgnoreCase("Early Repayment Strategy"))
+        	repaymentStrategyId = "7";
         String graceOnPrincipalPayment = readAsString(GRACE_ON_PRINCIPAL_PAYMENT_COL, row);
         String graceOnInterestPayment = readAsString(GRACE_ON_INTEREST_PAYMENT_COL, row);
         String graceOnInterestCharged = readAsString(GRACE_ON_INTEREST_CHARGED_COL, row);
@@ -325,7 +328,6 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         Gson gson = new Gson();
         String payload = gson.toJson(loans.get(rowIndex));
         String response = restClient.post("loans", payload);
-
         return response;
     }
 
