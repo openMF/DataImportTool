@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.openmf.mifos.dataimport.dto.Charge;
+import org.openmf.mifos.dataimport.utils.StringUtils;
 
 public class Loan {
 
@@ -78,7 +79,10 @@ public class Loan {
 		this.amortizationType = amortizationType;
 		this.clientId = clientId;
 		this.expectedDisbursementDate = expectedDisbursementDate;
-		this.fundId = fundId;
+		if(fundId == null || StringUtils.isBlank(fundId) || fundId.equalsIgnoreCase("0"))
+			this.fundId = null;
+		else
+			this.fundId = fundId;
 		this.externalId= externalId;
 		this.graceOnInterestCharged = graceOnInterestCharged;
 		this.graceOnInterestPayment = graceOnInterestPayment;
