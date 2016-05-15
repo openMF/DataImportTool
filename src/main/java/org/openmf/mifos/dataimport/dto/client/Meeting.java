@@ -11,7 +11,7 @@ public class Meeting {
     private final String dateFormat;    
     private final Locale locale;    
     private final String description;    
-    private final Integer typeId;    
+    private final String typeId;    
     private String title;    
     private final String startDate;    
     private final String repeating;    
@@ -27,7 +27,7 @@ public class Meeting {
         this.dateFormat = "dd MMMM yyyy";
         this.locale = Locale.ENGLISH;
         this.description = "";
-        this.typeId = 1;
+        this.typeId = "1";
     }
     
     public void setGroupId(String groupId) {
@@ -54,7 +54,7 @@ public class Meeting {
 		return dateFormat;
 	}
 
-	public Integer getTypeId() {
+	public String getTypeId() {
 		return typeId;
 	}
 

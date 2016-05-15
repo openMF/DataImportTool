@@ -18,7 +18,6 @@ import org.openmf.mifos.dataimport.dto.Office;
 import org.openmf.mifos.dataimport.dto.Personnel;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.openmf.mifos.dataimport.populator.PersonnelSheetPopulator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PersonnelSheetPopulatorTest {

@@ -3,6 +3,8 @@ package org.openmf.mifos.dataimport.dto.client;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.openmf.mifos.dataimport.utils.StringUtils;
+
 public class Group {
 	
 	    private final transient Integer rowIndex;
@@ -26,7 +28,10 @@ public class Group {
 	        this.externalId = externalId;
 	        this.officeId = officeId;
 	        this.staffId = staffId;
-	        this.centerId= centerId;
+	        if(StringUtils.isBlank(centerId) || centerId.equalsIgnoreCase("0"))
+	        	this.centerId=null;
+	        else
+	        	this.centerId= centerId;
 	        this.rowIndex = rowIndex;
 	        this.status = status;
 	        this.dateFormat = "dd MMMM yyyy";

@@ -17,7 +17,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.openmf.mifos.dataimport.dto.client.CompactClient;
 import org.openmf.mifos.dataimport.handler.Result;
 import org.openmf.mifos.dataimport.http.RestClient;
-import org.openmf.mifos.dataimport.populator.ClientSheetPopulator;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientSheetPopulatorTest {
