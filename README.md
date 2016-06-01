@@ -20,6 +20,8 @@ Setup Instructions
   mifos.user.id=mifos  
   mifos.password=password  
   mifos.tenant.id=default  
+  
+  sample file is at https://github.com/openMF/DataImportTool/blob/develop/dataimport.properties
 
 2. Use the command "gradle clean tomcatRunWar" to run the application and access it at localhost:8070/DataImportTool.
 
