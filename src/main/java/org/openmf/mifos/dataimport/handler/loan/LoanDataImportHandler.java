@@ -124,8 +124,8 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         else
             fundId = getIdByName(workbook.getSheet("Extras"), fundName).toString();
         String principal = readAsDouble(PRINCIPAL_COL, row).toString();
-        String numberOfRepayments = readAsString(NO_OF_REPAYMENTS_COL, row);
-        String repaidEvery = readAsString(REPAID_EVERY_COL, row);
+        String numberOfRepayments = readAsInt(NO_OF_REPAYMENTS_COL, row);
+        String repaidEvery = readAsInt(REPAID_EVERY_COL, row);
         String repaidEveryFrequency = readAsString(REPAID_EVERY_FREQUENCY_COL, row);
         String repaidEveryFrequencyId = "";
         if (repaidEveryFrequency.equalsIgnoreCase("Days"))
@@ -133,7 +133,7 @@ public class LoanDataImportHandler extends AbstractDataImportHandler {
         else if (repaidEveryFrequency.equalsIgnoreCase("Weeks"))
             repaidEveryFrequencyId = "1";
         else if (repaidEveryFrequency.equalsIgnoreCase("Months")) repaidEveryFrequencyId = "2";
-        String loanTerm = readAsString(LOAN_TERM_COL, row);
+        String loanTerm = readAsInt(LOAN_TERM_COL, row);
         String loanTermFrequency = readAsString(LOAN_TERM_FREQUENCY_COL, row);
         String loanTermFrequencyId = "";
         if (loanTermFrequency.equalsIgnoreCase("Days"))
