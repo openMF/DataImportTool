@@ -40,6 +40,16 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
         	Cell c = row.getCell(colIndex);
         	if (c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
         		return "";
+        	FormulaEvaluator eval = row.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
+        	if(c.getCellType() == Cell.CELL_TYPE_FORMULA) {
+        		CellValue val = null;
+        		try {
+        			val = eval.evaluate(c);
+        		} catch (NullPointerException npe) {
+        			return "";
+        		}
+        		return ((Double)val.getNumberValue()).intValue() + "";
+        	}
         	return ((Double) c.getNumericCellValue()).intValue() + "";
         } catch (RuntimeException re) {
             return row.getCell(colIndex).getStringCellValue();
@@ -51,6 +61,16 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
         	Cell c = row.getCell(colIndex);
         	if (c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
         		return "";
+        	FormulaEvaluator eval = row.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
+        	if(c.getCellType() == Cell.CELL_TYPE_FORMULA) {
+        		CellValue val = null;
+        		try {
+        			val = eval.evaluate(c);
+        		} catch (NullPointerException npe) {
+        			return "";
+        		}
+        		return ((Double) val.getNumberValue()).longValue() + "";
+        	}
         	return ((Double) c.getNumericCellValue()).longValue() + "";
         } catch (RuntimeException re) {
             return row.getCell(colIndex).getStringCellValue();
@@ -61,6 +81,16 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
     	Cell c = row.getCell(colIndex);
     	if (c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
     		return 0.0;
+    	FormulaEvaluator eval = row.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
+    	if(c.getCellType() == Cell.CELL_TYPE_FORMULA) {
+    		CellValue val = null;
+    		try {
+    			val = eval.evaluate(c);
+    		} catch (NullPointerException npe) {
+    			return 0.0;
+    		}
+    		return val.getNumberValue();
+    	}
     	return row.getCell(colIndex).getNumericCellValue();
     }
 
@@ -71,7 +101,12 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
         		return "";
         	FormulaEvaluator eval = row.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
         	if(c.getCellType() == Cell.CELL_TYPE_FORMULA) {
-        		CellValue val = eval.evaluate(c);
+        		CellValue val = null;
+        		try {
+        			val = eval.evaluate(c);
+        		} catch(NullPointerException npe) {
+        			return "";
+        		}
         		String res = trimEmptyDecimalPortion(val.getStringValue());
         		return res.trim();
         	}
@@ -119,6 +154,16 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
     	    Cell c = row.getCell(colIndex);
 		    if(c == null || c.getCellType() == Cell.CELL_TYPE_BLANK)
 			    return false;
+		    FormulaEvaluator eval = row.getSheet().getWorkbook().getCreationHelper().createFormulaEvaluator();
+        	if(c.getCellType() == Cell.CELL_TYPE_FORMULA) {
+        		CellValue val = null;
+        		try {
+        			val = eval.evaluate(c);
+        		} catch (NullPointerException npe) {
+        			return false;
+        		}
+        		return val.getBooleanValue();
+        	}
     	    return c.getBooleanCellValue();
     	} catch (Exception e) {
     		String booleanString = row.getCell(colIndex).getStringCellValue().trim();
