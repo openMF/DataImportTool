@@ -150,7 +150,16 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
                     	else if(sheetName.equals("GlAccounts"))
                     		return ((Double)row.getCell(cell.getColumnIndex() - 1).getNumericCellValue()).intValue();
                     	else if(sheetName.equals("Clients") || sheetName.equals("Center")|| sheetName.equals("Groups") || sheetName.equals("Staff") ) 
-                    		return ((Double)row.getCell(cell.getColumnIndex() + 1).getNumericCellValue()).intValue();
+                    		/* Monkey patch - if office and center names are the same it errors out from looking
+                    		 for a number in a string. You have to check if the cell is a number, if not get the
+                    		  next column which will work when office and branch share names on group import.
+				*/
+				if (row.getCell(cell.getColumnIndex() + 1).getCellType() == Cell.CELL_TYPE_NUMERIC){
+					return ((Double)row.getCell(cell.getColumnIndex() + 1).getNumericCellValue()).intValue();
+				}
+				else {
+					return ((Double)row.getCell(cell.getColumnIndex() + 2).getNumericCellValue()).intValue();
+				}
                     }
             }
           }
