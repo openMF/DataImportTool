@@ -198,8 +198,8 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
         else if (lockinPeriodFrequencyType.equalsIgnoreCase("Months"))
             lockinPeriodFrequencyTypeId = "2";
         else if (lockinPeriodFrequencyType.equalsIgnoreCase("Years")) lockinPeriodFrequencyTypeId = "3";
-        String depositAmount = readAsString(RECURRING_DEPOSIT_AMOUNT_COL, row);
-        String depositPeriod = readAsString(DEPOSIT_PERIOD_COL, row);
+        String depositAmount = readAsInt(RECURRING_DEPOSIT_AMOUNT_COL, row);
+        String depositPeriod = readAsInt(DEPOSIT_PERIOD_COL, row);
         String depositPeriodFrequency = readAsString(DEPOSIT_PERIOD_FREQUENCY_COL, row);
         String depositPeriodFrequencyId = "";
         if (depositPeriodFrequency.equalsIgnoreCase("Days"))
@@ -210,7 +210,7 @@ public class RecurringDepositImportHandler extends AbstractDataImportHandler{
         	depositPeriodFrequencyId = "2";
         else if (depositPeriodFrequency.equalsIgnoreCase("Years")) depositPeriodFrequencyId = "3";
         
-        String recurringFrequency = readAsString(DEPOSIT_FREQUENCY_COL, row);
+        String recurringFrequency = readAsInt(DEPOSIT_FREQUENCY_COL, row);
         String recurringFrequencyType = readAsString(DEPOSIT_FREQUENCY_TYPE_COL, row);
         String recurringFrequencyTypeId = "";
         if (recurringFrequencyType.equalsIgnoreCase("Days"))
