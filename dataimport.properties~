@@ -1,4 +1,0 @@
-mifos.endpoint=https://localhost/fineract-provider/api/v1/
-mifos.user.id=root
-mifos.password=@Admin123
-mifos.tenant.id=default
