@@ -69,7 +69,7 @@ public class AddJournalEntriesHandler extends AbstractDataImportHandler {
 			try {
 				row = addJournalEntriesSheet.getRow(rowIndex);
 
-				currentTransactionId = readAsString(TRANSACTION_ID_COL, row);
+				currentTransactionId = readAsInt(TRANSACTION_ID_COL, row);
 
 				if (currentTransactionId.equals(prevTransactionId)) {
 					if (journalEntry != null) {
@@ -159,12 +159,12 @@ public class AddJournalEntriesHandler extends AbstractDataImportHandler {
 		String debit = readAsString(GL_ACCOUNT_ID_DEBIT_COL, row);
 
 		if (!credit.equalsIgnoreCase("")) {
-			credits.add(new CreditDebit(glAccountIdCredit, readAsString(
+			credits.add(new CreditDebit(glAccountIdCredit, readAsInt(
 					AMOUNT_CREDIT_COL, row)));
 		}
 
 		if (!debit.equalsIgnoreCase("")) {
-			debits.add(new CreditDebit(glAccountIdDebit, readAsString(
+			debits.add(new CreditDebit(glAccountIdDebit, readAsInt(
 					AMOUNT_DEBIT_COL, row)));
 		}
 
