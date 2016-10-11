@@ -99,7 +99,7 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         String fieldOfficerName = readAsString(FIELD_OFFICER_NAME_COL, row);
         String fieldOfficerId = getIdByName(workbook.getSheet("Staff"), fieldOfficerName).toString();
         String submittedOnDate = readAsDate(SUBMITTED_ON_DATE_COL, row);
-        String nominalAnnualInterestRate = readAsString(NOMINAL_ANNUAL_INTEREST_RATE_COL, row);
+        String nominalAnnualInterestRate = readAsInt(NOMINAL_ANNUAL_INTEREST_RATE_COL, row);
         String interestCompoundingPeriodType = readAsString(INTEREST_COMPOUNDING_PERIOD_COL, row);
         String interestCompoundingPeriodTypeId = "";
         if (interestCompoundingPeriodType.equalsIgnoreCase("Daily"))
@@ -132,8 +132,8 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
         if (interestCalculationDaysInYearType.equalsIgnoreCase("360 Days"))
             interestCalculationDaysInYearTypeId = "360";
         else if (interestCalculationDaysInYearType.equalsIgnoreCase("365 Days")) interestCalculationDaysInYearTypeId = "365";
-        String minRequiredOpeningBalance = readAsDouble(MIN_OPENING_BALANCE_COL, row).toString();
-        String lockinPeriodFrequency = readAsString(LOCKIN_PERIOD_COL, row);
+        String minRequiredOpeningBalance = readAsInt(MIN_OPENING_BALANCE_COL, row);
+        String lockinPeriodFrequency = readAsInt(LOCKIN_PERIOD_COL, row).toString();
         String lockinPeriodFrequencyType = readAsString(LOCKIN_PERIOD_FREQUENCY_COL, row);
         String lockinPeriodFrequencyTypeId = "";
         if (lockinPeriodFrequencyType.equalsIgnoreCase("Days"))
@@ -152,7 +152,7 @@ public class SavingsDataImportHandler extends AbstractDataImportHandler {
 
         
         String allowOverdraft = readAsBoolean(ALLOW_OVER_DRAFT_COL, row).toString();
-        String overdraftLimit = readAsString(OVER_DRAFT_LIMIT_COL, row);
+        String overdraftLimit = readAsInt(OVER_DRAFT_LIMIT_COL, row);
        
         String charge1 = readAsString(CHARGE_ID_1, row);
         String charge2 = readAsString(CHARGE_ID_2, row);

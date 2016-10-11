@@ -161,7 +161,7 @@ public class ClosingOfSavingsAccountsWorkbookPopulator extends AbstractWorkbookP
 		        writeString(SAVINGS_ACCOUNT_NO_COL, rowHeader, "Account No.*");
 		        writeString(PRODUCT_COL, rowHeader, "Product Name");
 		        writeString(OPENING_BALANCE_COL, rowHeader, "Opening Balance");
-		        writeString(CLOSED_ON_DATE, rowHeader, "Clising Date ");
+		        writeString(CLOSED_ON_DATE, rowHeader, "Closing Date ");
 		        writeString(ON_ACCOUNT_CLOSURE_ID,rowHeader,"Action(Account Transfer(200) or cash(100) ");
 		        writeString(TO_SAVINGS_ACCOUNT_ID,rowHeader, "Transfered Account No.");
 		        writeString(LOOKUP_CLIENT_NAME_COL, rowHeader, "Lookup Client");

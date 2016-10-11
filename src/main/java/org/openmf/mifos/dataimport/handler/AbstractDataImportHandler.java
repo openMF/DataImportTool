@@ -187,7 +187,10 @@ public abstract class AbstractDataImportHandler implements DataImportHandler {
     
     protected String parseStatus(String errorMessage) {
     	StringBuffer message = new StringBuffer();
-    	JsonObject obj = new JsonParser().parse(errorMessage.trim()).getAsJsonObject();
+    	//String errmsg = errorMessage.trim();
+    	
+    	JsonObject obj = new JsonParser().parse(errorMessage).getAsJsonObject();
+    	
         JsonArray array = obj.getAsJsonArray("errors");
         Iterator<JsonElement> iterator = array.iterator();
         while(iterator.hasNext()) {

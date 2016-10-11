@@ -81,7 +81,7 @@ public class DataImportServlet extends HttpServlet {
         			+ "<div id='title'>Data Import Tool</div><"
         			+ "div id='container'>"
         			+ "<div id='content'>"
-        			+ "<div class='step' style='border-left: 5px solid rgb(30, 224, 30);'>Import complete </div>"
+        			+ "<div class='step' style='border-left: 100% solid rgb(30, 224, 30);'>Import complete </div>"
         			+ "<div style='text-align:center;padding-top:25px;'><a href='/DataImportTool' class='btn'>Go Back</a></div>"
         			+ "</div>"
         			+ "</div>"
