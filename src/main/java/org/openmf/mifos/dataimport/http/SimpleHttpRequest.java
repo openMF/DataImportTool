@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 public class SimpleHttpRequest {
 
-    private static final int HTTP_TIMEOUT = 100 * 1000; // 100 secs
+    private static final int HTTP_TIMEOUT = 300 * 1000; // 100 secs
 	
     private final HttpURLConnection connection;
 

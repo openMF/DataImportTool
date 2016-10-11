@@ -92,7 +92,7 @@ public Result upload() {
         	Cell statusCell = savingsTransactionSheet.getRow(transaction.getRowIndex()).createCell(STATUS_COL);
         	statusCell.setCellValue(message);
             statusCell.setCellStyle(getCellStyle(workbook, IndexedColors.RED));
-            result.addError("Row = " + transaction.getRowIndex() + " ," + message);
+           // result.addError("Row = " + transaction.getRowIndex() + " ," + message);
         }
     }
     savingsTransactionSheet.setColumnWidth(STATUS_COL, 15000);
